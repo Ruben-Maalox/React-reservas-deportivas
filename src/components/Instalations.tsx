@@ -1,5 +1,4 @@
-import { table } from "console";
-import { Instalacion, InstalacionesAPI } from "../../types/types";
+import { Instalacion } from "../types/types";
 import { useState, useEffect } from "react";
 
 export default function Instalaciones({ token }: { token: string }) {
@@ -11,7 +10,7 @@ export default function Instalaciones({ token }: { token: string }) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${getCookie("authToken")}`, //❌ aquí
+          Authorization: `Bearer `, //❌ aquí
         },
         credentials: "include",
       });
@@ -50,7 +49,3 @@ export default function Instalaciones({ token }: { token: string }) {
     </table>
   );
 }
-
-/* TODO
-- Ver cómo recuperar el token de la cookie o de la sesión
-*/

@@ -1,13 +1,14 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 * {
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
+  margin: auto;
+  max-width: 1400px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -19,8 +20,37 @@ header img {
   width: 30%;
 }
 
-.social-networks img{
-  width: 50px;
-  height: 50px;
-  margin: 10px;
+p,
+ul {
+  margin-bottom: 1em;
+}
+
+h1 {
+  font-size: 2em; /* 32px */
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.5em; /* 24px */
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.17em; /* 18.72px */
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1em; /* 16px */
+  font-weight: bold;
+}
+
+h5 {
+  font-size: 0.83em; /* 13.28px */
+  font-weight: bold;
+}
+
+h6 {
+  font-size: 0.67em; /* 10.72px */
+  font-weight: bold;
 }

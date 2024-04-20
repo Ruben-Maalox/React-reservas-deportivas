@@ -1,4 +1,4 @@
-import Login from "./Login";
+import Login from "./ReservationsTable";
 import logoEmpresa from "../../assets/images/logoMenosTransparencia.png"
 import { useState } from "react";
 

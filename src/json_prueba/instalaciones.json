@@ -2,76 +2,41 @@
   "instalaciones": [
     {
       "id": 1,
-      "nombre": "Tenis - 1",
+      "nombre": "Tenis",
       "precioHora": 6
     },
     {
       "id": 2,
-      "nombre": "Tenis - 2",
-      "precioHora": 6
+      "nombre": "Fútbol 7",
+      "precioHora": 21
     },
     {
       "id": 3,
-      "nombre": "Fútbol 7 - 1",
-      "precioHora": 21
-    },
-    {
-      "id": 4,
-      "nombre": "Fútbol 7 - 2",
-      "precioHora": 21
-    },
-    {
-      "id": 5,
       "nombre": "Padel - 1",
       "precioHora": 16
     },
     {
-      "id": 6,
+      "id": 4,
       "nombre": "Padel - 2",
       "precioHora": 16
     },
     {
+      "id": 5,
+      "nombre": "Fútbol sala",
+      "precioHora": 15
+    },
+    {
+      "id": 6,
+      "nombre": "Baloncesto",
+      "precioHora": 15
+    },
+    {
       "id": 7,
-      "nombre": "Padel - 3",
-      "precioHora": 16
-    },
-    {
-      "id": 8,
-      "nombre": "Padel - 4",
-      "precioHora": 16
-    },
-    {
-      "id": 9,
-      "nombre": "Fútbol sala - Outdoor",
-      "precioHora": 10
-    },
-    {
-      "id": 10,
-      "nombre": "Fútbol sala - Pabellon",
-      "precioHora": 15
-    },
-    {
-      "id": 11,
-      "nombre": "Baloncesto - Outdoor",
-      "precioHora": 10
-    },
-    {
-      "id": 12,
-      "nombre": "Baloncesto - Pabellon",
-      "precioHora": 15
-    },
-    {
-      "id": 13,
       "nombre": "Piscina cubierta",
       "precioHora": 3
     },
     {
-      "id": 14,
-      "nombre": "Gimnasio",
-      "precioHora": 3
-    },
-    {
-      "id": 15,
+      "id": 8,
       "nombre": "Volleyball",
       "precioHora": 15
     }

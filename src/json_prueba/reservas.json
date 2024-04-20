@@ -1,272 +1,182 @@
 [
   {
     "ID": "1",
-    "idUsuario": "123",
-    "idInstalacion": "456",
+    "idUsuario": "1",
+    "idInstalacion": "1",
     "fecha": "01-01-2022",
     "hora": "09:00",
     "duracion": "60",
-    "importe": "50"
+    "importe": "6"
   },
   {
     "ID": "2",
-    "idUsuario": "456",
-    "idInstalacion": "789",
+    "idUsuario": "1",
+    "idInstalacion": "1",
     "fecha": "02-01-2022",
     "hora": "14:30",
     "duracion": "90",
-    "importe": "75"
+    "importe": "9"
   },
   {
     "ID": "3",
-    "idUsuario": "789",
-    "idInstalacion": "123",
+    "idUsuario": "1",
+    "idInstalacion": "2",
     "fecha": "03-01-2022",
-    "hora": "18:00",
-    "duracion": "120",
-    "importe": "100"
+    "hora": "10:00",
+    "duracion": "60",
+    "importe": "21"
   },
   {
     "ID": "4",
-    "idUsuario": "234",
-    "idInstalacion": "567",
+    "idUsuario": "1",
+    "idInstalacion": "2",
     "fecha": "04-01-2022",
-    "hora": "10:00",
-    "duracion": "60",
-    "importe": "50"
+    "hora": "15:30",
+    "duracion": "90",
+    "importe": "21"
   },
   {
     "ID": "5",
-    "idUsuario": "567",
-    "idInstalacion": "890",
+    "idUsuario": "1",
+    "idInstalacion": "3",
     "fecha": "05-01-2022",
-    "hora": "15:30",
-    "duracion": "90",
-    "importe": "75"
+    "hora": "11:00",
+    "duracion": "60",
+    "importe": "16"
   },
   {
     "ID": "6",
-    "idUsuario": "890",
-    "idInstalacion": "234",
+    "idUsuario": "1",
+    "idInstalacion": "4",
     "fecha": "06-01-2022",
-    "hora": "19:00",
-    "duracion": "120",
-    "importe": "100"
+    "hora": "16:30",
+    "duracion": "90",
+    "importe": "16"
   },
   {
     "ID": "7",
-    "idUsuario": "345",
-    "idInstalacion": "678",
+    "idUsuario": "1",
+    "idInstalacion": "5",
     "fecha": "07-01-2022",
-    "hora": "11:00",
+    "hora": "12:30",
     "duracion": "60",
-    "importe": "50"
+    "importe": "15"
   },
   {
     "ID": "8",
-    "idUsuario": "678",
-    "idInstalacion": "901",
+    "idUsuario": "1",
+    "idInstalacion": "6",
     "fecha": "08-01-2022",
-    "hora": "16:30",
-    "duracion": "90",
-    "importe": "75"
+    "hora": "17:00",
+    "duracion": "60",
+    "importe": "15"
   },
   {
     "ID": "9",
-    "idUsuario": "901",
-    "idInstalacion": "345",
+    "idUsuario": "1",
+    "idInstalacion": "7",
     "fecha": "09-01-2022",
-    "hora": "20:00",
-    "duracion": "120",
-    "importe": "100"
+    "hora": "13:00",
+    "duracion": "60",
+    "importe": "3"
   },
   {
     "ID": "10",
-    "idUsuario": "432",
-    "idInstalacion": "765",
+    "idUsuario": "1",
+    "idInstalacion": "8",
     "fecha": "10-01-2022",
-    "hora": "12:00",
+    "hora": "18:30",
     "duracion": "60",
-    "importe": "50"
+    "importe": "15"
   },
   {
     "ID": "11",
-    "idUsuario": "765",
-    "idInstalacion": "098",
+    "idUsuario": "1",
+    "idInstalacion": "1",
     "fecha": "11-01-2022",
-    "hora": "17:30",
-    "duracion": "90",
-    "importe": "75"
+    "hora": "14:00",
+    "duracion": "60",
+    "importe": "15"
   },
   {
     "ID": "12",
-    "idUsuario": "098",
-    "idInstalacion": "432",
+    "idUsuario": "1",
+    "idInstalacion": "2",
     "fecha": "12-01-2022",
-    "hora": "21:00",
-    "duracion": "120",
-    "importe": "100"
+    "hora": "19:00",
+    "duracion": "60",
+    "importe": "15"
   },
   {
     "ID": "13",
-    "idUsuario": "543",
-    "idInstalacion": "876",
+    "idUsuario": "1",
+    "idInstalacion": "3",
     "fecha": "13-01-2022",
-    "hora": "13:00",
+    "hora": "15:00",
     "duracion": "60",
-    "importe": "50"
+    "importe": "15"
   },
   {
     "ID": "14",
-    "idUsuario": "876",
-    "idInstalacion": "209",
+    "idUsuario": "1",
+    "idInstalacion": "4",
     "fecha": "14-01-2022",
-    "hora": "18:30",
-    "duracion": "90",
-    "importe": "75"
+    "hora": "20:00",
+    "duracion": "60",
+    "importe": "15"
   },
   {
     "ID": "15",
-    "idUsuario": "209",
-    "idInstalacion": "543",
+    "idUsuario": "1",
+    "idInstalacion": "5",
     "fecha": "15-01-2022",
-    "hora": "22:00",
-    "duracion": "120",
-    "importe": "100"
+    "hora": "16:00",
+    "duracion": "60",
+    "importe": "15"
   },
   {
     "ID": "16",
-    "idUsuario": "654",
-    "idInstalacion": "987",
+    "idUsuario": "1",
+    "idInstalacion": "6",
     "fecha": "16-01-2022",
-    "hora": "08:30",
+    "hora": "21:00",
     "duracion": "60",
-    "importe": "50"
+    "importe": "15"
   },
   {
     "ID": "17",
-    "idUsuario": "987",
-    "idInstalacion": "320",
+    "idUsuario": "1",
+    "idInstalacion": "7",
     "fecha": "17-01-2022",
-    "hora": "13:30",
-    "duracion": "90",
-    "importe": "75"
+    "hora": "17:00",
+    "duracion": "60",
+    "importe": "15"
   },
   {
     "ID": "18",
-    "idUsuario": "320",
-    "idInstalacion": "654",
+    "idUsuario": "1",
+    "idInstalacion": "8",
     "fecha": "18-01-2022",
-    "hora": "17:00",
-    "duracion": "120",
-    "importe": "100"
+    "hora": "22:00",
+    "duracion": "60",
+    "importe": "15"
   },
   {
     "ID": "19",
-    "idUsuario": "765",
-    "idInstalacion": "543",
+    "idUsuario": "1",
+    "idInstalacion": "1",
     "fecha": "19-01-2022",
-    "hora": "09:30",
+    "hora": "18:00",
     "duracion": "60",
-    "importe": "50"
+    "importe": "15"
   },
   {
     "ID": "20",
-    "idUsuario": "098",
-    "idInstalacion": "876",
+    "idUsuario": "1",
+    "idInstalacion": "2",
     "fecha": "20-01-2022",
-    "hora": "14:30",
-    "duracion": "90",
-    "importe": "75"
-  },
-  {
-    "ID": "21",
-    "idUsuario": "432",
-    "idInstalacion": "209",
-    "fecha": "21-01-2022",
-    "hora": "18:00",
-    "duracion": "120",
-    "importe": "100"
-  },
-  {
-    "ID": "22",
-    "idUsuario": "765",
-    "idInstalacion": "987",
-    "fecha": "22-01-2022",
-    "hora": "10:30",
+    "hora": "23:00",
     "duracion": "60",
-    "importe": "50"
-  },
-  {
-    "ID": "23",
-    "idUsuario": "098",
-    "idInstalacion": "320",
-    "fecha": "23-01-2022",
-    "hora": "15:30",
-    "duracion": "90",
-    "importe": "75"
-  },
-  {
-    "ID": "24",
-    "idUsuario": "432",
-    "idInstalacion": "654",
-    "fecha": "24-01-2022",
-    "hora": "19:00",
-    "duracion": "120",
-    "importe": "100"
-  },
-  {
-    "ID": "25",
-    "idUsuario": "543",
-    "idInstalacion": "543",
-    "fecha": "25-01-2022",
-    "hora": "11:30",
-    "duracion": "60",
-    "importe": "50"
-  },
-  {
-    "ID": "26",
-    "idUsuario": "876",
-    "idInstalacion": "876",
-    "fecha": "26-01-2022",
-    "hora": "16:30",
-    "duracion": "90",
-    "importe": "75"
-  },
-  {
-    "ID": "27",
-    "idUsuario": "209",
-    "idInstalacion": "209",
-    "fecha": "27-01-2022",
-    "hora": "20:00",
-    "duracion": "120",
-    "importe": "100"
-  },
-  {
-    "ID": "28",
-    "idUsuario": "987",
-    "idInstalacion": "987",
-    "fecha": "28-01-2022",
-    "hora": "12:30",
-    "duracion": "60",
-    "importe": "50"
-  },
-  {
-    "ID": "29",
-    "idUsuario": "320",
-    "idInstalacion": "320",
-    "fecha": "29-01-2022",
-    "hora": "17:30",
-    "duracion": "90",
-    "importe": "75"
-  },
-  {
-    "ID": "30",
-    "idUsuario": "654",
-    "idInstalacion": "654",
-    "fecha": "30-01-2022",
-    "hora": "21:00",
-    "duracion": "120",
-    "importe": "100"
+    "importe": "15"
   }
 ]

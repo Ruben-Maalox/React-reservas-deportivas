@@ -1,4 +1,4 @@
-import Login from "../components/auth/Login";
+import Login from "../components/auth/ReservationsTable";
 import backgroundImage from "../assets/images/fondo-reservas.jpg";
 
 export default function Reservas() {

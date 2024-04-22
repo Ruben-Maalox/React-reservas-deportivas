@@ -52,6 +52,10 @@ export default function ReservationsTable() {
   const formattedDate = `${selectedDate.getFullYear()}-${String(
     selectedDate.getMonth() + 1
   ).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(2, "0")}`;
+
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate(new Date(event.target.value));
+  };
   return (
     <>
       {instalaciones.length > 0 && !showRegistro && (
@@ -74,6 +78,7 @@ export default function ReservationsTable() {
               type="date"
               id="reservation-date"
               value={formattedDate}
+              onChange={handleDateChange}
               className="mt-1 block pl-3 pr-5 sm:text-sm border-gray-300 rounded-md"
             />
             <button
@@ -121,5 +126,4 @@ export default function ReservationsTable() {
 
 /* TODO:
 - Ver dónde guardar el token recibido de la API para futuras peticiones
-- Ponemos el recordar inicio de sesión en un checkbox??
 */

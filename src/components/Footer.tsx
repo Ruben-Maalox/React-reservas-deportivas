@@ -5,11 +5,12 @@ import {
   AiOutlineClockCircle,
 } from "react-icons/ai";
 import { Link } from 'react-router-dom';
+import "./Footer.css"
 
 export default function Footer() {
   return (
     <footer className="p-5 bg-gray-200 text-white flex justify-between items-center">
-      <div className="flex flex-col items-center">
+      <div id="social-ftr" className="flex flex-col items-center">
         <img
           src="./src/assets/images/logo-white-transp.png"
           alt="LetsMove"

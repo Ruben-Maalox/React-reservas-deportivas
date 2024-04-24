@@ -8,7 +8,7 @@ export type Instalacion = {
   precioHora: number;
 };
 
-export type Reserva = {
+export interface Reserva {
   ID: string;
   idUsuario: string;
   idInstalacion: string;
@@ -16,4 +16,4 @@ export type Reserva = {
   hora: string;
   duracion: string;
   importe: string;
-};
+}

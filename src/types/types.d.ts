@@ -7,3 +7,13 @@ export type Instalacion = {
   nombre: string;
   precioHora: number;
 };
+
+export type Reserva = {
+  ID: string;
+  idUsuario: string;
+  idInstalacion: string;
+  fecha: string;
+  hora: string;
+  duracion: string;
+  importe: string;
+};

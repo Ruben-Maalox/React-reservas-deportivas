@@ -1,11 +1,33 @@
 import logoEmpresa from "../../assets/images/logoMenosTransparencia.png";
+import { useEffect } from "react";
+import { useAuthProvider } from "../../context/useAuthProvider";
+import { useNavigate } from "react-router-dom";
 
-export default function Login({setToken}: {setToken: (token: string) => void}) {
+export default function Login() {
+  const { user, setUser } = useAuthProvider();
+  const navigate = useNavigate();
+
+
+  // Lo usamos para leer el localStorage
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem("loggedNoteAppUser");
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+    }
+  }, []);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const email = (form.email as HTMLInputElement).value;
     const password = (form.password as HTMLInputElement).value;
+
+    setUser({ email, name: "Usuario", token: "tokenPrueba" })
+    window.localStorage.setItem("loggedUser", JSON.stringify({ email, name: "Usuario", token: "tokenPrueba" }));
+
+    // Redireccionamos a /reservas
+    navigate("/reservas");
 
     /* const body = JSON.stringify({ email, password });
 
@@ -22,9 +44,7 @@ export default function Login({setToken}: {setToken: (token: string) => void}) {
       // setToken(data.token);
       // <-- Redireccionar a /reservas/pistas
     } */
-    setToken("hola")
   };
-  
 
   return (
     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-2/6" onSubmit={handleSubmit}>
@@ -58,10 +78,7 @@ export default function Login({setToken}: {setToken: (token: string) => void}) {
       <div className="flex flex-col items-center justify-center">
         <p className="text-center mt-4 text-gray-700 font-bold mb-5">¿No tienes cuenta?</p>
 
-        <button
-
-          className="w-1/3 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
-        >
+        <button className="w-1/3 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce">
           Regístrate
         </button>
       </div>

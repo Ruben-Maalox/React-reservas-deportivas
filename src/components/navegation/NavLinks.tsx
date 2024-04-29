@@ -1,4 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+import { useAuthProvider } from "../../context/useAuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const links = [
   { name: "Home", href: "/" },
@@ -7,10 +9,20 @@ const links = [
   { name: "Reservas", href: "/reservas" },
   { name: "Restaurante", href: "/restaurante" },
   { name: "Localización y contacto", href: "/contacto" },
+
 ];
 
 export default function NavLinks() {
+  const { user, setUser } = useAuthProvider();
   const location = useLocation();
+  const navigate = useNavigate();
+
+
+  const handleLogOut = () => {
+    setUser(null);
+    localStorage.removeItem("loggedUser");
+    navigate("/");
+  }
 
   return (
     <>
@@ -28,6 +40,11 @@ export default function NavLinks() {
           </Link>
         );
       })}
+        <div className="flex flex-col">
+        {user && <p>{user?.email} // {user?.name}</p>}
+        {user && <button onClick={handleLogOut}>Log Out</button>}
+        </div>
+
     </>
   );
 }

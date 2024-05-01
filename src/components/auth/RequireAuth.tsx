@@ -11,7 +11,7 @@ export default function RequireAuth({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate("/auth-page");
     }
   }, [user, navigate]);
 

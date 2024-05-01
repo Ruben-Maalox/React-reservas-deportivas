@@ -8,7 +8,7 @@ import Contacto from "./pages/Contacto.tsx";
 import PoliticaCookies from "./pages/PoliticaCookies.tsx";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad.tsx";
 // --> Componentes
-import Login from "./components/auth/Login.tsx";
+import AuthPage from "./pages/AuthPage.tsx";
 import Footer from "./components/Footer.tsx";
 import Header from "./components/Header.tsx";
 import AvisoLegal from "./pages/AvisoLegal.tsx";
@@ -43,7 +43,7 @@ export default function App() {
               <Route path="/politicaCookies" element={<PoliticaCookies />} />
               <Route path="/politicaPrivacidad" element={<PoliticaPrivacidad />} />
               <Route path="/avisoLegal" element={<AvisoLegal />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/auth-page" element={<AuthPage />} />
             </Routes>
           </main>
           <Footer />

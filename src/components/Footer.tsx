@@ -9,8 +9,8 @@ import "./Footer.css"
 
 export default function Footer() {
   return (
-    <footer className="p-5 bg-gray-200 text-white flex justify-between items-center">
-      <div id="social-ftr" className="flex flex-col items-center">
+    <footer className="p-5 bg-gray-200 text-white flex flex-col items-start md:flex-row md:justify-between md:items-center">
+      <div id="social-ftr" className="flex flex-col items-center mb-4 md:mb-0">
         <img
           src="./src/assets/images/logo-white-transp.png"
           alt="LetsMove"
@@ -40,12 +40,12 @@ export default function Footer() {
         </div>
       </div>
       {/* Añadir enlaces politica de cookies, privacidad, aviso legal. */}
-      <div className="legal-links flex flex-col text-black">
+      <div className="legal-links flex flex-col text-black mb-4 md:mb-0">
         <Link to="/politicaCookies">Política de cookies</Link>
         <Link to="/politicaPrivacidad" className="mt-2">Política de privacidad</Link>
         <Link to="/avisoLegal" className="mt-2">Aviso legal</Link>
       </div>
-      <div className="mt-5 text-black">
+      <div className="mt-5 text-black mb-4 md:mb-0">
         <h2 className="font-bold text-lg mb-2">Horario:</h2>
         <p className="mb-1">
           <AiOutlineClockCircle className="inline-block mr-1" />
@@ -61,7 +61,7 @@ export default function Footer() {
         </p>
       </div>
       {/* CONTACTO */}
-      <div className="contacto flex flex-col text-black">
+      <div className="contacto flex flex-col text-black mb-4 md:mb-0">
         <h2 className="font-bold text-lg mb-2">Contacto:</h2>
         <p className="mb-2">
           <AiOutlinePhone className="inline-block mr-1" />

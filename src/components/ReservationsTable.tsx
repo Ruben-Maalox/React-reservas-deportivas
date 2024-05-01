@@ -80,19 +80,22 @@ export default function ReservationsTable() {
       {instalaciones.length > 0 && (
         <div className="w-full md:w-2/3 lg:w-3/4 mx-auto bg-white rounded-lg p-4">
           <h1 className="font-bold text-center text-3xl mb-5">Reservas</h1>
-          <div className="flex bg-gray-200 items-center p-3">
+          <div className="flex flex-col sm:flex-row bg-gray-200 items-center p-3">
             <label htmlFor="reservation-date" className="block text-sm font-medium text-gray-700 mr-3">
               Fecha:
             </label>
-            <button onClick={handlePrevDay} className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 px-3 rounded">
-              &lt;
-            </button>
             <input type="date" id="reservation-date" value={formattedDate} onChange={handleDateChange} className="mt-1 block pl-3 pr-5 sm:text-sm border-gray-300 rounded-md" />
-            <button onClick={handleNextDay} className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 px-3 rounded">
-              &gt;
-            </button>
+            <div className="flex mt-2 sm:mt-0">
+              <button onClick={handlePrevDay} className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 px-3 rounded">
+                &lt;
+              </button>
+              <button onClick={handleNextDay} className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 px-3 rounded">
+                &gt;
+              </button>
+            </div>
           </div>
-          <table className=" w-full text-center">
+          <div className="overflow-auto ">
+          <table className="min-w-full text-center">
             <thead>
               <tr>
                 {/* <th>Time</th> */}
@@ -145,7 +148,7 @@ export default function ReservationsTable() {
 
                         return (
                           <>
-                            <td onClick={()=>{alert("Has hecho click")}} rowSpan={cRow.merge} key={instalacion.id} data-instalacion={instalacion.id} className={`border ${reserva ? "bg-red-500" : ""} `}>
+                            <td onClick={()=>{alert("Has hecho click")}} rowSpan={cRow.merge} key={instalacion.id} data-instalacion={instalacion.id} className={`border ${reserva ? "bg-red-500" : ""} w-1/6 `}>
                               {showHour(cRow.merge, time)}
                             </td>
                           </>
@@ -157,6 +160,7 @@ export default function ReservationsTable() {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       )}
       {showModalReservation && <div className="fixed z-10 inset-0 overflow-y-auto"> </div>}

@@ -1,23 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { INSTALACIONES_INFO } from "../constants/constants";
 import reservasJSON from "../json_prueba/reservas.json";
 import { Reserva } from "../types/types";
 
 // import Register from "../register/Register";
+export interface MergeRows {
+  [key: number]: {
+    merge: number;
+    first: boolean;
+  };
+}
 
 export default function ReservationsTable() {
   const [instalaciones, setInstalaciones] = useState<any[]>([]); // <-- [hour, pista
   const [reservas, setReservas] = useState<Reserva[] | null>(null); // <-- [hour, pista
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const mergeRows = useRef<MergeRows>({ 1: { merge: 1, first: true }, 2: { merge: 1, first: true }, 3: { merge: 1, first: true }, 4: { merge: 1, first: true }, 5: { merge: 1, first: true }, 6: { merge: 1, first: true }, 7: { merge: 1, first: true }, 8: { merge: 1, first: true } });
+  const [showModalReservation, setShowModalReservation] = useState<boolean>(false);
+  const [reservationsData, setReservationsData] = useState<Reserva[]>([]);
 
   useEffect(() => {
     /* fetch("http://localhost:8000/api/instalaciones/all")
       .then((response) => response.json())
       .then((data) => setInstalaciones(data.instalaciones)); */
     setInstalaciones(INSTALACIONES_INFO);
-    const filteredReservas = reservasJSON.filter((reserva) => reserva.fecha === "2024-04-24");
-    setReservas(filteredReservas);
-    console.log(filteredReservas);
+    setReservas(reservasJSON);
   }, []);
 
   const handlePrevDay = () => {
@@ -27,7 +34,7 @@ export default function ReservationsTable() {
   const handleNextDay = () => {
     setSelectedDate((prevDate) => new Date(new Date(prevDate).setDate(prevDate.getDate() + 1)));
   };
-  // const today = new Date();
+
   const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(2, "0")}`;
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +42,37 @@ export default function ReservationsTable() {
   };
 
   function hasReserva(idInstalacion: string, hora: string) {
-    return reservas?.find((reserva) => reserva.idInstalacion == idInstalacion && reserva.hora === hora);
+    return reservas?.find((reserva) => reserva.idInstalacion == idInstalacion && reserva.hora === hora && reserva.fecha === formattedDate);
+  }
+  
+  function showHour(merge: number, hour: string) {
+    if (merge === 1) {
+      return hour;
+    }
+
+    const [hourPart, minutePart] = hour.split(":");
+    let endHour = parseInt(hourPart);
+    let endMinute = parseInt(minutePart);
+
+    // Add 30 minutes for each merge
+    for (let i = 0; i < merge; i++) {
+      endMinute += 30;
+      if (endMinute >= 60) {
+        endHour += 1;
+        endMinute = 0;
+      }
+    }
+
+    // Format the end hour and minute
+    const endHourStr = endHour < 10 ? `0${endHour}` : `${endHour}`;
+    const endMinuteStr = endMinute === 0 ? "00" : `${endMinute}`;
+
+    return `${hour} - ${endHourStr}:${endMinuteStr}`;
+  }
+
+  const handleReservation = ()=>{
+
+    setShowModalReservation(true);
   }
 
   return (
@@ -58,6 +95,7 @@ export default function ReservationsTable() {
           <table className=" w-full text-center">
             <thead>
               <tr>
+                {/* <th>Time</th> */}
                 {instalaciones.map((instalacion) => {
                   return (
                     <th key={instalacion.id} data-id={instalacion.id} className="p-4">
@@ -74,25 +112,46 @@ export default function ReservationsTable() {
                 const time = `${hour2}:${halfHour % 2 === 0 ? "00" : "30"}`;
                 return (
                   <tr key={halfHour} data-hour={time}>
-                    {instalaciones.map((instalacion) => {
-                      const reserva = hasReserva(instalacion.id, time);
+                    <>
+                      {/* <td>{time}</td> */}
+                      {instalaciones.map((instalacion) => {
+                        const reserva = hasReserva(instalacion.id, time);
+                        const cRow = mergeRows.current[instalacion.id];
 
-                      /* 
-                      --> Fusionar columnas???
-                      let fusionarColumnas = 1;
-                      if (reserva && reserva.duracion === "60") {
-                        fusionarColumnas = 2;
-                      }
-                      if (reserva && reserva.duracion === "90") {
-                        fusionarColumnas = 3;
-                      } */
+                        //--> Fusionar columnas???
+                        if (reserva && reserva.duracion === "60") {
+                          cRow.merge = 2;
+                          cRow.first = true;
+                        }
+                        if (reserva && reserva.duracion === "90") {
+                          cRow.merge = 3;
+                          cRow.first = true;
+                        }
 
-                      return (
-                        <td key={instalacion.id} data-instalacion={instalacion.id} className={`border ${reserva ? "bg-red-500" : ""} `}>
-                          {time}
-                        </td>
-                      );
-                    })}
+                        // Si no es la primera vez que se pinta la celda y hay que fusionar:
+                        if (cRow.first === false) {
+                          cRow.merge -= 1;
+                          if (cRow.merge === 1) cRow.first = true;
+                          return null; // Devolvemos null para que no pinte un TD
+                        }
+
+                        // Si es la primera vez que se pinta la celda devolvemos un TD
+                        if (cRow.merge > 1) {
+                          cRow.first = false;
+                        }
+                        if (cRow.merge === 1) {
+                          cRow.first = true;
+                        }
+
+                        return (
+                          <>
+                            <td onClick={()=>{alert("Has hecho click")}} rowSpan={cRow.merge} key={instalacion.id} data-instalacion={instalacion.id} className={`border ${reserva ? "bg-red-500" : ""} `}>
+                              {showHour(cRow.merge, time)}
+                            </td>
+                          </>
+                        );
+                      })}
+                    </>
                   </tr>
                 );
               })}
@@ -100,6 +159,7 @@ export default function ReservationsTable() {
           </table>
         </div>
       )}
+      {showModalReservation && <div className="fixed z-10 inset-0 overflow-y-auto"> </div>}
     </>
   );
 }

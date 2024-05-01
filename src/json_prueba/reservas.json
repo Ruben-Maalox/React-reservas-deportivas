@@ -5,7 +5,16 @@
     "idInstalacion": "1",
     "fecha": "2024-04-24",
     "hora": "09:00",
-    "duracion": "60",
+    "duracion": "90",
+    "importe": "6"
+  },
+  {
+    "ID": "1",
+    "idUsuario": "1",
+    "idInstalacion": "1",
+    "fecha": "2024-04-24",
+    "hora": "11:30",
+    "duracion": "90",
     "importe": "6"
   },
   {
@@ -31,8 +40,8 @@
     "idUsuario": "1",
     "idInstalacion": "2",
     "fecha": "2024-04-24",
-    "hora": "15:30",
-    "duracion": "90",
+    "hora": "11:30",
+    "duracion": "60",
     "importe": "21"
   },
   {
@@ -93,7 +102,7 @@
     "ID": "11",
     "idUsuario": "1",
     "idInstalacion": "1",
-    "fecha": "2024-04-25",
+    "fecha": "2024-04-26",
     "hora": "14:00",
     "duracion": "60",
     "importe": "15"
@@ -102,7 +111,7 @@
     "ID": "12",
     "idUsuario": "1",
     "idInstalacion": "2",
-    "fecha": "2024-04-25",
+    "fecha": "2024-04-26",
     "hora": "19:00",
     "duracion": "60",
     "importe": "15"
@@ -111,7 +120,7 @@
     "ID": "13",
     "idUsuario": "1",
     "idInstalacion": "3",
-    "fecha": "2024-04-25",
+    "fecha": "2024-04-26",
     "hora": "15:00",
     "duracion": "60",
     "importe": "15"
@@ -120,7 +129,7 @@
     "ID": "14",
     "idUsuario": "1",
     "idInstalacion": "4",
-    "fecha": "2024-04-25",
+    "fecha": "2024-04-26",
     "hora": "20:00",
     "duracion": "60",
     "importe": "15"
@@ -129,7 +138,7 @@
     "ID": "15",
     "idUsuario": "1",
     "idInstalacion": "5",
-    "fecha": "2024-04-25",
+    "fecha": "2024-04-26",
     "hora": "16:00",
     "duracion": "60",
     "importe": "15"
@@ -138,7 +147,7 @@
     "ID": "16",
     "idUsuario": "1",
     "idInstalacion": "6",
-    "fecha": "2024-04-25",
+    "fecha": "2024-04-26",
     "hora": "21:00",
     "duracion": "60",
     "importe": "15"
@@ -147,7 +156,7 @@
     "ID": "17",
     "idUsuario": "1",
     "idInstalacion": "7",
-    "fecha": "2024-04-25",
+    "fecha": "2024-04-26",
     "hora": "17:00",
     "duracion": "60",
     "importe": "15"
@@ -156,7 +165,7 @@
     "ID": "18",
     "idUsuario": "1",
     "idInstalacion": "8",
-    "fecha": "2024-04-25",
+    "fecha": "2024-04-26",
     "hora": "22:00",
     "duracion": "60",
     "importe": "15"
@@ -165,7 +174,7 @@
     "ID": "19",
     "idUsuario": "1",
     "idInstalacion": "1",
-    "fecha": "2024-04-25",
+    "fecha": "2024-04-26",
     "hora": "18:00",
     "duracion": "60",
     "importe": "15"
@@ -174,8 +183,8 @@
     "ID": "20",
     "idUsuario": "1",
     "idInstalacion": "2",
-    "fecha": "2024-04-25",
-    "hora": "23:00",
+    "fecha": "2024-04-26",
+    "hora": "22:00",
     "duracion": "60",
     "importe": "15"
   }

@@ -2,20 +2,21 @@ import { useState, useMemo } from "react";
 import { ReservaModal } from "../types/types";
 
 export interface ReservaModalProps {
-  reservationsData: ReservaModal;
+  reservationData: ReservaModal;
   handleCloseModal: () => void;
 }
 
-export const Modal = ({ reservationsData, handleCloseModal }: ReservaModalProps) => {
-  const [duration, setDuration] = useState(60);
+export const Modal = ({ reservationData, handleCloseModal }: ReservaModalProps) => {
+  const { precioHora, fechaYHora, nombreInstalacion, duracion } = reservationData; // Destructuramos el objeto reservationData
+  const [currentDuration, setCurrentDuration] = useState(duracion[0]);
 
   // Esta función nos permite calcular el importe cada vez que cambie la duración
   const importe = useMemo(() => {
-    const precioHora = reservationsData.precioHora;
-    return ((duration / 60) * precioHora).toFixed(2) + "€";
-  }, [duration]);
+    return ((currentDuration / 60) * precioHora).toFixed(2) + "€";
+  }, [currentDuration]);
 
-  const [date, timeWithZone] = reservationsData.fechaYHora.split("T");
+  // Desestructuramos la fecha y la hora de la reserva para mostrarlas por separado
+  const [date, timeWithZone] = fechaYHora.split("T");
   const [time, _] = timeWithZone.split("+");
 
   return (
@@ -25,14 +26,17 @@ export const Modal = ({ reservationsData, handleCloseModal }: ReservaModalProps)
           x
         </button>
         <h2 className="text-center">Reserva</h2>
-        <p className="">Instalación: {reservationsData.nombreInstalacion}</p>
+        <p className="">Instalación: {nombreInstalacion}</p>
         <p>Fecha: {date}</p>
         <p>Hora: {time}</p>
         <div className="mb-3">
           <label>Duración: </label>
-          <select value={duration} onChange={(e) => setDuration(parseInt(e.target.value))}>
-            <option defaultValue={60}>60 minutos</option>
-            <option value={90}>90 minutos</option>
+          <select value={currentDuration} onChange={(e) => setCurrentDuration(parseInt(e.target.value))}>
+            {duracion.map((duracion, indx) => (
+              <option key={indx} value={duracion}>
+                {duracion} minutos
+              </option>
+            ))}
           </select>
         </div>
         <p>Importe: {importe}</p>

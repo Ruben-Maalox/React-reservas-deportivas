@@ -22,4 +22,5 @@ export interface ReservaModal {
   nombreInstalacion: string;
   fechaYHora: string;
   precioHora: number;
+  duracion: number[];
 }

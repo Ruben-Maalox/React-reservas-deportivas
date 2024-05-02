@@ -3,7 +3,7 @@
     "ID": 1,
     "idUsuario": 1,
     "idInstalacion": 1,
-    "fechaYHora": "2024-04-24T09:00+00:00",
+    "fechaYHora": "2024-04-24T09:00+02:00",
     "duracion": 90,
     "importe": 6
   },
@@ -11,7 +11,7 @@
     "ID": 2,
     "idUsuario": 1,
     "idInstalacion": 1,
-    "fechaYHora": "2024-04-24T11:30+00:00",
+    "fechaYHora": "2024-04-24T11:30+02:00",
     "duracion": 90,
     "importe": 6
   },
@@ -19,7 +19,7 @@
     "ID": 3,
     "idUsuario": 1,
     "idInstalacion": 1,
-    "fechaYHora": "2024-04-24T14:30+00:00",
+    "fechaYHora": "2024-04-24T14:30+02:00",
     "duracion": 90,
     "importe": 9
   },
@@ -27,7 +27,7 @@
     "ID": 4,
     "idUsuario": 1,
     "idInstalacion": 2,
-    "fechaYHora": "2024-04-24T10:00+00:00",
+    "fechaYHora": "2024-04-24T10:00+02:00",
     "duracion": 60,
     "importe": 21
   },
@@ -35,7 +35,23 @@
     "ID": 5,
     "idUsuario": 1,
     "idInstalacion": 2,
-    "fechaYHora": "2024-04-24T11:30+00:00",
+    "fechaYHora": "2024-04-24T11:30+02:00",
+    "duracion": 60,
+    "importe": 21
+  },
+  {
+    "ID": 21,
+    "idUsuario": 1,
+    "idInstalacion": 2,
+    "fechaYHora": "2024-04-24T13:00+02:00",
+    "duracion": 60,
+    "importe": 21
+  },
+  {
+    "ID": 22,
+    "idUsuario": 1,
+    "idInstalacion": 2,
+    "fechaYHora": "2024-04-24T15:00+02:00",
     "duracion": 60,
     "importe": 21
   },
@@ -43,7 +59,7 @@
     "ID": 6,
     "idUsuario": 1,
     "idInstalacion": 3,
-    "fechaYHora": "2024-04-24T11:00+00:00",
+    "fechaYHora": "2024-04-24T11:00+02:00",
     "duracion": 60,
     "importe": 16
   },
@@ -51,7 +67,7 @@
     "ID": 7,
     "idUsuario": 1,
     "idInstalacion": 4,
-    "fechaYHora": "2024-04-24T16:30+00:00",
+    "fechaYHora": "2024-04-24T16:30+02:00",
     "duracion": 90,
     "importe": 16
   },
@@ -59,7 +75,7 @@
     "ID": 8,
     "idUsuario": 1,
     "idInstalacion": 5,
-    "fechaYHora": "2024-04-24T12:30+00:00",
+    "fechaYHora": "2024-04-24T12:30+02:00",
     "duracion": 60,
     "importe": 15
   },
@@ -67,7 +83,7 @@
     "ID": 9,
     "idUsuario": 1,
     "idInstalacion": 6,
-    "fechaYHora": "2024-04-24T17:00+00:00",
+    "fechaYHora": "2024-04-24T17:00+02:00",
     "duracion": 60,
     "importe": 15
   },
@@ -75,7 +91,7 @@
     "ID": 10,
     "idUsuario": 1,
     "idInstalacion": 7,
-    "fechaYHora": "2024-04-24T13:00+00:00",
+    "fechaYHora": "2024-04-24T13:00+02:00",
     "duracion": 60,
     "importe": 3
   },
@@ -83,7 +99,7 @@
     "ID": 11,
     "idUsuario": 1,
     "idInstalacion": 8,
-    "fechaYHora": "2024-04-24T18:30+00:00",
+    "fechaYHora": "2024-04-24T18:30+02:00",
     "duracion": 60,
     "importe": 15
   },
@@ -91,7 +107,7 @@
     "ID": 12,
     "idUsuario": 1,
     "idInstalacion": 1,
-    "fechaYHora": "2024-04-26T14:00+00:00",
+    "fechaYHora": "2024-04-26T14:00+02:00",
     "duracion": 60,
     "importe": 15
   },
@@ -99,7 +115,7 @@
     "ID": 13,
     "idUsuario": 1,
     "idInstalacion": 2,
-    "fechaYHora": "2024-04-26T19:00+00:00",
+    "fechaYHora": "2024-04-26T19:00+02:00",
     "duracion": 60,
     "importe": 15
   },
@@ -107,7 +123,7 @@
     "ID": 14,
     "idUsuario": 1,
     "idInstalacion": 3,
-    "fechaYHora": "2024-04-26T15:00+00:00",
+    "fechaYHora": "2024-04-26T15:00+02:00",
     "duracion": 60,
     "importe": 15
   },
@@ -115,7 +131,7 @@
     "ID": 15,
     "idUsuario": 1,
     "idInstalacion": 4,
-    "fechaYHora": "2024-04-26T20:00+00:00",
+    "fechaYHora": "2024-04-26T20:00+02:00",
     "duracion": 60,
     "importe": 15
   },
@@ -123,7 +139,7 @@
     "ID": 16,
     "idUsuario": 1,
     "idInstalacion": 6,
-    "fechaYHora": "2024-04-26T21:00+00:00",
+    "fechaYHora": "2024-04-26T21:00+02:00",
     "duracion": 60,
     "importe": 15
   },
@@ -131,7 +147,7 @@
     "ID": 17,
     "idUsuario": 1,
     "idInstalacion": 7,
-    "fechaYHora": "2024-04-26T17:00+00:00",
+    "fechaYHora": "2024-04-26T17:00+02:00",
     "duracion": 60,
     "importe": 15
   },
@@ -139,7 +155,7 @@
     "ID": 18,
     "idUsuario": 1,
     "idInstalacion": 8,
-    "fechaYHora": "2024-04-26T22:00+00:00",
+    "fechaYHora": "2024-04-26T22:00+02:00",
     "duracion": 60,
     "importe": 15
   },
@@ -147,7 +163,7 @@
     "ID": 19,
     "idUsuario": 1,
     "idInstalacion": 1,
-    "fechaYHora": "2024-04-26T18:00+00:00",
+    "fechaYHora": "2024-04-26T18:00+02:00",
     "duracion": 60,
     "importe": 15
   },
@@ -155,7 +171,7 @@
     "ID": 20,
     "idUsuario": 1,
     "idInstalacion": 2,
-    "fechaYHora": "2024-04-26T22:00+00:00",
+    "fechaYHora": "2024-04-26T22:00+02:00",
     "duracion": 60,
     "importe": 15
   }

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { INSTALACIONES_INFO } from "../constants/constants";
 import reservasJSON from "../json_prueba/reservas.json";
 import { Reserva } from "../types/types";
+import { Modal } from "./Modal";
 
 // import Register from "../register/Register";
 export interface MergeRows {
@@ -17,7 +18,8 @@ export default function ReservationsTable() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const mergeRows = useRef<MergeRows>({ 1: { merge: 1, first: true }, 2: { merge: 1, first: true }, 3: { merge: 1, first: true }, 4: { merge: 1, first: true }, 5: { merge: 1, first: true }, 6: { merge: 1, first: true }, 7: { merge: 1, first: true }, 8: { merge: 1, first: true } });
   const [showModalReservation, setShowModalReservation] = useState<boolean>(false);
-  const [reservationsData, setReservationsData] = useState<Reserva[]>([]);
+  const [reservationsData, setReservationsData] = useState(null);
+  const [installations, setInstallations] = useState({});
 
   useEffect(() => {
     /* fetch("http://localhost:8000/api/instalaciones/all")
@@ -25,6 +27,12 @@ export default function ReservationsTable() {
       .then((data) => setInstalaciones(data.instalaciones)); */
     setInstalaciones(INSTALACIONES_INFO);
     setReservas(reservasJSON);
+
+    const installationsMap = {};
+    for (const instalacion of INSTALACIONES_INFO) {
+      installationsMap[instalacion.id] = instalacion.nombre;
+    }
+    setInstallations(installationsMap);
   }, []);
 
   const handlePrevDay = () => {
@@ -70,10 +78,24 @@ export default function ReservationsTable() {
     return `${hour} - ${endHourStr}:${endMinuteStr}`;
   }
 
-  const handleReservation = ()=>{
+  const handleReservation = (instalacion, time)=>{
 
+    const reserva = {
+      instalacion,
+      fecha: formattedDate,
+      hora: time,
+      duracion: '60', 
+      importe: '100'
+    };
+  
+    setReservationsData(reserva);
     setShowModalReservation(true);
   }
+
+  function handleCloseModal() {
+    setShowModalReservation(false);
+  }
+
 
   return (
     <>
@@ -113,6 +135,7 @@ export default function ReservationsTable() {
                 const hour1 = Math.floor(halfHour / 2) % 24;
                 const hour2 = hour1 >= 10 ? hour1 : `0${hour1}`;
                 const time = `${hour2}:${halfHour % 2 === 0 ? "00" : "30"}`;
+                
                 return (
                   <tr key={halfHour} data-hour={time}>
                     <>
@@ -147,11 +170,11 @@ export default function ReservationsTable() {
                         }
 
                         return (
-                          <>
-                            <td onClick={()=>{alert("Has hecho click")}} rowSpan={cRow.merge} key={instalacion.id} data-instalacion={instalacion.id} className={`border ${reserva ? "bg-red-500" : ""} w-1/6 `}>
+                         
+                            <td onClick={()=>{handleReservation(instalacion.id, time)}} rowSpan={cRow.merge} key={instalacion.id} data-instalacion={instalacion.id} className={`border ${reserva ? "bg-red-500" : ""} w-1/6 `}>
                               {showHour(cRow.merge, time)}
                             </td>
-                          </>
+                          
                         );
                       })}
                     </>
@@ -163,7 +186,14 @@ export default function ReservationsTable() {
           </div>
         </div>
       )}
-      {showModalReservation && <div className="fixed z-10 inset-0 overflow-y-auto"> </div>}
+      {showModalReservation && reservationsData && (
+        <Modal
+        reservationsData={reservationsData} 
+        installations={installations} 
+        handleCloseModal={handleCloseModal} 
+        setReservationsData={setReservationsData} 
+        />
+      )}
     </>
   );
 }

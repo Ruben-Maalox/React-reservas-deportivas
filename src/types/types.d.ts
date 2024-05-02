@@ -2,18 +2,24 @@ export type InstalacionesAPI = {
   instalaciones: Instalacion[];
 };
 
-export type Instalacion = {
+export interface Instalacion {
   id: number;
   nombre: string;
   precioHora: number;
-};
+}
 
 export interface Reserva {
-  ID: string;
-  idUsuario: string;
-  idInstalacion: string;
-  fecha: string;
-  hora: string;
-  duracion: string;
-  importe: string;
+  ID: number;
+  idUsuario: number;
+  idInstalacion: number;
+  fechaYHora: string;
+  duracion: number;
+  importe: number;
+}
+
+export interface ReservaModal {
+  idInstalacion: number;
+  nombreInstalacion: string;
+  fechaYHora: string;
+  precioHora: number;
 }

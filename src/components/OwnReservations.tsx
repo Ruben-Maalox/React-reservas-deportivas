@@ -15,7 +15,7 @@ export default function OwnReservations() {
 
   return (
     <>
-      <table className="min-w-full divide-y divide-gray-200">
+      <table className="min-w-full text-center">
         <thead className="bg-gray-50">
           <tr>
             <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ID Reserva</th>
@@ -25,6 +25,7 @@ export default function OwnReservations() {
             <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Hora</th>
             <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Duración</th>
             <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Importe</th>
+            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -42,6 +43,10 @@ export default function OwnReservations() {
                   <td className="px-6 py-4 whitespace-nowrap text-center">{time}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">{duracion}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">{importe}€</td>
+                  <td className="flex flex-row px-6 py-4 whitespace-nowrap text-center">
+                    <img src="/assets/icons/edit.svg" alt="Edit icon"/>
+                    <img src="/assets/icons/delete.svg" alt="Delete icon"/>
+                  </td>
                 </tr>
               );
             })}

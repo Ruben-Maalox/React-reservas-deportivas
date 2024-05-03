@@ -88,6 +88,7 @@ export default function ReservationsTable() {
     if (reservationsAlreadyExisting && reservationsAlreadyExisting.length > 0) {
       // Con el método some devolvería true en la primera coincidencia (y por tanto duracion sería 0 cuando no sea posible, 60 cuando se pueda 60min y 90 cuando se pueda 90 min)
       hasAlreadyReservation = reservationsAlreadyExisting?.some((reservation) => {
+        duracionNueva = 0; // Reinicio la duración a 0 para cada reservaExistente
         // Para fecha inicio no hay problema, para la fechaFinal hay que comprobar si sería posible duración de 60 o 90 min
         const fechaInicioNueva = new Date(fechaYHoraNueva);
         const fechaFinalNueva60 = new Date(fechaYHoraNueva);
@@ -115,7 +116,7 @@ export default function ReservationsTable() {
     } else {
       duracionNueva = 90;
     }
-    if (hasAlreadyReservation) duracionNueva = 0;
+
     return duracionNueva;
   }
 

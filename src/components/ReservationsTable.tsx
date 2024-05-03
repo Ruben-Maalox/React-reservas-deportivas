@@ -15,7 +15,7 @@ export interface MergeRows {
 export default function ReservationsTable() {
   const [installations, setInstallations] = useState<Instalacion[]>([]); // <-- [hour, pista
   const [reservas, setReservas] = useState<Reserva[] | null>(null); // <-- [hour, pista
-  const [selectedDate, setSelectedDate] = useState(new Date("2024-04-24")); // Para que empiece siempre en 2024-04-24
+  const [selectedDate, setSelectedDate] = useState(new Date("2024-04-24T10:30+02:00")); // Para que empiece siempre en 2024-04-24
   const mergeRows = useRef<MergeRows>({ 1: { merge: 1, first: true }, 2: { merge: 1, first: true }, 3: { merge: 1, first: true }, 4: { merge: 1, first: true }, 5: { merge: 1, first: true }, 6: { merge: 1, first: true }, 7: { merge: 1, first: true }, 8: { merge: 1, first: true } });
   const [showModalReservation, setShowModalReservation] = useState<boolean>(false);
   const [reservationData, setReservationData] = useState<ReservaModal | null>(null);
@@ -72,7 +72,6 @@ export default function ReservationsTable() {
   }
 
   function checkIfReservationAlreadyExists(idInstalacion: number, fechaYHoraNueva: string) {
-    debugger;
     // fechaInicioComprobacion (1h antes) y fechaFinalComprobacion (1h 30 min después) de la hora de inicio de la nueva reserva
     const fechaInicioComprobacion = new Date(fechaYHoraNueva);
     fechaInicioComprobacion.setHours(fechaInicioComprobacion.getHours() - 1);
@@ -83,11 +82,10 @@ export default function ReservationsTable() {
     const reservationsAlreadyExisting = reservas?.filter((reserva) => reserva.idInstalacion === idInstalacion && new Date(reserva.fechaYHora) >= fechaInicioComprobacion && new Date(reserva.fechaYHora) < fechaFinalComprobacion);
 
     let duracionNueva = 0;
-    let hasAlreadyReservation = false;
     // Si hay reservas ya existentes, comprobamos si la nueva reserva podría ser válida
     if (reservationsAlreadyExisting && reservationsAlreadyExisting.length > 0) {
       // Con el método some devolvería true en la primera coincidencia (y por tanto duracion sería 0 cuando no sea posible, 60 cuando se pueda 60min y 90 cuando se pueda 90 min)
-      hasAlreadyReservation = reservationsAlreadyExisting?.some((reservation) => {
+      reservationsAlreadyExisting?.some((reservation) => {
         duracionNueva = 0; // Reinicio la duración a 0 para cada reservaExistente
         // Para fecha inicio no hay problema, para la fechaFinal hay que comprobar si sería posible duración de 60 o 90 min
         const fechaInicioNueva = new Date(fechaYHoraNueva);
@@ -121,6 +119,10 @@ export default function ReservationsTable() {
   }
 
   const handleReservation = (idInstalacion: number, fechaYHoraNueva: string) => {
+    // Comprobamos si estamos pinchando en un TD cuya hora es inferior a la hora actual (en ese caso, return para que el click no haga nada)
+    if (!isAfterCurrentTime(fechaYHoraNueva)) {
+      return;
+    }
     // Comprobamos si ya hay una reserva en esa franja horaria
     const nuevaDuracion = checkIfReservationAlreadyExists(idInstalacion, fechaYHoraNueva);
     if (nuevaDuracion === 0) {
@@ -155,6 +157,11 @@ export default function ReservationsTable() {
     setShowModalReservation(false);
   }
 
+  function isAfterCurrentTime(fechaYHoraNueva: string): boolean {
+    const currentDate = new Date(selectedDate.getTime());
+    return currentDate.getTime() < new Date(fechaYHoraNueva).getTime();
+  }
+
   return (
     <>
       {installations && (
@@ -173,6 +180,9 @@ export default function ReservationsTable() {
                 &gt;
               </button>
             </div>
+            <p>
+              Current hour: {selectedDate.getHours()}:{selectedDate.getMinutes()}
+            </p>
           </div>
           <div className="overflow-auto ">
             <table className="min-w-full text-center">
@@ -202,6 +212,9 @@ export default function ReservationsTable() {
                           const fechaYHoraNueva = formattedDate + "T" + time + "+02:00";
                           const reserva = hasReserva(instalacion.id, fechaYHoraNueva);
                           const cRow = mergeRows.current[instalacion.id];
+
+                          // Comprobar si la hora de la celda es mayor que la hora actual para mostrar el TD en gris
+                          const shouldShowGray = isAfterCurrentTime(fechaYHoraNueva);
 
                           //--> Fusionar columnas???
                           if (reserva && reserva.duracion === 60) {
@@ -236,7 +249,7 @@ export default function ReservationsTable() {
                               rowSpan={cRow.merge}
                               key={instalacion.id}
                               data-instalacion={instalacion.id}
-                              className={`border ${reserva ? "bg-red-500" : ""} w-1/6 `}
+                              className={`border ${!shouldShowGray ? "bg-gray-300" : reserva ? "bg-red-500" : ""} w-1/6 `}
                             >
                               {showHour(cRow.merge, time)}
                             </td>
@@ -257,6 +270,8 @@ export default function ReservationsTable() {
 }
 
 /* TODO:
-- Quitar el inicio del state de la fecha (he puesto siempre 24-04-2024 para no teneer que ir pasando felchas)
+- Quitar el inicio del state de la fecha (he puesto siempre 24-04-2024T10:30+02:00 para no teneer que ir pasando felchas)
+- Ahora mismo he fijado como hora las 10.30 para comprobar que no se pincha en horas anteriores a la actual
 - Hay que tener en cuenta la franja horaria (ahora mismo es +02:00)
+- Cambiar el alert de (No puedes hacer una reserva!) por algún modal que después de 3 segundos se cierre solo
 */

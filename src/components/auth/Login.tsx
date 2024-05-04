@@ -2,6 +2,7 @@ import logoEmpresa from "../../assets/images/logoMenosTransparencia.png";
 import { useEffect } from "react";
 import { useAuthProvider } from "../../context/useAuthProvider";
 import { useNavigate } from "react-router-dom";
+import GoogleLogin from "./GoogleLogin";
 
 export default function Login({setShowLogin}: { setShowLogin: (showLogin: boolean) => void}){
   const { user, setUser } = useAuthProvider();
@@ -65,8 +66,9 @@ export default function Login({setShowLogin}: { setShowLogin: (showLogin: boolea
         </label>
       </div>
 
-      <div className="flex items-center justify-center mt-3">
+      <div className="flex flex-col items-center justify-center mt-3">
         <button className="w-1/3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full animate-pulse">Entrar</button>
+        <GoogleLogin />
       </div>
       <div className="flex flex-col items-center justify-center">
         <p className="text-center mt-4 text-gray-700 font-bold mb-5">¿No tienes cuenta?</p>

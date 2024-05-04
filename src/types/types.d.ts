@@ -24,3 +24,8 @@ export interface ReservaModal {
   precioHora: number;
   duracion: number[];
 }
+
+export interface AuthProps {
+  setShowLogin: (showLogin: boolean) => void;
+  setShowError: (showError: boolean) => void;
+}

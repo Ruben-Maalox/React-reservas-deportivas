@@ -1,56 +1,68 @@
 import { useState, useEffect } from "react";
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import {useGoogleLogin } from "@react-oauth/google";
 import { useAuthProvider } from "../../context/useAuthProvider";
+import { useNavigate } from "react-router-dom";
 
-export interface GoogleLoginResponse{
+export interface GoogleLoginResponse {
   access_token: string;
   authuser: string;
   expires_in: number;
   prompt: string;
   scope: string;
   token_type: string;
+  error?: string;
+  error_description?: string;
+  error_uri?: string;
 }
 
-export default function GoogleLogin() {
-  const [userGoogle, setUserGoogle] = useState<GoogleLoginResponse | null>();
+export default function GoogleLogin({setIsLoading} : {setIsLoading: (isLoading: boolean) => void}) {
+  const [userGoogle, setUserGoogle] = useState<GoogleLoginResponse>();
   const { setUser } = useAuthProvider();
+  const navigate = useNavigate();
 
   const login = useGoogleLogin({
-    onSuccess: (codeResponse) => setUserGoogle(codeResponse), // {access_token, authuser, expires_in, ... }
+    onSuccess: (codeResponse: any) => setUserGoogle(codeResponse), // {access_token, authuser, expires_in, ... } ❗❗ Si ponemos ANY se va el error, pero tenemos que arreglar
     onError: (error) => console.log("Login Failed:", error),
   });
 
   // El objeto que tiene el token de haber iniciado sesión correctamente con google lo metemos en el state (userGoogle) y entonces llamamos a la API de google para obtener los datos de ese usuario. Recibiremos -->  {data, family_name, given_name, id, name, picture, verified_email}
   useEffect(() => {
     if (userGoogle) {
-      fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${userGoogle.access_token}`, {
+      setIsLoading(true);
+      fetch(`http://localhost:8000/api/login-google`, {
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${userGoogle.access_token}`,
-          Accept: "application/json",
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({ token: userGoogle.access_token }),
       })
         .then((res) => res.json())
         .then((data) => {
-          // data: {id, email, family_name, given_name, locale, picture}
-          setUser(data);
-          window.localStorage.setItem("loggedUser", JSON.stringify(data));
-          // Aquí haría petición a mi API de Symfony ??
+          if (data.ok) {
+            const { email, name, token, picture } = data.results;
+            setUser({ email, name, token, picture, fromGoogle: true });
+            window.localStorage.setItem("loggedUser", JSON.stringify({ email, name, token, picture }));
+            setIsLoading(false);
+            navigate("/reservas");
+          }
         })
         .catch((err) => console.log(err));
     }
   }, [userGoogle]);
 
-  // log out function to log the user out of google and set the profile array to null
-  // const logOut = () => {
-  //   googleLogout();
-  //   setUser(null);
-  //   window.localStorage.removeItem("loggedUser");
-  // };
-
-  return <button onClick={()=>login()} className="bg-black text-white mt-2 p-4">Sign in with Google 🚀 </button>;
+  return (
+    <button onClick={() => login()} className="bg-black text-white mt-2 p-4">
+      Sign in with Google 🚀{" "}
+    </button>
+  );
 }
 
-/* TODO Opción 1 --> Pasarle token al servidor
+/* TODO:
+- Si en el useState de userGoogle tipamos como GoogleLoginResponse, nos da error en el setUserGoogle(codeResponse)
+- Ver por qué tarda tanto en hacer la petición al servidor y mostrar los datos
+*/
+
+/* Opción 1 --> Pasarle token al servidor
 if (userGoogle) {
       fetch("http://localhost:8000/api/login-google", {
         method: "POST", // o 'PUT'
@@ -90,22 +102,23 @@ if (userGoogle) {
   );
 */
 
-/* TODO Opción 2 --> Hacer la petición desde el propio cliente
+/* Opción 2 --> Hacer la petición desde el propio cliente
 - Suele ser más recomendable enviar el token al servidor, y que sea este quien reciba los datos del usuario y los almacene en la BD.
 
 Realizando la petición en el cliente sería:
-   if (userGoogle) {
-      axios
-        .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${userGoogle.access_token}`, {
-          headers: {
-            Authorization: `Bearer ${userGoogle.access_token}`,
-            Accept: "application/json",
-          },
-        })
-        .then((res) => {
-          // res {data: {id, email, family_name, given_name, locale, picture}}
-          setUser(res.data);
-          window.localStorage.setItem("loggedUser", JSON.stringify(res.data));
+     if (userGoogle) {
+      fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${userGoogle.access_token}`, {
+        headers: {
+          Authorization: `Bearer ${userGoogle.access_token}`,
+          Accept: "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // data: {id, email, family_name, given_name, locale, picture}
+          const { email, given_name, picture } = data;
+          setUser({ email, name: given_name, token: userGoogle.access_token, picture });
+          window.localStorage.setItem("loggedUser", JSON.stringify(data));
           // Aquí haría petición a mi API de Symfony ??
         })
         .catch((err) => console.log(err));

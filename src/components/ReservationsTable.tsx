@@ -273,5 +273,5 @@ export default function ReservationsTable() {
 - Quitar el inicio del state de la fecha (he puesto siempre 24-04-2024T10:30+02:00 para no teneer que ir pasando felchas)
 - Ahora mismo he fijado como hora las 10.30 para comprobar que no se pincha en horas anteriores a la actual
 - Hay que tener en cuenta la franja horaria (ahora mismo es +02:00)
-- Cambiar el alert de (No puedes hacer una reserva!) por algún modal que después de 3 segundos se cierre solo
+- Cambiar el alert de (No puedes hacer una reserva!) por algún modal que después de 3 segundos se cierre solo (o algo así)
 */

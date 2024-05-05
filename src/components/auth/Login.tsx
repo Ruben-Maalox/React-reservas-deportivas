@@ -27,7 +27,6 @@ export default function Login({ setShowLogin, setShowError }: AuthProps) {
       .then((res) => res.json())
       .then((data) => {
         if (data.ok) {
-          debugger;
           const { email, name, token, picture } = data.results;
           setUser({ email, name, token, picture, fromGoogle: false });
           window.localStorage.setItem("loggedUser", JSON.stringify({ email, name, token, picture }));

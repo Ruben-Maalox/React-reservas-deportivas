@@ -1,6 +1,6 @@
 Esto va a ser más general para ver qué cosas nos faltan
-[] 
-[] 
+[] Hacer una página que permita editar la información del usuario
+[] Implementar que el usuario pueda subir una imagen suya al servidor
 [] 
 [] 
 [] 

@@ -12,6 +12,7 @@ import AuthPage from "./pages/AuthPage.tsx";
 import Footer from "./components/Footer.tsx";
 import Header from "./components/Header.tsx";
 import AvisoLegal from "./pages/AvisoLegal.tsx";
+import UserInfo from "./pages/UserInfo.tsx";
 // --> Navegación
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -35,6 +36,14 @@ export default function App() {
                 element={
                   <RequireAuth>
                     <Reservas />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/user-info"
+                element={
+                  <RequireAuth>
+                    <UserInfo />
                   </RequireAuth>
                 }
               />

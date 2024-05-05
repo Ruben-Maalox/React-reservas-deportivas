@@ -47,7 +47,7 @@ export default function NavLinks() {
       })}
       {user && (
         <div className="flex flex-col items-center">
-          <img src={userImage} alt="User image" className="w-12 h-12 rounded-full object-cover" />
+          <img onClick={()=>navigate("user-info")} src={userImage} alt="User image" className="w-12 h-12 rounded-full object-cover" />
 
           <button onClick={handleLogOut} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-full mt-2 text-s">
             Log Out

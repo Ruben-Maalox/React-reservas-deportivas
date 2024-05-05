@@ -13,6 +13,7 @@ import Footer from "./components/Footer.tsx";
 import Header from "./components/Header.tsx";
 import AvisoLegal from "./pages/AvisoLegal.tsx";
 import UserInfo from "./pages/UserInfo.tsx";
+import UserEdit from "./pages/UserEdit.tsx";
 // --> Navegación
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -44,6 +45,14 @@ export default function App() {
                 element={
                   <RequireAuth>
                     <UserInfo />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/user-edit"
+                element={
+                  <RequireAuth>
+                    <UserEdit />
                   </RequireAuth>
                 }
               />

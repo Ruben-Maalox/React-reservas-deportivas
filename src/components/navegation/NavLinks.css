@@ -1,0 +1,26 @@
+.user-info-button {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 4px;
+  position: relative;
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+
+.user-info-button ~ input:checked ~ .user-info {
+  height: 100%;
+  display: block;
+}
+
+.user-info {
+  background: #78caeb;
+  display: none;
+  padding: 32px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 200px;
+  z-index: 9;
+}

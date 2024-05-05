@@ -3,7 +3,7 @@ import { useAuthProvider } from "../../context/useAuthProvider";
 import { useNavigate } from "react-router-dom";
 import { googleLogout } from "@react-oauth/google";
 import userDefaultImage from "../../assets/images/user.png";
-
+import "./NavLinks.css";
 const links = [
   { name: "Home", href: "/" },
   { name: "Instalaciones", href: "/instalaciones" },
@@ -47,11 +47,23 @@ export default function NavLinks() {
       })}
       {user && (
         <div className="flex flex-col items-center">
-          <img onClick={()=>navigate("user-info")} src={userImage} alt="User image" className="w-12 h-12 rounded-full object-cover" />
+          <label className="user-info-button" htmlFor="userImgProfile">
+            <img src={userImage} alt="User image" className="w-16 h-16 rounded-full object-cover" />
+          </label>
+          <input id="userImgProfile" type="checkbox" hidden />
 
-          <button onClick={handleLogOut} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-full mt-2 text-s">
-            Log Out
-          </button>
+          <aside className="user-info">
+            <div className="flex flex-col">
+              <div className="items-center mt-20">
+                <p onClick={()=>navigate("/user-info")}>Ver información del usuario</p>
+                <p onClick={()=>navigate("/user-edit")}>Editar usuario</p>
+                <p>{user?.name}</p>
+              </div>
+              <button onClick={handleLogOut} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-full mt-2 text-s">
+                Log Out
+              </button>
+            </div>
+          </aside>
         </div>
       )}
     </>

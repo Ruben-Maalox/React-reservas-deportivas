@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import {useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import { useAuthProvider } from "../../context/useAuthProvider";
 import { useNavigate } from "react-router-dom";
+import googleIcon from "../../assets/icons/google.svg";
+import { useMediaQuery } from "react-responsive";
 
 export interface GoogleLoginResponse {
   access_token: string;
@@ -10,15 +12,13 @@ export interface GoogleLoginResponse {
   prompt: string;
   scope: string;
   token_type: string;
-  error?: string;
-  error_description?: string;
-  error_uri?: string;
 }
 
-export default function GoogleLogin({setIsLoading} : {setIsLoading: (isLoading: boolean) => void}) {
+export default function GoogleLogin({ setIsLoading }: { setIsLoading: (isLoading: boolean) => void }) {
   const [userGoogle, setUserGoogle] = useState<GoogleLoginResponse>();
   const { setUser } = useAuthProvider();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse: any) => setUserGoogle(codeResponse), // {access_token, authuser, expires_in, ... } ❗❗ Si ponemos ANY se va el error, pero tenemos que arreglar
@@ -51,8 +51,9 @@ export default function GoogleLogin({setIsLoading} : {setIsLoading: (isLoading: 
   }, [userGoogle]);
 
   return (
-    <button onClick={() => login()} className="bg-black text-white mt-2 p-4">
-      Sign in with Google 🚀{" "}
+    <button onClick={() => login()} className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-500 hover:bg-cyan-600">
+      <img src={googleIcon} alt="Google" className="h-5 w-5 mr-3" />
+      {isMobile ? "Sign In 🚀" : "Sign In with Google 🚀"}
     </button>
   );
 }

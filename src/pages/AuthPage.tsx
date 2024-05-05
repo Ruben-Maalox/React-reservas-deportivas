@@ -1,25 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
 import ErrorAuth from "../components/auth/ErrorAuth";
+import useError from "../hooks/useError";
 
 export default function AuthPage(){
   const [showLogin, setShowLogin] = useState<boolean>(true);
-  const [showError, setShowError] = useState<boolean>(false);
-
-  useEffect(() => {
-    let timer : any;
-    if (showError) {
-      timer = setTimeout(() => {
-        setShowError(false);
-      }, 5000); // Cambia esto al número de milisegundos que quieras
-    }
-    return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
-    };
-  }, [showError]);
+  const {showError, setShowError} = useError(5000);
 
   return(
     <div className="relative flex justify-center mt-4">

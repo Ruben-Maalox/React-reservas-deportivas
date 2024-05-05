@@ -3,8 +3,9 @@ import instalacionesAPI from "../json_prueba/instalaciones.json";
 import reservasJSON from "../json_prueba/reservas.json";
 import { Reserva, ReservaModal, Instalacion } from "../types/types";
 import { Modal } from "./ReservationModal";
+import ReservationsErrors from "./errors/ReservationsError";
+import useError from "../hooks/useError";
 
-// import Register from "../register/Register";
 export interface MergeRows {
   [key: number]: {
     merge: number;
@@ -19,6 +20,7 @@ export default function ReservationsTable() {
   const mergeRows = useRef<MergeRows>({ 1: { merge: 1, first: true }, 2: { merge: 1, first: true }, 3: { merge: 1, first: true }, 4: { merge: 1, first: true }, 5: { merge: 1, first: true }, 6: { merge: 1, first: true }, 7: { merge: 1, first: true }, 8: { merge: 1, first: true } });
   const [showModalReservation, setShowModalReservation] = useState<boolean>(false);
   const [reservationData, setReservationData] = useState<ReservaModal | null>(null);
+  const { showError, setShowError } = useError(3000);
 
   useEffect(() => {
     /* fetch("http://localhost:8000/api/instalaciones/all")
@@ -126,7 +128,7 @@ export default function ReservationsTable() {
     // Comprobamos si ya hay una reserva en esa franja horaria
     const nuevaDuracion = checkIfReservationAlreadyExists(idInstalacion, fechaYHoraNueva);
     if (nuevaDuracion === 0) {
-      alert("No puedes hacer una reserva!!");
+      setShowError(true);
       return;
     }
     let duracionesPosibles = [];
@@ -166,6 +168,7 @@ export default function ReservationsTable() {
     <>
       {installations && (
         <div className="w-full md:w-2/3 lg:w-3/4 mx-auto bg-white rounded-lg p-4">
+          {showError && <ReservationsErrors />}
           <h1 className="font-bold text-center text-3xl mb-5">Reservas</h1>
           <div className="flex flex-col sm:flex-row bg-gray-200 items-center p-3">
             <label htmlFor="reservation-date" className="block text-sm font-medium text-gray-700 mr-3">
@@ -270,8 +273,7 @@ export default function ReservationsTable() {
 }
 
 /* TODO:
-- Quitar el inicio del state de la fecha (he puesto siempre 24-04-2024T10:30+02:00 para no teneer que ir pasando felchas)
+- Quitar el inicio del state de la fecha (he puesto siempre 24-04-2024T10:30+02:00 para no teneer que ir pasando fechas)
 - Ahora mismo he fijado como hora las 10.30 para comprobar que no se pincha en horas anteriores a la actual
 - Hay que tener en cuenta la franja horaria (ahora mismo es +02:00)
-- Cambiar el alert de (No puedes hacer una reserva!) por algún modal que después de 3 segundos se cierre solo (o algo así)
 */

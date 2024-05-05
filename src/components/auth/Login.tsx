@@ -6,8 +6,6 @@ import GoogleLogin from "./GoogleLogin";
 import { PacmanLoader } from "react-spinners";
 import { AuthProps } from "../../types/types";
 
-
-
 export default function Login({ setShowLogin, setShowError }: AuthProps) {
   const { setUser } = useAuthProvider();
   const navigate = useNavigate();
@@ -17,7 +15,7 @@ export default function Login({ setShowLogin, setShowError }: AuthProps) {
     event.preventDefault();
     const form = event.currentTarget;
     const email = (form.email as HTMLInputElement).value;
-    const password = (form.password as HTMLInputElement).value; 
+    const password = (form.password as HTMLInputElement).value;
 
     fetch("http://localhost:8000/api/login_check", {
       method: "POST",
@@ -26,18 +24,22 @@ export default function Login({ setShowLogin, setShowError }: AuthProps) {
       },
       body: JSON.stringify({ email, password }),
     })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.ok) {
-        debugger;
-        const { email, name, token, picture } = data.results;
-        setUser({ email, name, token, picture, fromGoogle: false });
-        window.localStorage.setItem("loggedUser", JSON.stringify({ email, name, token, picture }));
-        navigate("/reservas");
-      }
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok) {
+          debugger;
+          const { email, name, token, picture } = data.results;
+          setUser({ email, name, token, picture, fromGoogle: false });
+          window.localStorage.setItem("loggedUser", JSON.stringify({ email, name, token, picture }));
+          navigate("/reservas");
+        }
 
-      setShowError(true)
-    })
+        setShowError(true);
+      });
+    /*  Me estuvo fallando el servidor (no me hacía peticiones) asi que tuve que pasar del Login (lo dejo comentado por si vuelve a ocurrir para poder trabajar xd)    
+    setUser({ email: "j@gmail.com", name: "juan", token: "dsfsdfsd", picture: null, fromGoogle: false });
+    window.localStorage.setItem("loggedUser", JSON.stringify({ email: "j@gmail.com", name: "juan", token: "dsfsdfsd", picture: null, fromGoogle: false }));
+    navigate("/reservas"); */
   };
 
   return isLoading ? (

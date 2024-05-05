@@ -64,6 +64,22 @@
     "importe": 16
   },
   {
+    "ID": 30,
+    "idUsuario": 1,
+    "idInstalacion": 4,
+    "fechaYHora": "2024-04-24T10:00+02:00",
+    "duracion": 90,
+    "importe": 16
+  },
+  {
+    "ID": 31,
+    "idUsuario": 1,
+    "idInstalacion": 4,
+    "fechaYHora": "2024-04-24T12:30+02:00",
+    "duracion": 90,
+    "importe": 16
+  },
+  {
     "ID": 7,
     "idUsuario": 1,
     "idInstalacion": 4,

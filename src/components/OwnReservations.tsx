@@ -44,8 +44,10 @@ export default function OwnReservations() {
                   <td className="px-6 py-4 whitespace-nowrap text-center">{duracion}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">{importe}€</td>
                   <td className="flex flex-row px-6 py-4 whitespace-nowrap text-center">
-                    <img src="/assets/icons/edit.svg" alt="Edit icon"/>
-                    <img src="/assets/icons/delete.svg" alt="Delete icon"/>
+                  <div className="flex pl-16">
+                    <img src="src/assets/icons/edit.svg" alt="Edit icon" className="w-10 h10"/>
+                    <img src="src/assets/icons/delete.svg" alt="Delete icon" className="w-10 h10"/>
+                  </div>
                   </td>
                 </tr>
               );

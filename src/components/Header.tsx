@@ -29,7 +29,7 @@ export default function Header() {
           </svg>
         )}
       </button>
-      <div className={`md:flex ${isOpen ? 'block' : 'hidden'} md:items-center md:relative md:top-auto md:w-auto md:left-auto md:transform-none absolute w-full top-full left-1/2 transform -translate-x-1/2 right-0 bg-white `}>
+      <div className={`md:flex ${isOpen ? 'block' : 'hidden'} z-10 md:items-center md:relative md:top-auto md:w-auto md:left-auto md:transform-none absolute w-full top-full left-1/2 transform -translate-x-1/2 right-0 bg-white `}>
         <NavLinks />
       </div>
     </header>

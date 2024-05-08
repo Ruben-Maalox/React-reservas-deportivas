@@ -41,7 +41,7 @@ export default function NavLinks() {
             ${location.pathname === link.href ? "bg-gray-200 font-bold" : ""}
             `}
           >
-            <p className="hidden md:block">{link.name}</p>
+            <p className="md:block">{link.name}</p>
           </Link>
         );
       })}

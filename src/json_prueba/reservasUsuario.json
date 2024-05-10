@@ -1,0 +1,47 @@
+[
+  {
+    "duracion": 60,
+    "fechaYHora": "2024-04-24T09:00+02:00",
+    "id": 1,
+    "idInstalacion": 1,
+    "idUsuario": 1,
+    "importe": 6,
+    "nombreInstalacion": "Tenis"
+  },
+  {
+    "duracion": 90,
+    "fechaYHora": "2024-04-24T011:00+02:00",
+    "id": 1,
+    "idInstalacion": 1,
+    "idUsuario": 1,
+    "importe": 9,
+    "nombreInstalacion": "Tenis"
+  },
+  {
+    "duracion": 60,
+    "fechaYHora": "2024-04-24T13:00+02:00",
+    "id": 1,
+    "idInstalacion": 1,
+    "idUsuario": 1,
+    "importe": 6,
+    "nombreInstalacion": "Tenis"
+  },
+  {
+    "duracion": 90,
+    "fechaYHora": "2024-04-24T15:00+02:00",
+    "id": 1,
+    "idInstalacion": 1,
+    "idUsuario": 1,
+    "importe": 9,
+    "nombreInstalacion": "Tenis"
+  },
+  {
+    "duracion": 90,
+    "fechaYHora": "2024-04-24T018:00+02:00",
+    "id": 1,
+    "idInstalacion": 1,
+    "idUsuario": 1,
+    "importe": 9,
+    "nombreInstalacion": "Tenis"
+  }
+]

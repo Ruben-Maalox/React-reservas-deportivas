@@ -14,8 +14,8 @@ export default function Contacto() {
 
   return (
     <>
-      <div className="flex items-center justify-between py-10 px-5 md:px-20 bg-gray-100">
-        <div className="w-full md:w-1/2">
+      <div className="flex flex-col md:flex-row items-center justify-between py-10 px-5 md:px-20 bg-gray-100">
+        <div className="w-full md:w-1/2 mb-10 md:mb-0">
           <LoadScript googleMapsApiKey="AIzaSyD5cPRPxRqgt79povW5F_F8QYJT_AZRVN4">
             <GoogleMap
               mapContainerStyle={{ width: "100%", height: "500px" }}

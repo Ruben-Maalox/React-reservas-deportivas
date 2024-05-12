@@ -168,7 +168,7 @@ export default function ReservationsTable() {
   return (
     <>
       {installations && (
-        <div className="w-full md:w-2/3 lg:w-3/4 mx-auto bg-white rounded-lg p-4">
+        <div className="w-full md:w-2/3 lg:w-3/4 mx-auto bg-white rounded-lg p-4 ">
           {showError && <ReservationsErrors />}
           <h1 className="font-bold text-center text-3xl mb-5">Reservas</h1>
           <div className="flex flex-col sm:flex-row bg-gray-200 items-center p-3">

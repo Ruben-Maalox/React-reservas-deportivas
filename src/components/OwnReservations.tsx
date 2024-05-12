@@ -49,7 +49,7 @@ export default function OwnReservations() {
 
   return (
     <>
-     <div className="w-full md:w-2/3 lg:w-3/4 mx-auto rounded-lg overflow-x-auto">
+     <div className="w-full md:w-2/3 lg:w-3/4 mx-auto rounded-lg overflow-x-auto ">
   <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
@@ -86,7 +86,7 @@ export default function OwnReservations() {
                   <td className="px-6 py-4 whitespace-nowrap text-center">{duracion}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">{importe}€</td>
                   <td className="flex flex-row px-6 py-4 whitespace-nowrap text-center">
-                    <div className="flex pl-16">
+                    <div className="flex pl-4">
                       {differenceInHours > 12 && 
                         <img src="src/assets/icons/delete.svg" alt="Delete icon" className="w-10 h10 cursor-pointer" onClick={() => deleteReservation(id)} />
                       }

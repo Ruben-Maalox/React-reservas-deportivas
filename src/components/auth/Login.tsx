@@ -27,9 +27,9 @@ export default function Login({ setShowLogin, setShowError }: AuthProps) {
       .then((res) => res.json())
       .then((data) => {
         if (data.ok) {
-          const { email, name, token, picture } = data.results;
-          setUser({ email, name, token, picture, fromGoogle: false });
-          window.localStorage.setItem("loggedUser", JSON.stringify({ email, name, token, picture }));
+          const { email, name, token, picture, surname, phone,id } = data.results;
+          setUser({ email, name, token, picture, fromGoogle: false, surname, phone,id });
+          window.localStorage.setItem("loggedUser", JSON.stringify({ email, name, token, picture, surname, phone, id }));
           navigate("/reservas");
         }
 

@@ -17,6 +17,7 @@ export default function NavLinks() {
   const { user, setUser } = useAuthProvider();
   const location = useLocation();
   const navigate = useNavigate();
+  
 
   const handleLogOut = () => {
     if (user?.fromGoogle) {
@@ -52,7 +53,7 @@ export default function NavLinks() {
           </label>
           <input id="userImgProfile" type="checkbox" hidden />
 
-          <aside className="user-info">
+          <aside className="user-info ">
             <div className="flex flex-col">
               <div className="items-center mt-20">
                 <p onClick={()=>navigate("/user-info")}>Ver información del usuario</p>
@@ -60,7 +61,7 @@ export default function NavLinks() {
                 <p>{user?.name}</p>
               </div>
               <button onClick={handleLogOut} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-full mt-2 text-s">
-                Log Out
+                Cerrar sesión
               </button>
             </div>
           </aside>

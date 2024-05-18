@@ -1,49 +1,28 @@
-import {
-  AiOutlinePhone,
-  AiOutlineMail,
-  AiOutlineHome,
-  AiOutlineClockCircle,
-} from "react-icons/ai";
+import { AiOutlinePhone, AiOutlineMail, AiOutlineHome, AiOutlineClockCircle } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import "./Footer.css"
+import './Footer.css';
 
 export default function Footer() {
   return (
     <footer className="p-5 bg-gray-200 text-white flex flex-col items-start md:flex-row md:justify-between md:items-center">
       <div id="social-ftr" className="flex flex-col items-center mb-4 md:mb-0">
-        <img
-          src="./src/assets/images/logo-white-transp.png"
-          alt="LetsMove"
-          className="w-25 h-16"
-        />
+        <img src="./src/assets/images/logo-white-transp.png" alt="LetsMove" className="w-25 h-16" />
         <div className="social-networks flex flex-row mt-4">
-          <img
-            src="./src/assets/icons/facebook.svg"
-            alt="Facebook"
-            className="w-4 h-4 mr-2"
-          />
-          <img
-            src="./src/assets/icons/instagram.svg"
-            alt="Instagram"
-            className="w-4 h-4 mr-2"
-          />
-          <img
-            src="./src/assets/icons/twitter.svg"
-            alt="twitter"
-            className="w-4 h-4 mr-2"
-          />
-          <img
-            src="./src/assets/icons/tiktok.svg"
-            alt="tiktok"
-            className="w-4 h-4"
-          />
+          <img src="./src/assets/icons/facebook.svg" alt="Facebook" className="w-4 h-4 mr-2" />
+          <img src="./src/assets/icons/instagram.svg" alt="Instagram" className="w-4 h-4 mr-2" />
+          <img src="./src/assets/icons/twitter.svg" alt="twitter" className="w-4 h-4 mr-2" />
+          <img src="./src/assets/icons/tiktok.svg" alt="tiktok" className="w-4 h-4" />
         </div>
       </div>
       {/* Añadir enlaces politica de cookies, privacidad, aviso legal. */}
       <div className="legal-links flex flex-col text-black mb-4 md:mb-0">
         <Link to="/politicaCookies">Política de cookies</Link>
-        <Link to="/politicaPrivacidad" className="mt-2">Política de privacidad</Link>
-        <Link to="/avisoLegal" className="mt-2">Aviso legal</Link>
+        <Link to="/politicaPrivacidad" className="mt-2">
+          Política de privacidad
+        </Link>
+        <Link to="/avisoLegal" className="mt-2">
+          Aviso legal
+        </Link>
       </div>
       <div className="mt-5 text-black mb-4 md:mb-0">
         <h2 className="font-bold text-lg mb-2">Horario:</h2>
@@ -73,8 +52,7 @@ export default function Footer() {
         </p>
         <p className="mb-2">
           <AiOutlineHome className="inline-block mr-1" />
-          <span className="font-bold">Dirección:</span> C. Maestro Pedro Perez
-          Abadia, 2A, 30100 Espinardo, Murcia
+          <span className="font-bold">Dirección:</span> C. Maestro Pedro Perez Abadia, 2A, 30100 Espinardo, Murcia
         </p>
       </div>
     </footer>

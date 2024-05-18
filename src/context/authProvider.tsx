@@ -1,7 +1,7 @@
-import { createContext, useState, Dispatch, SetStateAction } from "react";
+import { createContext, useState, Dispatch, SetStateAction } from 'react';
 
 interface AuthContextType {
-  user: User | null; 
+  user: User | null;
   setUser: Dispatch<SetStateAction<User | null>>;
   updateUser: (updatedFields: Partial<User>) => void; // Añade esta línea
 }
@@ -14,7 +14,7 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const storedUser = localStorage.getItem("loggedUser");
+  const storedUser = localStorage.getItem('loggedUser');
   const newUser = storedUser ? JSON.parse(storedUser) : null;
   const [user, setUser] = useState<User | null>(newUser);
 

@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import { useAuthProvider } from "../context/useAuthProvider";
+import { useState, useEffect } from 'react';
+import { useAuthProvider } from '../context/useAuthProvider';
 import backgroundImage from './../assets/images/editarPerfil.jpg';
 
 export default function UserEdit() {
   const { user, updateUser } = useAuthProvider();
   const [userN, setUser] = useState({
-    name: "",
-    surname: "",
-    phone: "",
+    name: '',
+    surname: '',
+    phone: '',
   });
   const [message, setMessage] = useState<string | null>(null);
   // const [selectedFile, setSelectedFile] = useState(null);
@@ -35,52 +35,43 @@ export default function UserEdit() {
       telefono: userN.phone,
     };
     // Aquí puedes hacer un fetch para actualizar los datos del usuario
-    const response = await fetch(
-      `http://localhost:8000/api/user/update/${user?.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.token}`,
-        },
-        body: JSON.stringify(dataToSend),
-      }
-    );
-    
+    const response = await fetch(`http://localhost:8000/api/user/update/${user?.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user?.token}`,
+      },
+      body: JSON.stringify(dataToSend),
+    });
+
     if (response.ok) {
       const responseData = await response.json();
-      setMessage("Usuario actualizado correctamente");
+      setMessage('Usuario actualizado correctamente');
       const updatedUser = { ...userN, ...responseData };
       updateUser(updatedUser); // Actualiza el estado del usuario con la respuesta del servidor
-      localStorage.setItem("loggedUser", JSON.stringify(updatedUser)); // Actualiza localStorage con la respuesta del servidor
+      localStorage.setItem('loggedUser', JSON.stringify(updatedUser)); // Actualiza localStorage con la respuesta del servidor
     } else {
-      setMessage("Error al actualizar el usuario");
+      setMessage('Error al actualizar el usuario');
     }
   };
 
   return (
     <div
-    className="flex justify-center items-center min-h-screen bg-gray-200"
-    style={{
-      backgroundImage: `url(${backgroundImage})`,
-      backgroundPosition: 'center',
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat'
-    }}
-  >
-    
+      className="flex justify-center items-center min-h-screen bg-gray-200"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
       <form
         className="w-full max-w-lg bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 bg-opacity-90"
         onSubmit={handleSubmit}
       >
-        <h2 className="mb-8 text-2xl font-bold text-center text-gray-700">
-          Actualizar perfil
-        </h2>
+        <h2 className="mb-8 text-2xl font-bold text-center text-gray-700">Actualizar perfil</h2>
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2 "
-            htmlFor="name"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor="name">
             Nombre:
           </label>
           <input
@@ -92,10 +83,7 @@ export default function UserEdit() {
           />
         </div>
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="surname"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="surname">
             Apellidos:
           </label>
           <input
@@ -107,10 +95,7 @@ export default function UserEdit() {
           />
         </div>
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="phone"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
             Teléfono:
           </label>
           <input
@@ -122,10 +107,7 @@ export default function UserEdit() {
           />
         </div>
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="email"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
             Email:
           </label>
           <input
@@ -147,7 +129,6 @@ export default function UserEdit() {
           </button>
         </div>
       </form>
-    
     </div>
   );
 }

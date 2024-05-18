@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { ReservaModal } from "../types/types";
+import { useState, useMemo } from 'react';
+import { ReservaModal } from '../types/types';
 
 export interface ReservaModalProps {
   reservationData: ReservaModal;
@@ -12,12 +12,12 @@ export const Modal = ({ reservationData, handleCloseModal }: ReservaModalProps) 
 
   // Esta función nos permite calcular el importe cada vez que cambie la duración
   const importe = useMemo(() => {
-    return ((currentDuration / 60) * precioHora).toFixed(2) + "€";
+    return ((currentDuration / 60) * precioHora).toFixed(2) + '€';
   }, [currentDuration]);
 
   // Desestructuramos la fecha y la hora de la reserva para mostrarlas por separado
-  const [date, timeWithZone] = fechaYHora.split("T");
-  const [time, _] = timeWithZone.split("+");
+  const [date, timeWithZone] = fechaYHora.split('T');
+  const [time, _] = timeWithZone.split('+');
 
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center">

@@ -1,20 +1,20 @@
-import baloncestoImg from "../assets/images/instalaciones/baloncesto.jpg";
-import futbolSalaImg from "../assets/images/instalaciones/futbol-sala.jpg";
-import padelImg from "../assets/images/instalaciones/pista-padel.png";
-import piscinaImg from "../assets/images/instalaciones/piscina.jpg";
-import tenisImg from "../assets/images/instalaciones/tenis.jpg";
-import futbol7Img from "../assets/images/instalaciones/futbol7.jpg";
-import volleyballImg from "../assets/images/instalaciones/volleyball.jpg";
+import baloncestoImg from '../assets/images/instalaciones/baloncesto.jpg';
+import futbolSalaImg from '../assets/images/instalaciones/futbol-sala.jpg';
+import padelImg from '../assets/images/instalaciones/pista-padel.png';
+import piscinaImg from '../assets/images/instalaciones/piscina.jpg';
+import tenisImg from '../assets/images/instalaciones/tenis.jpg';
+import futbol7Img from '../assets/images/instalaciones/futbol7.jpg';
+import volleyballImg from '../assets/images/instalaciones/volleyball.jpg';
 
 export default function Instalaciones() {
   const images = [
-    { src: baloncestoImg, alt: "Pista de baloncesto" },
-    { src: futbolSalaImg, alt: "Pista de futbol sala" },
-    { src: padelImg, alt: "Pista de padel" },
-    { src: piscinaImg, alt: "Piscina" },
-    { src: tenisImg, alt: "Pista de tenis" },
-    { src: futbol7Img, alt: "Campo de futbol 7" },
-    { src: volleyballImg, alt: "Pista de volleyball" },
+    { src: baloncestoImg, alt: 'Pista de baloncesto' },
+    { src: futbolSalaImg, alt: 'Pista de futbol sala' },
+    { src: padelImg, alt: 'Pista de padel' },
+    { src: piscinaImg, alt: 'Piscina' },
+    { src: tenisImg, alt: 'Pista de tenis' },
+    { src: futbol7Img, alt: 'Campo de futbol 7' },
+    { src: volleyballImg, alt: 'Pista de volleyball' },
   ];
 
   return (

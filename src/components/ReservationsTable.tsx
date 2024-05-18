@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import instalacionesAPI from "../json_prueba/instalaciones.json";
-import reservasJSON from "../json_prueba/reservas.json";
-import { Reserva, ReservaModal, Instalacion } from "../types/types";
-import { Modal } from "./ReservationModal";
-import ReservationsErrors from "./errors/ReservationsError";
-import useError from "../hooks/useError";
+import { useState, useEffect, useRef } from 'react';
+import instalacionesAPI from '../json_prueba/instalaciones.json';
+import reservasJSON from '../json_prueba/reservas.json';
+import { Reserva, ReservaModal, Instalacion } from '../types/types';
+import { Modal } from './ReservationModal';
+import ReservationsErrors from './errors/ReservationsError';
+import useError from '../hooks/useError';
 
 export interface MergeRows {
   [key: number]: {
@@ -16,8 +16,17 @@ export interface MergeRows {
 export default function ReservationsTable() {
   const [installations, setInstallations] = useState<Instalacion[]>([]); // <-- [hour, pista
   const [reservas, setReservas] = useState<Reserva[] | null>(null); // <-- [hour, pista
-  const [selectedDate, setSelectedDate] = useState(new Date("2024-04-24T10:30+02:00")); // Para que empiece siempre en 2024-04-24
-  const mergeRows = useRef<MergeRows>({ 1: { merge: 1, first: true }, 2: { merge: 1, first: true }, 3: { merge: 1, first: true }, 4: { merge: 1, first: true }, 5: { merge: 1, first: true }, 6: { merge: 1, first: true }, 7: { merge: 1, first: true }, 8: { merge: 1, first: true } });
+  const [selectedDate, setSelectedDate] = useState(new Date('2024-04-24T10:30+02:00')); // Para que empiece siempre en 2024-04-24
+  const mergeRows = useRef<MergeRows>({
+    1: { merge: 1, first: true },
+    2: { merge: 1, first: true },
+    3: { merge: 1, first: true },
+    4: { merge: 1, first: true },
+    5: { merge: 1, first: true },
+    6: { merge: 1, first: true },
+    7: { merge: 1, first: true },
+    8: { merge: 1, first: true },
+  });
   const [showModalReservation, setShowModalReservation] = useState<boolean>(false);
   const [reservationData, setReservationData] = useState<ReservaModal | null>(null);
   const { showError, setShowError } = useError(3000);
@@ -38,15 +47,16 @@ export default function ReservationsTable() {
     setSelectedDate((prevDate) => new Date(new Date(prevDate).setDate(prevDate.getDate() + 1)));
   };
 
-  const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(2, "0")}`;
-  
+  const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(new Date(event.target.value));
   };
 
   function hasReserva(idInstalacion: number, fechaYHoraNueva: string) {
-    return reservas?.find((reserva) => reserva.idInstalacion === idInstalacion && reserva.fechaYHora === fechaYHoraNueva);
+    return reservas?.find(
+      (reserva) => reserva.idInstalacion === idInstalacion && reserva.fechaYHora === fechaYHoraNueva,
+    );
   }
 
   function showHour(merge: number, hour: string) {
@@ -54,7 +64,7 @@ export default function ReservationsTable() {
       return hour;
     }
 
-    const [hourPart, minutePart] = hour.split(":");
+    const [hourPart, minutePart] = hour.split(':');
     let endHour = parseInt(hourPart);
     let endMinute = parseInt(minutePart);
 
@@ -69,7 +79,7 @@ export default function ReservationsTable() {
 
     // Format the end hour and minute
     const endHourStr = endHour < 10 ? `0${endHour}` : `${endHour}`;
-    const endMinuteStr = endMinute === 0 ? "00" : `${endMinute}`;
+    const endMinuteStr = endMinute === 0 ? '00' : `${endMinute}`;
 
     return `${hour} - ${endHourStr}:${endMinuteStr}`;
   }
@@ -82,7 +92,12 @@ export default function ReservationsTable() {
     fechaFinalComprobacion.setTime(fechaFinalComprobacion.getTime() + 90 * 60 * 1000); // Add 90 minutes
 
     // Con este método filtramos solo las reservas para ese día y esa instalación en un intervalo de 1h antes del inicio de la nueva y 1h 30 min después
-    const reservationsAlreadyExisting = reservas?.filter((reserva) => reserva.idInstalacion === idInstalacion && new Date(reserva.fechaYHora) >= fechaInicioComprobacion && new Date(reserva.fechaYHora) < fechaFinalComprobacion);
+    const reservationsAlreadyExisting = reservas?.filter(
+      (reserva) =>
+        reserva.idInstalacion === idInstalacion &&
+        new Date(reserva.fechaYHora) >= fechaInicioComprobacion &&
+        new Date(reserva.fechaYHora) < fechaFinalComprobacion,
+    );
 
     let duracionNueva = 0;
     // Si hay reservas ya existentes, comprobamos si la nueva reserva podría ser válida
@@ -103,9 +118,16 @@ export default function ReservationsTable() {
         fechaFinalExistente.setTime(fechaInicioExistente.getTime() + reservation.duracion * 60 * 1000); // Add the duration in milliseconds
 
         if (fechaInicioExistente.getTime() === fechaInicioNueva.getTime()) return true;
-        if (fechaInicioExistente.getTime() < fechaInicioNueva.getTime() && fechaFinalExistente.getTime() > fechaInicioNueva.getTime()) return true;
+        if (
+          fechaInicioExistente.getTime() < fechaInicioNueva.getTime() &&
+          fechaFinalExistente.getTime() > fechaInicioNueva.getTime()
+        )
+          return true;
         // Hasta aquí bien, como en la BD (ahora nos falta saber si podría ser válido para 60min o para 90min)
-        if (fechaInicioExistente.getTime() > fechaInicioNueva.getTime() && fechaFinalNueva90.getTime() > fechaInicioExistente.getTime()) {
+        if (
+          fechaInicioExistente.getTime() > fechaInicioNueva.getTime() &&
+          fechaFinalNueva90.getTime() > fechaInicioExistente.getTime()
+        ) {
           if (fechaFinalNueva60.getTime() > fechaInicioExistente.getTime()) return true; // esto significa que no valdría ni 90 ni 60min
           // Si solo se cumple el primer if, es que podría ser válido para 60min
           duracionNueva = 60;
@@ -175,12 +197,24 @@ export default function ReservationsTable() {
             <label htmlFor="reservation-date" className="block text-sm font-medium text-gray-700 mr-3">
               Fecha:
             </label>
-            <input type="date" id="reservation-date" value={formattedDate} onChange={handleDateChange} className="mt-1 block pl-3 pr-5 sm:text-sm border-gray-300 rounded-md" />
+            <input
+              type="date"
+              id="reservation-date"
+              value={formattedDate}
+              onChange={handleDateChange}
+              className="mt-1 block pl-3 pr-5 sm:text-sm border-gray-300 rounded-md"
+            />
             <div className="flex mt-2 sm:mt-0">
-              <button onClick={handlePrevDay} className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 px-3 rounded">
+              <button
+                onClick={handlePrevDay}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 px-3 rounded"
+              >
                 &lt;
               </button>
-              <button onClick={handleNextDay} className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 px-3 rounded">
+              <button
+                onClick={handleNextDay}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 px-3 rounded"
+              >
                 &gt;
               </button>
             </div>
@@ -206,14 +240,14 @@ export default function ReservationsTable() {
                 {Array.from({ length: 29 }, (_, i) => i + 18).map((halfHour) => {
                   const hour1 = Math.floor(halfHour / 2) % 24;
                   const hour2 = hour1 >= 10 ? hour1 : `0${hour1}`;
-                  const time = `${hour2}:${halfHour % 2 === 0 ? "00" : "30"}`;
+                  const time = `${hour2}:${halfHour % 2 === 0 ? '00' : '30'}`;
 
                   return (
                     <tr key={halfHour} data-hour={time}>
                       <>
                         {/* <td>{time}</td> */}
                         {installations.map((instalacion) => {
-                          const fechaYHoraNueva = formattedDate + "T" + time + "+02:00";
+                          const fechaYHoraNueva = formattedDate + 'T' + time + '+02:00';
                           const reserva = hasReserva(instalacion.id, fechaYHoraNueva);
                           const cRow = mergeRows.current[instalacion.id];
 
@@ -253,7 +287,7 @@ export default function ReservationsTable() {
                               rowSpan={cRow.merge}
                               key={instalacion.id}
                               data-instalacion={instalacion.id}
-                              className={`border ${!shouldShowGray ? "bg-gray-300" : reserva ? "bg-red-500" : ""} w-1/6 `}
+                              className={`border ${!shouldShowGray ? 'bg-gray-300' : reserva ? 'bg-red-500' : ''} w-1/6 `}
                             >
                               {showHour(cRow.merge, time)}
                             </td>
@@ -268,7 +302,9 @@ export default function ReservationsTable() {
           </div>
         </div>
       )}
-      {showModalReservation && reservationData && <Modal reservationData={reservationData} handleCloseModal={handleCloseModal} />}
+      {showModalReservation && reservationData && (
+        <Modal reservationData={reservationData} handleCloseModal={handleCloseModal} />
+      )}
     </>
   );
 }

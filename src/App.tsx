@@ -1,24 +1,24 @@
 // --> Páginas
-import Home from "./pages/Home.tsx";
-import Instalaciones from "./pages/Instalaciones.tsx";
-import Reservas from "./pages/Reservas.tsx";
-import Servicios from "./pages/Servicios.tsx";
-import Restaurante from "./pages/Restaurante.tsx";
-import Contacto from "./pages/Contacto.tsx";
-import PoliticaCookies from "./pages/PoliticaCookies.tsx";
-import PoliticaPrivacidad from "./pages/PoliticaPrivacidad.tsx";
+import Home from './pages/Home.tsx';
+import Instalaciones from './pages/Instalaciones.tsx';
+import Reservas from './pages/Reservas.tsx';
+import Servicios from './pages/Servicios.tsx';
+import Restaurante from './pages/Restaurante.tsx';
+import Contacto from './pages/Contacto.tsx';
+import PoliticaCookies from './pages/PoliticaCookies.tsx';
+import PoliticaPrivacidad from './pages/PoliticaPrivacidad.tsx';
 // --> Componentes
-import AuthPage from "./pages/AuthPage.tsx";
-import Footer from "./components/Footer.tsx";
-import Header from "./components/Header.tsx";
-import AvisoLegal from "./pages/AvisoLegal.tsx";
-import UserInfo from "./pages/UserInfo.tsx";
-import UserEdit from "./pages/UserEdit.tsx";
+import AuthPage from './pages/AuthPage.tsx';
+import Footer from './components/Footer.tsx';
+import Header from './components/Header.tsx';
+import AvisoLegal from './pages/AvisoLegal.tsx';
+import UserInfo from './pages/UserInfo.tsx';
+import UserEdit from './pages/UserEdit.tsx';
 // --> Navegación
-import "./index.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./context/authProvider.tsx";
-import RequireAuth from "./components/auth/RequireAuth.tsx";
+import './index.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './context/authProvider.tsx';
+import RequireAuth from './components/auth/RequireAuth.tsx';
 
 export default function App() {
   return (

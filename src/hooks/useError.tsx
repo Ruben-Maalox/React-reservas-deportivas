@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 export default function useError(time: number) {
   const [showError, setShowError] = useState<boolean>(false);

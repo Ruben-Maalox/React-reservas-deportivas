@@ -1,18 +1,18 @@
-import logoEmpresa from "../../assets/images/logoMenosTransparencia.png";
-import { useState } from "react";
-import { AuthProps } from "../../types/types";
-import { useAuthProvider } from "../../context/useAuthProvider";
-import { useNavigate } from "react-router-dom";
+import logoEmpresa from '../../assets/images/logoMenosTransparencia.png';
+import { useState } from 'react';
+import { AuthProps } from '../../types/types';
+import { useAuthProvider } from '../../context/useAuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register({ setShowLogin, setShowError }: AuthProps) {
-  const [errorMessage, setErrorMessage] = useState(""); // Nuevo estado para mostrar mensajes de error
+  const [errorMessage, setErrorMessage] = useState(''); // Nuevo estado para mostrar mensajes de error
   const navigate = useNavigate();
   const { setUser } = useAuthProvider();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
-    const name = (form.elements.namedItem("name") as HTMLInputElement).value; // Este lo he cambiado porque si pongo form.name me da error
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value; // Este lo he cambiado porque si pongo form.name me da error
     const surname = (form.surname as HTMLInputElement).value;
     const phone = (form.phone as HTMLInputElement).value;
     const email = (form.email as HTMLInputElement).value;
@@ -22,19 +22,19 @@ export default function Register({ setShowLogin, setShowError }: AuthProps) {
     // Comprueba si los correos electrónicos coinciden
     if (email !== confirmEmail) {
       // alert("Los correos electrónicos no coinciden");
-      setErrorMessage("Los correos electrónicos no coinciden");
+      setErrorMessage('Los correos electrónicos no coinciden');
       setTimeout(() => {
-        setErrorMessage("");
+        setErrorMessage('');
       }, 5000);
       return; // Si los correos electrónicos no coinciden, termina la función aquí
     }
 
     const body = JSON.stringify({ email, password, name, surname, phone });
 
-    fetch("http://127.0.0.1:8000/api/register", {
-      method: "POST",
+    fetch('http://127.0.0.1:8000/api/register', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: body,
     })
@@ -43,8 +43,8 @@ export default function Register({ setShowLogin, setShowError }: AuthProps) {
         if (data.ok) {
           const { email, name, token, picture } = data.results;
           setUser({ email, name, token, picture, fromGoogle: false });
-          window.localStorage.setItem("loggedUser", JSON.stringify({ email, name, token, picture }));
-          navigate("/reservas");
+          window.localStorage.setItem('loggedUser', JSON.stringify({ email, name, token, picture }));
+          navigate('/reservas');
         }
         // Si data.ok no existe (es que hay error) entonces mostramos el error en el componente padre
         setShowError(true);
@@ -59,23 +59,59 @@ export default function Register({ setShowLogin, setShowError }: AuthProps) {
         </div>
         <h2 className="text-2xl text-center mb-4 font-bold">Alta de Usuario</h2>
         <div className="mb-4">
-          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="name" type="name" placeholder="Nombre *" required />
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            name="name"
+            type="name"
+            placeholder="Nombre *"
+            required
+          />
         </div>
         <div className="mb-4">
-          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline" name="surname" type="surname" placeholder="Apellidos *" required />
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
+            name="surname"
+            type="surname"
+            placeholder="Apellidos *"
+            required
+          />
         </div>
         <div className="mb-4">
-          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline" name="phone" type="phone" placeholder="Móvil *" required />
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
+            name="phone"
+            type="phone"
+            placeholder="Móvil *"
+            required
+          />
         </div>
         <div className="mb-4">
-          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="email" type="email" placeholder="Correo electrónico *" required />
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            name="email"
+            type="email"
+            placeholder="Correo electrónico *"
+            required
+          />
         </div>
         <div className="mb-4">
-          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="confirmEmail" type="email" placeholder="Confirmar correo electrónico *" required />
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            name="confirmEmail"
+            type="email"
+            placeholder="Confirmar correo electrónico *"
+            required
+          />
         </div>
 
         <div className="mb-4">
-          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="password" type="password" placeholder="Contraseña *" required />
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            name="password"
+            type="password"
+            placeholder="Contraseña *"
+            required
+          />
         </div>
         {errorMessage && <p className="text-red-500 mb-5">{errorMessage}</p>}
         <div className="flex flex-col items-center justify-between">
@@ -96,4 +132,3 @@ export default function Register({ setShowLogin, setShowError }: AuthProps) {
     </>
   );
 }
-

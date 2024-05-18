@@ -5,20 +5,20 @@
 }
 
 .toggle-checkbox:checked + .toggle-label {
-  background-color: #A3BFFA;
+  background-color: #a3bffa;
 }
 
 .toggle-checkbox:focus + .toggle-label,
 .toggle-checkbox:checked:focus + .toggle-label {
-  box-shadow: 0 0 1px 2px #1E3A8A;
+  box-shadow: 0 0 1px 2px #1e3a8a;
 }
 
 .toggle-checkbox:disabled + .toggle-label {
-  background-color: #E5E7EB;
+  background-color: #e5e7eb;
 }
 
 .toggle-checkbox:checked:disabled + .toggle-label {
-  background-color: #9CA3AF;
+  background-color: #9ca3af;
 }
 
 .toggle-checkbox:checked:disabled:focus + .toggle-label {
@@ -26,7 +26,7 @@
 }
 
 .toggle-checkbox:checked:focus + .toggle-label {
-  box-shadow: 0 0 1px 2px #1E3A8A;
+  box-shadow: 0 0 1px 2px #1e3a8a;
 }
 
 .toggle-checkbox:checked:disabled:focus + .toggle-label {
@@ -34,20 +34,20 @@
 }
 
 .toggle-checkbox:checked + .toggle-label {
-  background-color: #A3BFFA;
+  background-color: #a3bffa;
 }
 
 .toggle-checkbox:focus + .toggle-label,
 .toggle-checkbox:checked:focus + .toggle-label {
-  box-shadow: 0 0 1px 2px #1E3A8A;
+  box-shadow: 0 0 1px 2px #1e3a8a;
 }
 
 .toggle-checkbox:disabled + .toggle-label {
-  background-color: #E5E7EB;
+  background-color: #e5e7eb;
 }
 
 .toggle-checkbox:checked:disabled + .toggle-label {
-  background-color: #9CA3AF;
+  background-color: #9ca3af;
 }
 
 .toggle-checkbox:checked:disabled:focus + .toggle-label {
@@ -55,7 +55,7 @@
 }
 
 .toggle-checkbox:checked:focus + .toggle-label {
-  box-shadow: 0 0 1px 2px #1E3A8A;
+  box-shadow: 0 0 1px 2px #1e3a8a;
 }
 
 .toggle-checkbox:checked:disabled:focus + .toggle-label {

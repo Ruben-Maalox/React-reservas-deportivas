@@ -1,3 +1,1 @@
-export default function ConfirmarReserva() {
-  
-}
+export default function ConfirmarReserva() {}

@@ -17,7 +17,7 @@ export interface Reserva {
   importe: number;
 }
 
-export interface OwnReserva extends Reserva{
+export interface OwnReserva extends Reserva {
   nombreInstalacion: string;
 }
 

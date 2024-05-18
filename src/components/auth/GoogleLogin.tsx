@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { useGoogleLogin } from "@react-oauth/google";
-import { useAuthProvider } from "../../context/useAuthProvider";
-import { useNavigate } from "react-router-dom";
-import googleIcon from "../../assets/icons/google.svg";
-import { useMediaQuery } from "react-responsive";
+import { useState, useEffect } from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
+import { useAuthProvider } from '../../context/useAuthProvider';
+import { useNavigate } from 'react-router-dom';
+import googleIcon from '../../assets/icons/google.svg';
+import { useMediaQuery } from 'react-responsive';
 
 export interface GoogleLoginResponse {
   access_token: string;
@@ -18,11 +18,11 @@ export default function GoogleLogin({ setIsLoading }: { setIsLoading: (isLoading
   const [userGoogle, setUserGoogle] = useState<GoogleLoginResponse>();
   const { setUser } = useAuthProvider();
   const navigate = useNavigate();
-  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse: any) => setUserGoogle(codeResponse), // {access_token, authuser, expires_in, ... } ❗❗ Si ponemos ANY se va el error, pero tenemos que arreglar
-    onError: (error) => console.log("Login Failed:", error),
+    onError: (error) => console.log('Login Failed:', error),
   });
 
   // El objeto que tiene el token de haber iniciado sesión correctamente con google lo metemos en el state (userGoogle) y entonces llamamos a la API de google para obtener los datos de ese usuario. Recibiremos -->  {data, family_name, given_name, id, name, picture, verified_email}
@@ -30,9 +30,9 @@ export default function GoogleLogin({ setIsLoading }: { setIsLoading: (isLoading
     if (userGoogle) {
       setIsLoading(true);
       fetch(`http://localhost:8000/api/login-google`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ token: userGoogle.access_token }),
       })
@@ -41,9 +41,9 @@ export default function GoogleLogin({ setIsLoading }: { setIsLoading: (isLoading
           if (data.ok) {
             const { email, name, token, picture } = data.results;
             setUser({ email, name, token, picture, fromGoogle: true });
-            window.localStorage.setItem("loggedUser", JSON.stringify({ email, name, token, picture }));
+            window.localStorage.setItem('loggedUser', JSON.stringify({ email, name, token, picture }));
             setIsLoading(false);
-            navigate("/reservas");
+            navigate('/reservas');
           }
         })
         .catch((err) => console.log(err));
@@ -51,9 +51,12 @@ export default function GoogleLogin({ setIsLoading }: { setIsLoading: (isLoading
   }, [userGoogle]);
 
   return (
-    <button onClick={() => login()} className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-500 hover:bg-cyan-600">
+    <button
+      onClick={() => login()}
+      className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-500 hover:bg-cyan-600"
+    >
       <img src={googleIcon} alt="Google" className="h-5 w-5 mr-3" />
-      {isMobile ? "Sign In 🚀" : "Sign In with Google 🚀"}
+      {isMobile ? 'Sign In 🚀' : 'Sign In with Google 🚀'}
     </button>
   );
 }

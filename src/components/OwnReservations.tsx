@@ -18,6 +18,7 @@ export default function OwnReservations() {
     })
       .then((res) => res.json())
       .then((data) => {
+        debugger;
         if (data.ok) {
           setOwnReservations(data.results);
         }
@@ -77,46 +78,54 @@ export default function OwnReservations() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {ownReservations &&
-              ownReservations.map((reserva, index) => {
-                const { id, idUsuario, idInstalacion, nombreInstalacion, fechaYHora, duracion, importe } = reserva;
-                const [date, timeWithZone] = fechaYHora.split('T');
-                const [time, _] = timeWithZone.split('+');
+              (ownReservations.length === 0 ? (
+                <tr key={1}>
+                  <td colSpan={8} className="text-center text-bold">
+                    No tienes ninguna reserva aún!
+                  </td>
+                </tr>
+              ) : (
+                ownReservations.map((reserva, index) => {
+                  const { id, idUsuario, idInstalacion, nombreInstalacion, fechaYHora, duracion, importe } = reserva;
+                  const [date, timeWithZone] = fechaYHora.split('T');
+                  const [time, _] = timeWithZone.split('+');
 
-                const reservationDateTime = new Date(`${date}T${time}`);
-                console.log(reservationDateTime);
-                const differenceInHours =
-                  (reservationDateTime.getTime() -
-                    new Date().getTime() +
-                    (reservationDateTime.getTimezoneOffset() + 120) * 60 * 1000) /
-                  (1000 * 60 * 60);
-                console.log('asdasd', differenceInHours);
+                  const reservationDateTime = new Date(`${date}T${time}`);
+                  console.log(reservationDateTime);
+                  const differenceInHours =
+                    (reservationDateTime.getTime() -
+                      new Date().getTime() +
+                      (reservationDateTime.getTimezoneOffset() + 120) * 60 * 1000) /
+                    (1000 * 60 * 60);
+                  console.log('asdasd', differenceInHours);
 
-                return (
-                  <tr key={index}>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">{id}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">{idUsuario}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center" data-id={idInstalacion}>
-                      {nombreInstalacion}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">{date}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">{time}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">{duracion}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center">{importe}€</td>
-                    <td className="flex flex-row px-6 py-4 whitespace-nowrap text-center">
-                      <div className="flex pl-4">
-                        {differenceInHours > 12 && (
-                          <img
-                            src="src/assets/icons/delete.svg"
-                            alt="Delete icon"
-                            className="w-10 h10 cursor-pointer"
-                            onClick={() => deleteReservation(id)}
-                          />
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+                  return (
+                    <tr key={index}>
+                      <td className="px-6 py-4 whitespace-nowrap text-center">{id}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center">{idUsuario}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center" data-id={idInstalacion}>
+                        {nombreInstalacion}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center">{date}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center">{time}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center">{duracion}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-center">{importe}€</td>
+                      <td className="flex flex-row px-6 py-4 whitespace-nowrap text-center">
+                        <div className="flex pl-4">
+                          {differenceInHours > 12 && (
+                            <img
+                              src="src/assets/icons/delete.svg"
+                              alt="Delete icon"
+                              className="w-10 h10 cursor-pointer"
+                              onClick={() => deleteReservation(id)}
+                            />
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              ))}
           </tbody>
         </table>
       </div>

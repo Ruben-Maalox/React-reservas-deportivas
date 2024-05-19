@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useAuthProvider } from '../context/useAuthProvider';
 import backgroundImage from './../assets/images/editarPerfil.jpg';
+import { UserEditProps } from '../types/types';
 
 export default function UserEdit() {
   const { user, updateUser } = useAuthProvider();
-  const [userN, setUser] = useState({
+  const [userN, setUser] = useState<UserEditProps>({
     name: '',
     surname: '',
     phone: '',
+    picture: '',
   });
   const [message, setMessage] = useState<string | null>(null);
-  // const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -22,6 +24,12 @@ export default function UserEdit() {
     setUser({ ...userN, [event.target.name]: event.target.value });
   };
 
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
   // const handleFileChange = (event: any) => {
   //   setSelectedFile(event.target.files[0]);
   // };
@@ -29,19 +37,20 @@ export default function UserEdit() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    const dataToSend = {
-      nombre: userN.name,
-      apellidos: userN.surname,
-      telefono: userN.phone,
-    };
+    const formData = new FormData();
+    formData.append('nombre', userN.name);
+    formData.append('apellidos', userN.surname);
+    formData.append('telefono', userN.phone);
+    if (selectedFile) {
+      formData.append('picture', selectedFile);
+    }
     // Aquí puedes hacer un fetch para actualizar los datos del usuario
     const response = await fetch(`http://localhost:8000/api/user/update/${user?.id}`, {
-      method: 'PATCH',
+      method: 'POST', // Cambiado a POST
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${user?.token}`,
       },
-      body: JSON.stringify(dataToSend),
+      body: formData,
     });
 
     if (response.ok) {
@@ -117,6 +126,17 @@ export default function UserEdit() {
             value={user?.email}
             onChange={handleInputChange}
             readOnly
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+            Foto:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-20"
+            type="file"
+            name="picture"
+            onChange={handleImageChange}
           />
         </div>
         <div className="flex flex-col items-center justify-center">

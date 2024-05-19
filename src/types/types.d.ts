@@ -33,3 +33,18 @@ export interface AuthProps {
   setShowLogin: (showLogin: boolean) => void;
   setShowError: (showError: boolean) => void;
 }
+
+export interface UserEditProps {
+  name: string;
+  surname: string;
+  phone: string;
+  picture: string | null;
+}
+
+export interface UserInfoProps extends UserEditProps {
+  email: string;
+  id: number;
+  token: string;
+  fromGoogle: boolean;
+  isAdmin: boolean;
+}

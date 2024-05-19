@@ -19,6 +19,8 @@ import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './context/authProvider.tsx';
 import RequireAuth from './components/auth/RequireAuth.tsx';
+import AdminPage from './pages/AdminPage.tsx';
+import RequireAdmin from './components/auth/RequireAdmin.tsx';
 
 export default function App() {
   return (
@@ -27,7 +29,7 @@ export default function App() {
         <BrowserRouter>
           <Header />
 
-          <main>
+          <main className="p-4 flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/instalaciones" element={<Instalaciones />} />
@@ -54,6 +56,14 @@ export default function App() {
                   <RequireAuth>
                     <UserEdit />
                   </RequireAuth>
+                }
+              />
+              <Route
+                path="/adminPage"
+                element={
+                  <RequireAdmin>
+                    <AdminPage />
+                  </RequireAdmin>
                 }
               />
               <Route path="/restaurante" element={<Restaurante />} />

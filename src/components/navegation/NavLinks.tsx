@@ -45,6 +45,19 @@ export default function NavLinks() {
           </Link>
         );
       })}
+
+      {user && user.isAdmin && (
+        <Link
+          key="AdminPage"
+          to="/adminPage"
+          className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:bg-gray-300 md:flex-none md:justify-start md:p-2 md:px-3
+            ${location.pathname === '/adminPage' ? 'bg-gray-200 font-bold' : ''}
+            `}
+        >
+          <p className="md:block text-blue-500 font-bold">Admin</p>
+        </Link>
+      )}
+
       {user && (
         <div className="flex flex-col items-center">
           <label className="user-info-button" htmlFor="userImgProfile">

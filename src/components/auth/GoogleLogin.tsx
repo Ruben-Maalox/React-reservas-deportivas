@@ -39,9 +39,12 @@ export default function GoogleLogin({ setIsLoading }: { setIsLoading: (isLoading
         .then((res) => res.json())
         .then((data) => {
           if (data.ok) {
-            const { email, name, token, picture } = data.results;
-            setUser({ email, name, token, picture, fromGoogle: true });
-            window.localStorage.setItem('loggedUser', JSON.stringify({ email, name, token, picture }));
+            const { email, name, token, picture, surname, phone, id, isAdmin } = data.results;
+            setUser({ email, name, token, picture, fromGoogle: false, surname, phone, id, isAdmin });
+            window.localStorage.setItem(
+              'loggedUser',
+              JSON.stringify({ email, name, token, picture, fromGoogle: true, surname, phone, id, isAdmin }),
+            );
             setIsLoading(false);
             navigate('/reservas');
           }

@@ -2,8 +2,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuthProvider } from '../../context/useAuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { googleLogout } from '@react-oauth/google';
+import { useEffect, useRef } from 'react';
 import userDefaultImage from '../../assets/images/user.png';
 import './NavLinks.css';
+
 const links = [
   { name: 'Home', href: '/' },
   { name: 'Instalaciones', href: '/instalaciones' },
@@ -17,6 +19,8 @@ export default function NavLinks() {
   const { user, setUser } = useAuthProvider();
   const location = useLocation();
   const navigate = useNavigate();
+  const userInfoRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleLogOut = () => {
     if (user?.fromGoogle) {
@@ -29,22 +33,38 @@ export default function NavLinks() {
 
   const userImage = user?.picture ? user.picture : userDefaultImage;
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        userInfoRef.current &&
+        !userInfoRef.current.contains(event.target as Node) &&
+        inputRef.current &&
+        !inputRef.current.contains(event.target as Node)
+      ) {
+        inputRef.current.checked = false;
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
-      {links.map((link) => {
-        return (
-          <Link
-            key={link.name}
-            to={link.href}
-            className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:bg-gray-300 md:flex-none md:justify-start md:p-2 md:px-3
-            
+      {links.map((link) => (
+        <Link
+          key={link.name}
+          to={link.href}
+          className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:bg-gray-300 md:flex-none md:justify-start md:p-2 md:px-3
             ${location.pathname === link.href ? 'bg-gray-200 font-bold' : ''}
-            `}
-          >
-            <p className="md:block">{link.name}</p>
-          </Link>
-        );
-      })}
+          `}
+        >
+          <p className="md:block">{link.name}</p>
+        </Link>
+      ))}
 
       {user && user.isAdmin && (
         <Link
@@ -59,18 +79,25 @@ export default function NavLinks() {
       )}
 
       {user && (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center relative">
           <label className="user-info-button" htmlFor="userImgProfile">
             <img src={userImage} alt="User image" className="w-16 h-16 rounded-full object-cover" />
           </label>
-          <input id="userImgProfile" type="checkbox" hidden />
 
-          <aside className="user-info ">
+          <input id="userImgProfile" type="checkbox" hidden ref={inputRef} />
+
+          <aside className="user-info" ref={userInfoRef}>
             <div className="flex flex-col">
-              <div className="items-center mt-20">
-                <p onClick={() => navigate('/user-info')}>Ver información del usuario</p>
-                <p onClick={() => navigate('/user-edit')}>Editar usuario</p>
-                <p>{user?.name}</p>
+              <div className="items-center mt-4">
+                <p className="text-lg">
+                  <span className="font-bold">Usuario/a:</span> {user?.name}
+                </p>
+                <p
+                  onClick={() => navigate('/user-edit')}
+                  className="cursor-pointer hover:bg-[#a0d8f1] hover:shadow-[0_4px_8px_0_#4a90e2] transition-all duration-300 rounded p-1"
+                >
+                  Información personal
+                </p>
               </div>
               <button
                 onClick={handleLogOut}

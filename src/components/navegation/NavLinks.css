@@ -6,21 +6,30 @@
   padding: 4px;
   position: relative;
   transition: all 0.3s ease;
-  z-index: 9999;
+  z-index: 1;
 }
 
 .user-info-button ~ input:checked ~ .user-info {
-  height: 100%;
-  display: block;
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
 }
 
 .user-info {
-  background: #78caeb;
-  display: none;
-  padding: 32px;
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  width: 200px;
-  z-index: 9;
+  background-image: url('/src/assets/images/user-bg.jpg');
+  display: block;
+  padding: 20px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 250px;
+  z-index: 2;
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }

@@ -5,6 +5,7 @@ import { Reserva, ReservaModal, Instalacion } from '../types/types';
 import { Modal } from './ReservationModal';
 import ReservationsErrors from './errors/ReservationsError';
 import useError from '../hooks/useError';
+import { useAuthProvider } from '../context/useAuthProvider';
 
 export interface MergeRows {
   [key: number]: {
@@ -16,7 +17,7 @@ export interface MergeRows {
 export default function ReservationsTable() {
   const [installations, setInstallations] = useState<Instalacion[]>([]); // <-- [hour, pista
   const [reservas, setReservas] = useState<Reserva[] | null>(null); // <-- [hour, pista
-  const [selectedDate, setSelectedDate] = useState(new Date('2024-04-24T10:30+02:00')); // Para que empiece siempre en 2024-04-24
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Para que empiece siempre en 2024-04-24
   const mergeRows = useRef<MergeRows>({
     1: { merge: 1, first: true },
     2: { merge: 1, first: true },
@@ -30,14 +31,34 @@ export default function ReservationsTable() {
   const [showModalReservation, setShowModalReservation] = useState<boolean>(false);
   const [reservationData, setReservationData] = useState<ReservaModal | null>(null);
   const { showError, setShowError } = useError(3000);
+  const { user } = useAuthProvider();
 
   useEffect(() => {
-    /* fetch("http://localhost:8000/api/instalaciones/all")
-      .then((response) => response.json())
-      .then((data) => setInstalaciones(data.instalaciones)); */
-    setInstallations(instalacionesAPI.instalaciones);
-    setReservas(reservasJSON);
-  }, []);
+    fetch('http://localhost:8000/api/instalaciones/all', {
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok) {
+          setInstallations(data.results);
+        }
+      });
+
+    fetch('http://localhost:8000/api/reservas/all', {
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        debugger;
+        if (data.ok) {
+          setReservas(data.results);
+        }
+      });
+  }, [user]);
 
   const handlePrevDay = () => {
     setSelectedDate((prevDate) => new Date(new Date(prevDate).setDate(prevDate.getDate() - 1)));
@@ -56,6 +77,11 @@ export default function ReservationsTable() {
   function hasReserva(idInstalacion: number, fechaYHoraNueva: string) {
     return reservas?.find(
       (reserva) => reserva.idInstalacion === idInstalacion && reserva.fechaYHora === fechaYHoraNueva,
+      /* 
+      const reservaDate = new Date(reserva.fechaYHora).getTime();
+      const targetDate = new Date(fechaYHoraNueva).getTime();
+      return reserva.idInstalacion === idInstalacion && reservaDate === targetDate;
+      */
     );
   }
 

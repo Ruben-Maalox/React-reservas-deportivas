@@ -69,8 +69,9 @@ export default function Header() {
           </svg>
         )}
       </button>
+
       <div
-        className={`lg:flex ${isOpen ? 'block' : 'hidden'} lg:items-center lg:relative lg:top-auto lg:w-auto lg:left-auto lg:transform-none absolute w-full top-full left-1/2 transform -translate-x-1/2 right-0 bg-white`}
+        className={`lg:flex ${isOpen ? 'block' : 'hidden'} lg:items-center lg:relative lg:top-auto lg:w-auto lg:left-auto lg:transform-none absolute w-full top-full left-1/2 transform -translate-x-1/2 right-0 bg-white `}
       >
         <NavLinks />
       </div>

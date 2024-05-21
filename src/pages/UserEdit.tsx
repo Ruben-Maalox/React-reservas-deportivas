@@ -78,7 +78,8 @@ export default function UserEdit() {
         className="w-full max-w-lg bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 bg-opacity-90"
         onSubmit={handleSubmit}
       >
-        <h2 className="mb-8 text-2xl font-bold text-center text-gray-700">Actualizar perfil</h2>
+        <h2 className="mb-8 text-2xl font-bold text-center text-gray-700">Información personal</h2>
+
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor="name">
             Nombre:

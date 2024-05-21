@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ReservaModal } from '../types/types';
 import { useAuthProvider } from '../context/useAuthProvider';
 
@@ -10,8 +10,10 @@ export interface ReservaModalProps {
 export const Modal = ({ reservationData, handleCloseModal }: ReservaModalProps) => {
   const { precioHora, fechaYHora, nombreInstalacion, duracion, idInstalacion } = reservationData; // Destructuramos el objeto reservationData
   const [currentDuration, setCurrentDuration] = useState(duracion[0]);
+  const [responseMessage, setResponseMessage] = useState<string | null>(null);
   const { user } = useAuthProvider();
   console.log(reservationData);
+
   // Esta función nos permite calcular el importe cada vez que cambie la duración
   const importe = useMemo(() => {
     return ((currentDuration / 60) * precioHora).toFixed(2) + '€';
@@ -20,6 +22,16 @@ export const Modal = ({ reservationData, handleCloseModal }: ReservaModalProps) 
   // Desestructuramos la fecha y la hora de la reserva para mostrarlas por separado
   const [date, timeWithZone] = fechaYHora.split('T');
   const [time, _] = timeWithZone.split('+');
+
+  // Efecto para cerrar el modal después de 5 segundos si hay un mensaje de éxito
+  useEffect(() => {
+    if (responseMessage && responseMessage.includes('correctamente')) {
+      const timer = setTimeout(() => {
+        handleCloseModal();
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [responseMessage, handleCloseModal]);
 
   // Función para manejar la reserva
   const handleAddReservation = async () => {
@@ -30,7 +42,7 @@ export const Modal = ({ reservationData, handleCloseModal }: ReservaModalProps) 
       importe: ((currentDuration / 60) * precioHora).toFixed(2),
       idInstalacion: idInstalacion,
     };
-    console.log(reservationDetails);
+
     try {
       const response = await fetch('http://127.0.0.1:8000/api/reservas/new', {
         method: 'POST',
@@ -43,15 +55,14 @@ export const Modal = ({ reservationData, handleCloseModal }: ReservaModalProps) 
 
       if (response.ok) {
         const data = await response.json();
-        alert(data.message); // Puedes mostrar un mensaje de éxito o realizar alguna otra acción
-        handleCloseModal(); // Cerrar el modal
+        setResponseMessage(data.message); // Mostrar mensaje de éxito
       } else {
         const errorData = await response.json();
-        alert(errorData.message); // Mostrar mensaje de error
+        setResponseMessage(errorData.message); // Mostrar mensaje de error
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Hubo un error al crear la reserva.');
+      setResponseMessage('Hubo un error al crear la reserva.'); // Mostrar mensaje de error
     }
   };
 
@@ -82,6 +93,7 @@ export const Modal = ({ reservationData, handleCloseModal }: ReservaModalProps) 
         >
           Añadir Reserva
         </button>
+        {responseMessage && <p className="mt-4 text-center text-red-500 font-bold">{responseMessage}</p>}
       </div>
     </div>
   );

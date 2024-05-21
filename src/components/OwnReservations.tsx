@@ -18,7 +18,6 @@ export default function OwnReservations() {
     })
       .then((res) => res.json())
       .then((data) => {
-        debugger;
         if (data.ok) {
           setOwnReservations(data.results);
         }

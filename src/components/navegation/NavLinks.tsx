@@ -59,12 +59,25 @@ export default function NavLinks() {
           key={link.name}
           to={link.href}
           className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:bg-gray-300 md:flex-none md:justify-start md:p-2 md:px-3
-            ${location.pathname === link.href ? 'bg-gray-200 font-bold' : ''}
+          ${location.pathname === link.href ? 'bg-gray-200 font-bold' : ''}
+          ${link.href === '/auth-page' && 'text-green-600 font-bold'}
           `}
         >
           <p className="md:block">{link.name}</p>
         </Link>
       ))}
+
+      {!user && (
+        <Link
+          key={'AuthPage'}
+          to={'/auth-page'}
+          className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:bg-gray-300 md:flex-none md:justify-start md:p-2 md:px-3 
+        ${location.pathname === '/auth-page' ? 'bg-gray-200 font-bold' : ''}
+        `}
+        >
+          <p className="md:block text-green-600 font-bold">Iniciar sesión</p>
+        </Link>
+      )}
 
       {user && user.isAdmin && (
         <Link

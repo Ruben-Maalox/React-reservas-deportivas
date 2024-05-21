@@ -29,6 +29,7 @@ export default function ReservationsTable() {
   const [showModalReservation, setShowModalReservation] = useState<boolean>(false);
   const [reservationData, setReservationData] = useState<ReservaModal | null>(null);
   const { showError, setShowError } = useError(3000);
+  const [refetch, setRefetch] = useState<boolean>(false);
   const { user } = useAuthProvider();
 
   useEffect(() => {
@@ -56,7 +57,11 @@ export default function ReservationsTable() {
           setReservas(data.results);
         }
       });
-  }, [user]);
+  }, [refetch]);
+
+  const handleRefetch = () => {
+    setRefetch((prevState) => !prevState);
+  };
 
   const handlePrevDay = () => {
     setSelectedDate((prevDate) => new Date(new Date(prevDate).setDate(prevDate.getDate() - 1)));
@@ -66,7 +71,9 @@ export default function ReservationsTable() {
     setSelectedDate((prevDate) => new Date(new Date(prevDate).setDate(prevDate.getDate() + 1)));
   };
 
-  const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
+  const getDayMonthYear = (date: Date) => {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  };
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(new Date(event.target.value));
@@ -233,7 +240,7 @@ export default function ReservationsTable() {
             <input
               type="date"
               id="reservation-date"
-              value={formattedDate}
+              value={getDayMonthYear(selectedDate)}
               onChange={handleDateChange}
               className="mt-1 block pl-3 pr-5 sm:text-sm border-gray-300 rounded-md"
             />
@@ -252,7 +259,8 @@ export default function ReservationsTable() {
               </button>
             </div>
             <p>
-              Hora actual: {selectedDate.getHours()}:{selectedDate.getMinutes()}
+              Hora actual: {String(selectedDate.getHours()).padStart(2, '0')}:
+              {String(selectedDate.getMinutes()).padStart(2, '0')}
             </p>
           </div>
           <div className="overflow-auto ">
@@ -275,7 +283,7 @@ export default function ReservationsTable() {
                   return (
                     <tr key={halfHour} data-hour={time}>
                       {installations.map((instalacion) => {
-                        const fechaYHoraNueva = formattedDate + 'T' + time;
+                        const fechaYHoraNueva = getDayMonthYear(selectedDate) + 'T' + time;
                         const reserva = hasReserva(instalacion.id, fechaYHoraNueva);
                         const cRow = mergeRows.current[instalacion.id];
 
@@ -324,7 +332,7 @@ export default function ReservationsTable() {
         </div>
       )}
       {showModalReservation && reservationData && (
-        <Modal reservationData={reservationData} handleCloseModal={handleCloseModal} />
+        <Modal reservationData={reservationData} handleCloseModal={handleCloseModal} handleRefetch={handleRefetch} />
       )}
     </>
   );

@@ -5,9 +5,10 @@ import { useAuthProvider } from '../context/useAuthProvider';
 export interface ReservaModalProps {
   reservationData: ReservaModal;
   handleCloseModal: () => void;
+  handleRefetch: () => void;
 }
 
-export const Modal = ({ reservationData, handleCloseModal }: ReservaModalProps) => {
+export const Modal = ({ reservationData, handleCloseModal, handleRefetch }: ReservaModalProps) => {
   const { precioHora, fechaYHora, nombreInstalacion, duracion, idInstalacion } = reservationData; // Destructuramos el objeto reservationData
   const [currentDuration, setCurrentDuration] = useState(duracion[0]);
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
@@ -28,6 +29,7 @@ export const Modal = ({ reservationData, handleCloseModal }: ReservaModalProps) 
     if (responseMessage && responseMessage.includes('correctamente')) {
       const timer = setTimeout(() => {
         handleCloseModal();
+        handleRefetch();
       }, 5000);
       return () => clearTimeout(timer);
     }
@@ -43,27 +45,23 @@ export const Modal = ({ reservationData, handleCloseModal }: ReservaModalProps) 
       idInstalacion: idInstalacion,
     };
 
-    try {
-      const response = await fetch('http://127.0.0.1:8000/api/reservas/new', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user?.token}`,
-        },
-        body: JSON.stringify(reservationDetails),
+    fetch('http://127.0.0.1:8000/api/reservas/new', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user?.token}`,
+      },
+      body: JSON.stringify(reservationDetails),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.ok) {
+          setResponseMessage(data.ok);
+        }
+        if (data.error) {
+          setResponseMessage(data.error);
+        }
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        setResponseMessage(data.message); // Mostrar mensaje de éxito
-      } else {
-        const errorData = await response.json();
-        setResponseMessage(errorData.message); // Mostrar mensaje de error
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setResponseMessage('Hubo un error al crear la reserva.'); // Mostrar mensaje de error
-    }
   };
 
   return (

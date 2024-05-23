@@ -1,13 +1,12 @@
 import logoEmpresa from '../../assets/images/logoMenosTransparencia.png';
 import { useState } from 'react';
 import { AuthProps } from '../../types/types';
-import { useAuthProvider } from '../../context/useAuthProvider';
 import { useNavigate } from 'react-router-dom';
 
 export default function Register({ setShowLogin, setShowError }: AuthProps) {
-  const [errorMessage, setErrorMessage] = useState(''); // Nuevo estado para mostrar mensajes de error
+  const [errorMessage, setErrorMessage] = useState<string>(''); // Nuevo estado para mostrar mensajes de error
+  const [notificationMessage, setNotificationMessage] = useState<string>('');
   const navigate = useNavigate();
-  const { setUser } = useAuthProvider();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,13 +40,14 @@ export default function Register({ setShowLogin, setShowError }: AuthProps) {
       .then((res) => res.json())
       .then((data) => {
         if (data.ok) {
-          const { email, name, token, picture } = data.results;
-          setUser({ email, name, token, picture, fromGoogle: false });
-          window.localStorage.setItem('loggedUser', JSON.stringify({ email, name, token, picture }));
-          navigate('/reservas');
+          setNotificationMessage(data.ok);
+          setTimeout(() => {
+            setShowLogin(true);
+          }, 7000);
         }
-        // Si data.ok no existe (es que hay error) entonces mostramos el error en el componente padre
-        setShowError(true);
+        if (data.error) {
+          setShowError(true);
+        }
       });
   };
 
@@ -129,6 +129,16 @@ export default function Register({ setShowLogin, setShowError }: AuthProps) {
           </button>
         </div>
       </form>
+      <div>
+        {notificationMessage && (
+          <div
+            className="absolute top-0 right-0 m-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg w-1/6"
+            role="alert"
+          >
+            <span className="font-bold block mb-2 sm:inline">{notificationMessage}</span>
+          </div>
+        )}
+      </div>
     </>
   );
 }

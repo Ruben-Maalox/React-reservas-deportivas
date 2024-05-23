@@ -6,15 +6,15 @@ import useError from '../hooks/useError';
 
 export default function AuthPage() {
   const [showLogin, setShowLogin] = useState<boolean>(true);
-  const { showError, setShowError } = useError(5000);
+  const { error, setError } = useError(5000);
 
   return (
     <div className="relative flex justify-center mt-4">
-      {showError && <ErrorAuth />}
+      {error && <ErrorAuth error={error} />}
       {showLogin ? (
-        <Login setShowLogin={setShowLogin} setShowError={setShowError} />
+        <Login setShowLogin={setShowLogin} setError={setError} />
       ) : (
-        <Register setShowLogin={setShowLogin} setShowError={setShowError} />
+        <Register setShowLogin={setShowLogin} setError={setError} />
       )}
     </div>
   );

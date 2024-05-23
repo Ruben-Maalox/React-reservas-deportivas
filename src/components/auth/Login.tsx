@@ -6,7 +6,7 @@ import GoogleLogin from './GoogleLogin';
 import { PacmanLoader } from 'react-spinners';
 import { AuthProps } from '../../types/types';
 
-export default function Login({ setShowLogin, setShowError }: AuthProps) {
+export default function Login({ setShowLogin, setError }: AuthProps) {
   const { setUser } = useAuthProvider();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -35,13 +35,10 @@ export default function Login({ setShowLogin, setShowError }: AuthProps) {
           );
           navigate('/reservas');
         }
-
-        setShowError(true);
+        if (data.error) {
+          setError(data.error);
+        }
       });
-    /*  Me estuvo fallando el servidor (no me hacía peticiones) asi que tuve que pasar del Login (lo dejo comentado por si vuelve a ocurrir para poder trabajar xd)    
-    setUser({ email: "j@gmail.com", name: "juan", token: "dsfsdfsd", picture: null, fromGoogle: false });
-    window.localStorage.setItem("loggedUser", JSON.stringify({ email: "j@gmail.com", name: "juan", token: "dsfsdfsd", picture: null, fromGoogle: false }));
-    navigate("/reservas"); */
   };
 
   return isLoading ? (

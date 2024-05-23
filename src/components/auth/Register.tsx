@@ -1,12 +1,10 @@
 import logoEmpresa from '../../assets/images/logoMenosTransparencia.png';
 import { useState } from 'react';
 import { AuthProps } from '../../types/types';
-import { useNavigate } from 'react-router-dom';
 
-export default function Register({ setShowLogin, setShowError }: AuthProps) {
+export default function Register({ setShowLogin, setError }: AuthProps) {
   const [errorMessage, setErrorMessage] = useState<string>(''); // Nuevo estado para mostrar mensajes de error
   const [notificationMessage, setNotificationMessage] = useState<string>('');
-  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,7 +44,7 @@ export default function Register({ setShowLogin, setShowError }: AuthProps) {
           }, 7000);
         }
         if (data.error) {
-          setShowError(true);
+          setError(data.error);
         }
       });
   };

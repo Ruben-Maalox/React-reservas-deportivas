@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
 export default function useError(time: number) {
-  const [showError, setShowError] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let timer: any;
-    if (showError) {
+    if (error) {
       timer = setTimeout(() => {
-        setShowError(false);
+        setError(null);
       }, time); // Cambia esto al número de milisegundos que quieras
     }
     return () => {
@@ -15,7 +15,7 @@ export default function useError(time: number) {
         clearTimeout(timer);
       }
     };
-  }, [showError]);
+  }, [error]);
 
-  return { showError, setShowError };
+  return { error, setError };
 }

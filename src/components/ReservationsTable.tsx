@@ -28,7 +28,7 @@ export default function ReservationsTable() {
   });
   const [showModalReservation, setShowModalReservation] = useState<boolean>(false);
   const [reservationData, setReservationData] = useState<ReservaModal | null>(null);
-  const { showError, setShowError } = useError(3000);
+  const { error, setError } = useError(3000);
   const [refetch, setRefetch] = useState<boolean>(false);
   const { user } = useAuthProvider();
 
@@ -43,6 +43,9 @@ export default function ReservationsTable() {
         if (data.ok) {
           setInstallations(data.results);
         }
+        if (data.error) {
+          setError(data.error);
+        }
       });
 
     fetch('http://localhost:8000/api/reservas/all', {
@@ -55,6 +58,9 @@ export default function ReservationsTable() {
         if (data.ok) {
           console.log(data.results);
           setReservas(data.results);
+        }
+        if (data.error) {
+          setError(data.error);
         }
       });
   }, [refetch]);
@@ -169,7 +175,7 @@ export default function ReservationsTable() {
     }
     const nuevaDuracion = checkIfReservationAlreadyExists(idInstalacion, fechaYHoraNueva);
     if (nuevaDuracion === 0) {
-      setShowError(true);
+      setError('No puedes realizar esta reserva!');
       return;
     }
     let duracionesPosibles = [];
@@ -231,7 +237,7 @@ export default function ReservationsTable() {
     <>
       {installations && (
         <div className="w-full md:w-2/3 lg:w-3/4 mx-auto bg-white rounded-lg p-4 ">
-          {showError && <ReservationsErrors />}
+          {error && <ReservationsErrors />}
           <h1 className="font-bold text-center text-3xl mb-5">Reservas</h1>
           <div className="flex flex-col sm:flex-row bg-gray-200 items-center p-3">
             <label htmlFor="reservation-date" className="block text-sm font-medium text-gray-700 mr-3">

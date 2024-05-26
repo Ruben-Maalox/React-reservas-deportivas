@@ -26,7 +26,9 @@ export interface ReservaModal {
   nombreInstalacion: string;
   fechaYHora: string;
   precioHora: number;
-  duracion: number[];
+  duraciones: number[];
+  isEdit: boolean;
+  reservationId?: number | null;
 }
 
 export interface AuthProps {
@@ -47,4 +49,28 @@ export interface UserInfoProps extends UserEditProps {
   token: string;
   fromGoogle: boolean;
   isAdmin: boolean;
+}
+
+export interface MergeRows {
+  [key: number]: {
+    merge: number;
+    first: boolean;
+  };
+}
+
+export interface EditReservationInfo {
+  installationId: number;
+  date: Date;
+  reservationId: number;
+}
+
+export interface ReservationsTableProps {
+  handleRefetch: () => void;
+  reservations: Reserva[];
+  installations: Instalacion[];
+  error: string | null;
+  setError: (error: string) => void;
+  date: Date;
+  handleShowEditReservation?: () => void;
+  editInfo?: EditReservationInfo | null;
 }

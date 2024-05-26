@@ -1,15 +1,60 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import backgroundImage from '../assets/images/fondo-reservas.jpg';
 import ReservationsTable from '../components/ReservationsTable';
 import OwnReservations from '../components/OwnReservations';
 import './Reservas.css';
+import { useAuthProvider } from '../context/useAuthProvider';
+import { Reserva, Instalacion } from '../types/types';
+import useError from '../hooks/useError';
 
 export default function Reservas() {
   const [showOwnReservations, setShowOwnReservations] = useState<boolean>(false);
+  const [installations, setInstallations] = useState<Instalacion[]>([]);
+  const [reservations, setReservations] = useState<Reserva[]>([]);
+  const { error, setError } = useError(3000);
+  const [refetch, setRefetch] = useState<boolean>(false);
+  const { user } = useAuthProvider();
+
+  useEffect(() => {
+    fetch('http://localhost:8000/api/instalaciones/all', {
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok) {
+          setInstallations(data.results);
+        }
+        if (data.error) {
+          setError(data.error);
+        }
+      });
+
+    fetch('http://localhost:8000/api/reservas/all', {
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok) {
+          setReservations(data.results);
+        }
+        if (data.error) {
+          setError(data.error);
+        }
+      });
+  }, [refetch]);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setShowOwnReservations(event.target.checked);
   };
+
+  const handleRefetch = () => {
+    setRefetch((prevState) => !prevState);
+  };
+
   return (
     <>
       <main
@@ -30,7 +75,24 @@ export default function Reservas() {
           </span>
         </label>
 
-        {showOwnReservations ? <OwnReservations /> : <ReservationsTable />}
+        {showOwnReservations ? (
+          <OwnReservations
+            handleRefetch={handleRefetch}
+            installations={installations}
+            reservations={reservations}
+            error={error}
+            setError={setError}
+          />
+        ) : (
+          <ReservationsTable
+            handleRefetch={handleRefetch}
+            installations={installations}
+            reservations={reservations}
+            error={error}
+            setError={setError}
+            date={new Date()}
+          />
+        )}
       </main>
     </>
   );

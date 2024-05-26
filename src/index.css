@@ -54,3 +54,7 @@ h6 {
   font-size: 0.67em; /* 10.72px */
   font-weight: bold;
 }
+
+.non-clickable {
+  pointer-events: none;
+}

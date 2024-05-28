@@ -24,7 +24,7 @@ export default function Reservas() {
             onChange={handleCheckboxChange}
             className="sr-only peer"
           />
-          <div className="group peer ring-2 bg-gradient-to-bl from-blue-500 via-blue-400 to-blue-300 rounded-full outline-none duration-1000 after:duration-300 w-10 h-5 shadow-md peer-focus:outline-none after:content-[''] after:rounded-full after:absolute after:[background:#0D2B39] peer-checked:after:rotate-180 after:[background:conic-gradient(from_135deg,_#b2a9a9,_#b2a8a8,_#ffffff,_#d7dbd9_,_#ffffff,_#b2a8a8)] after:outline-none after:h-4 after:w-4 after:top-0.5 after:left-9.5 peer-checked:after:translate-x-6 peer-hover:after:scale-125"></div>
+          <div className="group peer ring-2 bg-gradient-to-bl from-blue-500 via-blue-400 to-blue-300 rounded-full outline-none duration-1000 after:duration-300 w-10 h-5 shadow-md peer-focus:outline-none after:content-[''] after:rounded-full after:absolute peer-checked:after:rotate-180 after:[background:conic-gradient(from_135deg,_#b2a9a9,_#b2a8a8,_#ffffff,_#d7dbd9_,_#ffffff,_#b2a8a8)] after:outline-none after:h-4 after:w-4 after:top-0.5 after:left-9.5 peer-checked:after:translate-x-6 peer-hover:after:scale-125"></div>
           <span className="mt-2 text-md text-blue-100 font-semibold">
             {showOwnReservations ? 'Ver todas las reservas' : 'Ver mis reservas'}
           </span>

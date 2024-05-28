@@ -1,6 +1,7 @@
 import logoEmpresa from '../../assets/images/logoMenosTransparencia.png';
 import { useState } from 'react';
 import { AuthProps } from '../../types/types';
+import { emailRegex } from '../../constants/constants';
 
 export default function Register({ setShowLogin, setError }: AuthProps) {
   const [errorMessage, setErrorMessage] = useState<string>(''); // Nuevo estado para mostrar mensajes de error
@@ -9,21 +10,29 @@ export default function Register({ setShowLogin, setError }: AuthProps) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
-    const name = (form.elements.namedItem('name') as HTMLInputElement).value; // Este lo he cambiado porque si pongo form.name me da error
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
     const surname = (form.surname as HTMLInputElement).value;
     const phone = (form.phone as HTMLInputElement).value;
     const email = (form.email as HTMLInputElement).value;
-    const confirmEmail = (form.confirmEmail as HTMLInputElement).value; // Obtén el valor del campo confirmEmail
+    const confirmEmail = (form.confirmEmail as HTMLInputElement).value;
     const password = (form.password as HTMLInputElement).value;
+
+    // Validar correos electrónicos
+    if (!emailRegex.test(email)) {
+      setErrorMessage('Correo electrónico no válido');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 5000);
+      return;
+    }
 
     // Comprueba si los correos electrónicos coinciden
     if (email !== confirmEmail) {
-      // alert("Los correos electrónicos no coinciden");
       setErrorMessage('Los correos electrónicos no coinciden');
       setTimeout(() => {
         setErrorMessage('');
       }, 5000);
-      return; // Si los correos electrónicos no coinciden, termina la función aquí
+      return;
     }
 
     const body = JSON.stringify({ email, password, name, surname, phone });
@@ -51,16 +60,16 @@ export default function Register({ setShowLogin, setError }: AuthProps) {
 
   return (
     <>
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-2/6" action="" onSubmit={handleSubmit}>
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md mx-auto" onSubmit={handleSubmit}>
         <div className="flex items-center justify-center">
-          <img src={logoEmpresa} alt="logo" width={250} height={250} className="mb-10" />
+          <img src={logoEmpresa} alt="logo" className="mb-10 w-2/3 sm:w-1/2 md:w-1/3" />
         </div>
         <h2 className="text-2xl text-center mb-4 font-bold">Alta de Usuario</h2>
         <div className="mb-4">
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="name"
-            type="name"
+            type="text"
             placeholder="Nombre *"
             required
           />
@@ -69,7 +78,7 @@ export default function Register({ setShowLogin, setError }: AuthProps) {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
             name="surname"
-            type="surname"
+            type="text"
             placeholder="Apellidos *"
             required
           />
@@ -78,7 +87,7 @@ export default function Register({ setShowLogin, setError }: AuthProps) {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
             name="phone"
-            type="phone"
+            type="tel"
             placeholder="Móvil *"
             required
           />
@@ -111,17 +120,18 @@ export default function Register({ setShowLogin, setError }: AuthProps) {
             required
           />
         </div>
-        {errorMessage && <p className="text-red-500 mb-5">{errorMessage}</p>}
+        {errorMessage && <p className="text-red-500 mb-5 text-center font-bold">{errorMessage}</p>}
         <div className="flex flex-col items-center justify-between">
-          <button className="w-1/3 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce">
+          <button className="w-full sm:w-2/3 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce">
             Regístrate
           </button>
         </div>
-        <div className="flex flex-col items-center justify-between">
-          <p className="text-center mt-4 text-gray-700 font-bold mb-5">¿Ya tienes cuenta?</p>
+        <div className="flex flex-col items-center justify-between mt-4">
+          <p className="text-center text-gray-700 font-bold mb-5">¿Ya tienes cuenta?</p>
           <button
-            onClick={() => setShowLogin(true)} // Establece showRegistro a false cuando se hace clic en el botón
-            className="w-1/3 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
+            type="button"
+            onClick={() => setShowLogin(true)}
+            className="w-full sm:w-2/3 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
           >
             Inicia sesión
           </button>

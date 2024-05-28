@@ -15,7 +15,7 @@ const links = [
   { name: 'Localización y contacto', href: '/contacto' },
 ];
 
-export default function NavLinks() {
+export default function NavLinks({ onClick }: any) {
   const { user, setUser } = useAuthProvider();
   const location = useLocation();
   const navigate = useNavigate();
@@ -62,6 +62,7 @@ export default function NavLinks() {
           ${location.pathname === link.href ? 'bg-gray-200 font-bold' : ''}
           ${link.href === '/auth-page' && 'text-green-600 font-bold'}
           `}
+          onClick={onClick}
         >
           <p className="md:block">{link.name}</p>
         </Link>
@@ -74,6 +75,7 @@ export default function NavLinks() {
           className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:bg-gray-300 md:flex-none md:justify-start md:p-2 md:px-3 
         ${location.pathname === '/auth-page' ? 'bg-gray-200 font-bold' : ''}
         `}
+          onClick={onClick}
         >
           <p className="md:block text-green-600 font-bold">Iniciar sesión</p>
         </Link>
@@ -86,6 +88,7 @@ export default function NavLinks() {
           className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-sm font-medium hover:bg-gray-300 md:flex-none md:justify-start md:p-2 md:px-3
             ${location.pathname === '/adminPage' ? 'bg-gray-200 font-bold' : ''}
             `}
+          onClick={onClick}
         >
           <p className="md:block text-blue-500 font-bold">Admin</p>
         </Link>
@@ -106,14 +109,20 @@ export default function NavLinks() {
                   <span className="font-bold">Usuario/a:</span> {user?.name}
                 </p>
                 <p
-                  onClick={() => navigate('/user-edit')}
+                  onClick={() => {
+                    navigate('/user-edit');
+                    onClick();
+                  }}
                   className="cursor-pointer hover:bg-[#a0d8f1] hover:shadow-[0_4px_8px_0_#4a90e2] transition-all duration-300 rounded p-1"
                 >
                   Información personal
                 </p>
               </div>
               <button
-                onClick={handleLogOut}
+                onClick={() => {
+                  handleLogOut();
+                  onClick();
+                }}
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-full mt-2 text-s"
               >
                 Cerrar sesión

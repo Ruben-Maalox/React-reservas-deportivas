@@ -56,7 +56,6 @@ export default function ReservationsTable() {
       .then((res) => res.json())
       .then((data) => {
         if (data.ok) {
-          console.log(data.results);
           setReservas(data.results);
         }
         if (data.error) {
@@ -70,6 +69,10 @@ export default function ReservationsTable() {
   };
 
   const handlePrevDay = () => {
+    //No permitir seleccionar fechas anteriores a la actual
+    if (new Date().getTime() > selectedDate.getTime()) {
+      return;
+    }
     setSelectedDate((prevDate) => new Date(new Date(prevDate).setDate(prevDate.getDate() - 1)));
   };
 
@@ -236,45 +239,46 @@ export default function ReservationsTable() {
   return (
     <>
       {installations && (
-        <div className="w-full md:w-2/3 lg:w-3/4 mx-auto bg-white rounded-lg p-4 ">
+        <div className="w-full md:w-2/3 lg:w-3/4 mx-auto bg-white rounded-lg p-6 shadow-md">
           {error && <ReservationsErrors />}
-          <h1 className="font-bold text-center text-3xl mb-5">Reservas</h1>
-          <div className="flex flex-col sm:flex-row bg-gray-200 items-center p-3">
-            <label htmlFor="reservation-date" className="block text-sm font-medium text-gray-700 mr-3">
+          <h1 className="font-bold text-center text-3xl mb-6 text-gray-800">Reservas</h1>
+          <div className="flex flex-col sm:flex-row bg-gray-100 items-center p-4 rounded-md mb-4">
+            <label htmlFor="reservation-date" className="block text-sm font-medium text-gray-700 mr-4">
               Fecha:
             </label>
             <input
               type="date"
               id="reservation-date"
               value={getDayMonthYear(selectedDate)}
+              min={getDayMonthYear(new Date())}
               onChange={handleDateChange}
-              className="mt-1 block pl-3 pr-5 sm:text-sm border-gray-300 rounded-md"
+              className="mt-1 block pl-3 pr-5 py-2 sm:text-sm border-gray-300 rounded-md shadow-sm"
             />
-            <div className="flex mt-2 sm:mt-0">
+            <div className="flex mt-2 sm:mt-0 ml-4 space-x-2">
               <button
                 onClick={handlePrevDay}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 px-3 rounded"
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
               >
                 &lt;
               </button>
               <button
                 onClick={handleNextDay}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-1 px-3 rounded"
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
               >
                 &gt;
               </button>
             </div>
-            <p>
-              Hora actual: {String(selectedDate.getHours()).padStart(2, '0')}:
+            <label className="ml-4 text-md text-gray-600 ">
+              <span className="font-medium">Hora actual:</span> {String(selectedDate.getHours()).padStart(2, '0')}:
               {String(selectedDate.getMinutes()).padStart(2, '0')}
-            </p>
+            </label>
           </div>
-          <div className="overflow-auto ">
-            <table className="min-w-full text-center">
-              <thead>
+          <div className="overflow-auto rounded-md">
+            <table className="min-w-full text-center border-collapse">
+              <thead className="bg-gray-200 sticky top-0 z-10">
                 <tr>
                   {installations.map((instalacion) => (
-                    <th key={instalacion.id} data-id={instalacion.id} className="p-4 border">
+                    <th key={instalacion.id} data-id={instalacion.id} className="p-4 border bg-gray-200 ">
                       {instalacion.nombre}
                     </th>
                   ))}
@@ -287,7 +291,7 @@ export default function ReservationsTable() {
                   const time = `${hour2}:${halfHour % 2 === 0 ? '00' : '30'}`;
 
                   return (
-                    <tr key={halfHour} data-hour={time}>
+                    <tr key={halfHour} data-hour={time} className="odd:bg-white even:bg-gray-50">
                       {installations.map((instalacion) => {
                         const fechaYHoraNueva = getDayMonthYear(selectedDate) + 'T' + time;
                         const reserva = hasReserva(instalacion.id, fechaYHoraNueva);
@@ -323,7 +327,7 @@ export default function ReservationsTable() {
                             rowSpan={cRow.merge}
                             key={instalacion.id}
                             data-instalacion={instalacion.id}
-                            className={`border ${!shouldShowGray ? 'bg-gray-300' : reserva ? 'bg-red-500' : ''} w-1/6 `}
+                            className={`border ${!shouldShowGray ? 'bg-gray-300' : reserva ? 'bg-red-500 text-white' : ''} w-1/6 py-2 cursor-pointer`}
                           >
                             {showHour(cRow.merge, time)}
                           </td>

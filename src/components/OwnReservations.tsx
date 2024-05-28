@@ -47,9 +47,9 @@ export default function OwnReservations() {
 
   return (
     <>
-      <div className="w-full md:w-2/3 lg:w-3/4 mx-auto rounded-lg overflow-x-auto ">
+      <div className="w-full md:w-2/3 lg:w-3/4 mx-auto bg-white rounded-lg p-6 shadow-md overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-gray-100">
             <tr>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 ID Reserva
@@ -99,7 +99,7 @@ export default function OwnReservations() {
                   console.log('asdasd', differenceInHours);
 
                   return (
-                    <tr key={index}>
+                    <tr key={index} className="hover:bg-gray-100">
                       <td className="px-6 py-4 whitespace-nowrap text-center">{id}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center">{idUsuario}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-center" data-id={idInstalacion}>
@@ -115,7 +115,7 @@ export default function OwnReservations() {
                             <img
                               src="src/assets/icons/delete.svg"
                               alt="Delete icon"
-                              className="w-10 h10 cursor-pointer"
+                              className="w-10 h-10 cursor-pointer"
                               onClick={() => deleteReservation(id)}
                             />
                           )}

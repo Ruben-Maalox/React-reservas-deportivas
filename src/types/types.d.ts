@@ -34,6 +34,7 @@ export interface ReservaModal {
 export interface AuthProps {
   setShowLogin: (showLogin: boolean) => void;
   setError: (showError: string) => void;
+  showForgottenPassword?: (shouldShow: boolean) => void;
 }
 
 export interface UserEditProps {

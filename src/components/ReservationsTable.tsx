@@ -229,7 +229,7 @@ export default function ReservationsTable({
     <>
       {installations && (
         <div
-          className={`w-full relative ${installations.length === 1 ? 'w-1/2' : 'md:w-2/3 lg:w-3/4'} mx-auto bg-white rounded-lg p-6 shadow-md`}
+          className={`w-full relative ${installations.length === 1 ? 'w-1/6' : 'md:w-2/3 lg:w-3/4'} mx-auto bg-white rounded-lg p-6 shadow-md`}
         >
           {error && installations.length !== 1 && <ReservationsErrors />}
 
@@ -244,8 +244,7 @@ export default function ReservationsTable({
 
           <h1 className="font-bold text-center text-3xl mb-6 text-gray-800">Reservas</h1>
           <div className="flex flex-col sm:flex-row bg-gray-100 items-center p-4 rounded-md mb-4">
-          <label htmlFor="reservation-date" className="block text-sm font-medium text-gray-700 mr-4">
-
+            <label htmlFor="reservation-date" className="block text-sm font-medium text-gray-700 mr-4">
               Fecha:
             </label>
             <input

@@ -6,7 +6,7 @@ import GoogleLogin from './GoogleLogin';
 import { PacmanLoader } from 'react-spinners';
 import { AuthProps } from '../../types/types';
 
-export default function Login({ setShowLogin, setError }: AuthProps) {
+export default function Login({ setShowLogin, setError, showForgottenPassword }: AuthProps) {
   const { setUser } = useAuthProvider();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -89,6 +89,15 @@ export default function Login({ setShowLogin, setError }: AuthProps) {
         >
           Regístrate
         </button>
+      </div>
+
+      <div className="flex flex-col items-center justify-center">
+        <p
+          onClick={() => showForgottenPassword && showForgottenPassword(true)}
+          className="text-center mt-4 text-gray-700 font-bold mb-5"
+        >
+          He olvidado mi contraseña
+        </p>
       </div>
     </div>
   );

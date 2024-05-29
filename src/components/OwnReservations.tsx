@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 // --> Types
 import { EditReservationInfo, Instalacion, Reserva } from '../types/types';
 import { useAuthProvider } from '../context/useAuthProvider';
-import ReservationsErrors from './errors/ReservationsError';
 import ReservationsTable from './ReservationsTable';
 
 export interface OwnReservationsProps {
@@ -77,9 +76,6 @@ export default function OwnReservations({
       <div
         className={`${showEditReservation ? '' : 'w-full md:w-2/3 lg:w-3/4 mx-auto bg-white rounded-lg p-6 shadow-md overflow-x-auto'}`}
       >
-        <h1 className="font-bold text-center text-3xl mb-6 text-gray-800">Mis reservas</h1>
-        {error && <ReservationsErrors />}
-
         {showEditReservation && reservationsByInstallation && date ? (
           <ReservationsTable
             handleRefetch={handleRefetch}

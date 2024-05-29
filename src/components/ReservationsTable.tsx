@@ -231,7 +231,7 @@ export default function ReservationsTable({
         <div
           className={`w-full relative ${installations.length === 1 ? 'w-1/6' : 'md:w-2/3 lg:w-3/4'} mx-auto bg-white rounded-lg p-6 shadow-md`}
         >
-          {error && installations.length !== 1 && <ReservationsErrors />}
+          {error && <ReservationsErrors />}
 
           {installations.length === 1 && (
             <button

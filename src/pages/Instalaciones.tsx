@@ -19,9 +19,9 @@ export default function Instalaciones() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 m-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-3 md:gap-10 m-4 xl:grid-cols-3 xl:gap-10">
         {images.map((image, index) => (
-          <div key={index} className="overflow-hidden shadow-lg rounded-lg h-80 w-64 cursor-pointer m-auto">
+          <div key={index} className="overflow-hidden shadow-lg rounded-lg h-80 w-64 cursor-pointer mx-auto md:my-2">
             <img alt={image.alt} src={image.src} className="w-full h-64 object-cover" />
             <div className="p-4">
               <h1 className="text-xl font-bold">{image.alt}</h1>

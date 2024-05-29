@@ -87,6 +87,8 @@ export default function Register({ setShowLogin, setError }: AuthProps) {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
             name="phone"
+            minLength={9}
+            maxLength={9}
             type="tel"
             placeholder="Móvil *"
             required

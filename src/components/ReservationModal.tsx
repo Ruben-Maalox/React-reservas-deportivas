@@ -136,7 +136,15 @@ export const ReservationModal = ({
         >
           Añadir Reserva
         </button>
-        {responseMessage && <p className="mt-4 text-center text-red-500 font-bold">{responseMessage}</p>}
+        {responseMessage && (
+          <p
+            className={`mt-4 text-center font-bold ${
+              responseMessage.includes('correctamente') ? 'text-green-500' : 'text-red-500'
+            }`}
+          >
+            {responseMessage}
+          </p>
+        )}
       </div>
     </div>
   );

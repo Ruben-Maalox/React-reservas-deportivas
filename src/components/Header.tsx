@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <header className="flex flex-row items-center justify-between p-5 bg-white shadow-md relative">
-      <img src={logo} alt="logo" className="" />
+      <img src={logo} alt="logo" className="h-20 w-64" />
       <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden">
         {isOpen ? (
           <svg

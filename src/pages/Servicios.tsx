@@ -15,14 +15,14 @@ export default function Servicios() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 m-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-10 xl:gap-12 m-4">
         {images &&
           images.map((image, index) => {
             return (
               <div
                 key={index}
                 id={`servicios-${image.alt}`}
-                className="overflow-hidden shadow-lg rounded-lg h-96 w-64 cursor-pointer m-auto"
+                className="overflow-hidden shadow-lg rounded-lg h-96 w-64 cursor-pointer mx-auto md:my-2"
               >
                 <img src={image.src} alt={image.alt} className="w-full h-64 object-cover" />
                 <div className="p-4">

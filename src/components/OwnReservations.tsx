@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { EditReservationInfo, Instalacion, Reserva } from '../types/types';
 import { useAuthProvider } from '../context/useAuthProvider';
 import ReservationsTable from './ReservationsTable';
+import { getDayMonthYear } from '../utils/utils';
 
 export interface OwnReservationsProps {
   handleRefetch: () => void;
@@ -23,10 +24,12 @@ export default function OwnReservations({
   const { user } = useAuthProvider();
   const [editInfo, setEditInfo] = useState<EditReservationInfo | null>(null);
   const [date, setDate] = useState<Date>();
-  const [showAllReservations, setShowAllReservations] = useState<boolean>(false);
   const [showEditReservation, setShowEditReservation] = useState<boolean>(false);
   const totalReservations = useRef<number>(0);
   const [pagination, setPagination] = useState<number>(1);
+  const [showAllOwnReservations, setShowAllOwnReservations] = useState<boolean>(false);
+  const [filterByDate, setFilterByDate] = useState<Date>();
+  const [filterByInstallation, setFilterByInstallation] = useState<number>(0);
 
   // Cada vez que pulsamos en el botón de editar y cambiamos sus valores, se ejecuta para mostrar el modal de edición
   useEffect(() => {
@@ -36,8 +39,10 @@ export default function OwnReservations({
     }
   }, [editInfo]);
 
-  const ownReservations = useMemo(() => {
-    if (showAllReservations) {
+  // Métodos para filtrar en las reservas propias
+
+  const ownReservationsByUser = useMemo(() => {
+    if (showAllOwnReservations) {
       const allReservations = reservations
         ?.filter((reservation) => reservation.idUsuario === user?.id)
         .sort((a, b) => b.id - a.id);
@@ -54,7 +59,47 @@ export default function OwnReservations({
     return reservations
       ?.filter((reservation) => new Date(reservation.fechaYHora).getTime() >= new Date().getTime())
       .sort((a, b) => b.id - a.id);
-  }, [reservations, showAllReservations]);
+  }, [reservations, showAllOwnReservations]);
+
+  const ownReservationsByDate = useMemo(() => {
+    if (filterByDate !== undefined) {
+      const filteredByDate = ownReservationsByUser?.filter(
+        (reservation) => getDayMonthYear(new Date(reservation.fechaYHora)) === getDayMonthYear(filterByDate),
+      );
+
+      totalReservations.current = filteredByDate?.length || 0;
+      setPagination(1);
+
+      return filteredByDate;
+    }
+
+    totalReservations.current = ownReservationsByUser?.length || 0;
+
+    return ownReservationsByUser;
+  }, [ownReservationsByUser, filterByDate]);
+
+  const ownReservationsByInstallation = useMemo(() => {
+    if (filterByInstallation !== 0) {
+      const filteredByInstallation = ownReservationsByDate?.filter(
+        (reservation) => reservation.idInstalacion === filterByInstallation,
+      );
+
+      totalReservations.current = filteredByInstallation?.length || 0;
+      setPagination(1);
+
+      return filteredByInstallation;
+    }
+
+    totalReservations.current = ownReservationsByDate?.length || 0;
+
+    return ownReservationsByDate;
+  }, [ownReservationsByDate, filterByInstallation]);
+
+  const ownReservations = useMemo(() => {
+    return ownReservationsByInstallation;
+  }, [ownReservationsByInstallation]);
+
+  // Métodos para filtrar en las reservas que se van a mostrar al pinchar en EDITAR en la tabla
 
   const filteredInstallation = useMemo(() => {
     return installations?.filter((instalacion) => instalacion.id === editInfo?.installationId);
@@ -65,6 +110,8 @@ export default function OwnReservations({
       return reservations?.filter((reservation) => reservation.idInstalacion === editInfo?.installationId);
     }
   }, [reservations, editInfo]);
+
+  // Métodos para manejar eventos
 
   const handlePagination = (next: boolean) => {
     if (next) {
@@ -100,6 +147,17 @@ export default function OwnReservations({
     setShowEditReservation(false);
   };
 
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newDate = event.target.value;
+    if (newDate === '') return setFilterByDate(undefined);
+
+    setFilterByDate(new Date(newDate));
+  };
+
+  const handleFilterByInstallation = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterByInstallation(Number(event.target.value));
+  };
+
   return (
     <>
       <div
@@ -118,17 +176,45 @@ export default function OwnReservations({
           />
         ) : (
           <>
-            <div className="mb-2">
+            <div className="flex flex-col sm:flex-row mb-2 mt-0 sm:items-center">
               <button
-                onClick={() => setShowAllReservations((prevState) => !prevState)}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => setShowAllOwnReservations((prevState) => !prevState)}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded sm:mr-4 sm:mt-0"
               >
-                {showAllReservations ? 'Mostrar actuales' : 'Mostrar todas'}
+                {showAllOwnReservations ? 'Futuras' : 'Futuras y antiguas'}
               </button>
+
+              <input
+                type="date"
+                id="reservation-date"
+                min={getDayMonthYear(new Date())}
+                onChange={handleDateChange}
+                className="block pl-3 pr-5 py-2  border-gray-300 rounded-md shadow-sm bg-gray-100 mt-2 sm:mt-0 sm:text-sm"
+              />
+
+              <select
+                onChange={handleFilterByInstallation}
+                className="px-4  py-2 border border-gray-300 rounded-md shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:ml-4 sm:mt-0 mt-2"
+              >
+                <option value={0}>Todas las instalaciones</option>
+                {installations?.map((instalacion) => (
+                  <option key={instalacion.id} value={instalacion.id}>
+                    {instalacion.nombre}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-100">
+                <tr>
+                  <th
+                    className="px-6 py-3 text-center text-base font-bold text-gray-700 uppercase tracking-wider bg-gray-200"
+                    colSpan={8}
+                  >
+                    {showAllOwnReservations ? 'Reservas próximas y antiguas' : 'Reservas próximas'}
+                  </th>
+                </tr>
                 <tr>
                   <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                     ID Reserva
@@ -181,7 +267,7 @@ export default function OwnReservations({
                         (1000 * 60 * 60);
 
                       return (
-                        <tr key={index} className="hover:bg-gray-100">
+                        <tr key={index} className="hover:bg-gray-100 h-20">
                           <td className="px-6 py-4 whitespace-nowrap text-center">{id}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-center">{idUsuario}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-center" data-id={idInstalacion}>
@@ -225,15 +311,18 @@ export default function OwnReservations({
               </tbody>
             </table>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-4">
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-4"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
                 onClick={() => handlePagination(false)}
               >
                 Previous
               </button>
+              <span className="mx-4 text-center text-lg font-bold bg-gray-400 text-white py-1 px-2 rounded">
+                {pagination}
+              </span>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
                 onClick={() => handlePagination(true)}
               >
                 Next

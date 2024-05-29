@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { ReservaModal, MergeRows, ReservationsTableProps } from '../types/types';
 import { ReservationModal } from './ReservationModal';
 import ReservationsErrors from './errors/ReservationsError';
+import { getDayMonthYear } from '../utils/utils';
 
 export default function ReservationsTable({
   handleRefetch,
@@ -37,10 +38,6 @@ export default function ReservationsTable({
 
   const handleNextDay = () => {
     setSelectedDate((prevDate) => new Date(new Date(prevDate).setDate(prevDate.getDate() + 1)));
-  };
-
-  const getDayMonthYear = (date: Date) => {
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
   };
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {

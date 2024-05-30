@@ -59,9 +59,9 @@ export default function Reservas() {
     <>
       <main
         style={{ backgroundImage: `url(${backgroundImage})` }}
-        className="relative flex min-h-screen flex-col items-center p-4 bg-gray-100 text-black bg-no-repeat bg-cover pt-20 sm:pt-16 md:pt-8"
+        className="relative flex min-h-screen flex-col items-center p-4 bg-gray-100 text-black bg-no-repeat bg-cover pt-20 sm:pt-16 lg:pt-8"
       >
-        <label className="absolute top-5 right-5 flex flex-col items-center justify-center cursor-pointer">
+        <label className="absolute top-2 right-5 flex flex-col items-center justify-center cursor-pointer">
           <input
             type="checkbox"
             id="toggle"

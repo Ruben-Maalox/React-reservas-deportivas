@@ -3,6 +3,7 @@ import { ReservaModal, MergeRows, ReservationsTableProps } from '../types/types'
 import { ReservationModal } from './ReservationModal';
 import ReservationsErrors from './errors/ReservationsError';
 import { getDayMonthYear } from '../utils/utils';
+import { useMediaQuery } from 'react-responsive';
 
 export default function ReservationsTable({
   handleRefetch,
@@ -27,6 +28,29 @@ export default function ReservationsTable({
   });
   const [showModalReservation, setShowModalReservation] = useState<boolean>(false);
   const [reservationData, setReservationData] = useState<ReservaModal | null>(null);
+
+  // Para renderizar la tabla de una forma u otra en función de si es >1024px
+  const isLargeScreen = useMediaQuery({ minWidth: 1090 });
+  const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 1089 });
+
+  const handleTableResponsive = {
+    small: [
+      { start: 0, end: 3 },
+      { start: 3, end: 6 },
+      { start: 6, end: 9 },
+    ],
+    medium: [
+      { start: 0, end: 4 },
+      { start: 4, end: 9 },
+    ],
+    large: [{ start: 0, end: 9 }],
+  };
+
+  const typeOfDevice = () => {
+    if (isLargeScreen) return 'large';
+    if (isMediumScreen) return 'medium';
+    return 'small';
+  };
 
   const handlePrevDay = () => {
     //No permitir seleccionar fechas anteriores a la actual
@@ -229,7 +253,6 @@ export default function ReservationsTable({
           className={`w-full relative ${installations.length === 1 ? 'w-1/6' : 'md:w-2/3 lg:w-3/4'} mx-auto bg-white rounded-lg p-6 shadow-md`}
         >
           {error && <ReservationsErrors />}
-
           {installations.length === 1 && (
             <button
               onClick={() => handleShowEditReservation && handleShowEditReservation()}
@@ -240,119 +263,132 @@ export default function ReservationsTable({
           )}
 
           <h1 className="font-bold text-center text-3xl mb-6 text-gray-800">Reservas</h1>
-          <div className="flex flex-col sm:flex-row bg-gray-100 items-center p-4 rounded-md mb-4">
-            <label htmlFor="reservation-date" className="block text-sm font-medium text-gray-700 mr-4">
-              Fecha:
-            </label>
-            <input
-              type="date"
-              id="reservation-date"
-              value={getDayMonthYear(selectedDate)}
-              min={getDayMonthYear(new Date())}
-              onChange={handleDateChange}
-              className="mt-1 block pl-3 pr-5 py-2 sm:text-sm border-gray-300 rounded-md shadow-sm"
-            />
-            <div className="flex mt-2 sm:mt-0 ml-4 space-x-2">
-              <button
-                onClick={handlePrevDay}
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
-              >
-                &lt;
-              </button>
-              <button
-                onClick={handleNextDay}
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
-              >
-                &gt;
-              </button>
-            </div>
-            <label className="ml-4 text-md text-gray-600 ">
-              <span className="font-medium">Hora actual:</span> {String(new Date().getHours()).padStart(2, '0')}:
-              {String(new Date().getMinutes()).padStart(2, '0')}
-            </label>
-          </div>
-          <div className="overflow-auto rounded-md">
-            <table className="min-w-full text-center border-collapse">
-              <thead className="bg-gray-200 sticky top-0 z-10">
-                <tr>
-                  {installations.map((instalacion) => (
-                    <th key={instalacion.id} data-id={instalacion.id} className="p-4 border bg-gray-200 ">
-                      {instalacion.nombre}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {Array.from({ length: 29 }, (_, i) => i + 18).map((halfHour) => {
-                  const hour1 = Math.floor(halfHour / 2) % 24;
-                  const hour2 = hour1 >= 10 ? hour1 : `0${hour1}`;
-                  const time = `${hour2}:${halfHour % 2 === 0 ? '00' : '30'}`;
 
-                  return (
-                    <tr key={halfHour} data-hour={time} className="odd:bg-white even:bg-gray-50">
-                      {installations.map((instalacion) => {
-                        const fechaYHoraNueva = getDayMonthYear(selectedDate) + 'T' + time;
-                        const reserva = hasReserva(instalacion.id, fechaYHoraNueva);
+          {(installations.length === 1 ? handleTableResponsive['large'] : handleTableResponsive[typeOfDevice()]).map(
+            (range, index) => {
+              return (
+                <>
+                  <div
+                    className={`flex flex-col sm:flex-row bg-gray-100 items-center p-4 rounded-md mb-4 
+                ${index >= 1 ? 'mt-4' : ''}`}
+                  >
+                    <label htmlFor="reservation-date" className="block text-sm font-medium text-gray-700 mr-4">
+                      Fecha:
+                    </label>
+                    <input
+                      type="date"
+                      id="reservation-date"
+                      value={getDayMonthYear(selectedDate)}
+                      min={getDayMonthYear(new Date())}
+                      onChange={handleDateChange}
+                      className="mt-1 block pl-3 pr-5 py-2 sm:text-sm border-gray-300 rounded-md shadow-sm"
+                    />
+                    <div className="flex mt-2 sm:mt-0 ml-4 space-x-2">
+                      <button
+                        onClick={handlePrevDay}
+                        className="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
+                      >
+                        &lt;
+                      </button>
+                      <button
+                        onClick={handleNextDay}
+                        className="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
+                      >
+                        &gt;
+                      </button>
+                    </div>
+                    <label className="ml-4 text-md text-gray-600 ">
+                      <span className="font-medium">Hora actual:</span> {String(new Date().getHours()).padStart(2, '0')}
+                      :{String(new Date().getMinutes()).padStart(2, '0')}
+                    </label>
+                  </div>
 
-                        // Para ver si la reserva que se va a pintar es la de editar o una ya existente
-                        let editReservation = false;
-                        if (reserva && editInfo && editInfo.installationId === instalacion.id) {
-                          const reservationEditDate = new Date(editInfo.date);
-                          const currentReservationDate = new Date(reserva.fechaYHora);
+                  <div className="rounded-md">
+                    <table className="min-w-full text-center border-collapse">
+                      <thead className="bg-gray-200 sticky top-0 z-10">
+                        <tr>
+                          {installations.slice(range.start, range.end).map((instalacion) => (
+                            <th key={instalacion.id} data-id={instalacion.id} className="p-4 border bg-gray-200">
+                              {instalacion.nombre}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {Array.from({ length: 29 }, (_, i) => i + 18).map((halfHour) => {
+                          const hour1 = Math.floor(halfHour / 2) % 24;
+                          const hour2 = hour1 >= 10 ? hour1 : `0${hour1}`;
+                          const time = `${hour2}:${halfHour % 2 === 0 ? '00' : '30'}`;
 
-                          if (reservationEditDate.getTime() === currentReservationDate.getTime()) {
-                            editReservation = true;
-                          }
-                        }
+                          return (
+                            <tr key={halfHour} data-hour={time} className="odd:bg-white even:bg-gray-50">
+                              {installations.slice(range.start, range.end).map((instalacion) => {
+                                const fechaYHoraNueva = getDayMonthYear(selectedDate) + 'T' + time;
+                                const reserva = hasReserva(instalacion.id, fechaYHoraNueva);
 
-                        const cRow = mergeRows.current[instalacion.id];
+                                // Para ver si la reserva que se va a pintar es la de editar o una ya existente
+                                let editReservation = false;
+                                if (reserva && editInfo && editInfo.installationId === instalacion.id) {
+                                  const reservationEditDate = new Date(editInfo.date);
+                                  const currentReservationDate = new Date(reserva.fechaYHora);
 
-                        const shouldShowGray = isAfterCurrentTime(fechaYHoraNueva);
+                                  if (reservationEditDate.getTime() === currentReservationDate.getTime()) {
+                                    editReservation = true;
+                                  }
+                                }
 
-                        if (reserva && reserva.duracion === 60 && editReservation === false) {
-                          cRow.merge = 2;
-                          cRow.first = true;
-                        }
-                        if (reserva && reserva.duracion === 90 && editReservation === false) {
-                          cRow.merge = 3;
-                          cRow.first = true;
-                        }
+                                const cRow = mergeRows.current[instalacion.id];
 
-                        if (cRow.first === false) {
-                          cRow.merge -= 1;
-                          if (cRow.merge === 1) cRow.first = true;
-                          return null;
-                        }
+                                const shouldShowGray = isAfterCurrentTime(fechaYHoraNueva);
 
-                        if (cRow.merge > 1) {
-                          cRow.first = false;
-                        }
-                        if (cRow.merge === 1) {
-                          cRow.first = true;
-                        }
+                                if (reserva && reserva.duracion === 60 && editReservation === false) {
+                                  cRow.merge = 2;
+                                  cRow.first = true;
+                                }
+                                if (reserva && reserva.duracion === 90 && editReservation === false) {
+                                  cRow.merge = 3;
+                                  cRow.first = true;
+                                }
 
-                        return (
-                          <td
-                            onClick={() => handleReservation(instalacion.id, fechaYHoraNueva)}
-                            rowSpan={cRow.merge}
-                            key={instalacion.id}
-                            data-instalacion={instalacion.id}
-                            className={`border 
+                                if (cRow.first === false) {
+                                  cRow.merge -= 1;
+                                  if (cRow.merge === 1) cRow.first = true;
+                                  return null;
+                                }
+
+                                if (cRow.merge > 1) {
+                                  cRow.first = false;
+                                }
+                                if (cRow.merge === 1) {
+                                  cRow.first = true;
+                                }
+
+                                return (
+                                  <td
+                                    onClick={() => handleReservation(instalacion.id, fechaYHoraNueva)}
+                                    rowSpan={cRow.merge}
+                                    key={instalacion.id}
+                                    data-instalacion={instalacion.id}
+                                    className={`border 
                             ${!shouldShowGray ? 'bg-gray-300' : reserva ? (editReservation ? 'bg-blue-500' : 'bg-red-500 text-white') : ''} 
                             ${installations.length === 1 ? 'w-5/6' : 'w-1/6'} 
                             py-2 cursor-pointer
                             `}
-                          >
-                            {showHour(cRow.merge, time)}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                                  >
+                                    {showHour(cRow.merge, time)}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              );
+            },
+          )}
         </div>
       )}
 

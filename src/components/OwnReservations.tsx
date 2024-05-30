@@ -161,7 +161,7 @@ export default function OwnReservations({
   return (
     <>
       <div
-        className={`${showEditReservation ? '' : 'w-full md:w-2/3 lg:w-3/4 mx-auto bg-white rounded-lg p-6 shadow-md overflow-x-auto'}`}
+        className={`${showEditReservation ? '' : 'w-full lg:w-3/4 mx-auto bg-white rounded-lg p-6 shadow-md overflow-x-auto'}`}
       >
         {showEditReservation && reservationsByInstallation && date ? (
           <ReservationsTable
@@ -176,10 +176,10 @@ export default function OwnReservations({
           />
         ) : (
           <>
-            <div className="flex flex-col sm:flex-row mb-2 mt-0 sm:items-center">
+            <div className="flex flex-col sm:flex-row mb-2 mt-0 sm:items-center overflow-auto">
               <button
                 onClick={() => setShowAllOwnReservations((prevState) => !prevState)}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded sm:mr-4 sm:mt-0"
+                className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded sm:mr-4 sm:mt-0"
               >
                 {showAllOwnReservations ? 'Futuras' : 'Futuras y antiguas'}
               </button>
@@ -189,12 +189,12 @@ export default function OwnReservations({
                 id="reservation-date"
                 min={getDayMonthYear(new Date())}
                 onChange={handleDateChange}
-                className="block pl-3 pr-5 py-2  border-gray-300 rounded-md shadow-sm bg-gray-100 mt-2 sm:mt-0 sm:text-sm"
+                className="block pl-3 pr-5 py-2  border-gray-300 rounded-md shadow-sm bg-gray-100 mt-2 sm:mt-0 text-sm"
               />
 
               <select
                 onChange={handleFilterByInstallation}
-                className="px-4  py-2 border border-gray-300 rounded-md shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:ml-4 sm:mt-0 mt-2"
+                className="px-4  py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:ml-4 sm:mt-0 mt-2"
               >
                 <option value={0}>Todas las instalaciones</option>
                 {installations?.map((instalacion) => (
@@ -209,35 +209,29 @@ export default function OwnReservations({
               <thead className="bg-gray-100">
                 <tr>
                   <th
-                    className="px-6 py-3 text-center text-base font-bold text-gray-700 uppercase tracking-wider bg-gray-200"
-                    colSpan={8}
+                    className="px-3 py-2 text-center text-sm font-bold text-gray-700 uppercase tracking-wider bg-gray-200"
+                    colSpan={6}
                   >
                     {showAllOwnReservations ? 'Reservas próximas y antiguas' : 'Reservas próximas'}
                   </th>
                 </tr>
                 <tr>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    ID Reserva
-                  </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    ID Usuario
-                  </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Instalacion
                   </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Fecha
                   </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Hora
                   </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Duración
                   </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Importe
                   </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Acciones
                   </th>
                 </tr>
@@ -246,13 +240,13 @@ export default function OwnReservations({
                 {ownReservations &&
                   (ownReservations.length === 0 ? (
                     <tr key={1}>
-                      <td colSpan={8} className="text-center text-bold">
+                      <td colSpan={6} className="text-center text-bold">
                         No tienes ninguna reserva aún!
                       </td>
                     </tr>
                   ) : (
                     ownReservations.slice(pagination * 10 - 10, pagination * 10).map((reserva, index) => {
-                      const { id, idUsuario, idInstalacion, fechaYHora, duracion, importe } = reserva;
+                      const { id, idInstalacion, fechaYHora, duracion, importe } = reserva;
                       const nombreInstalacion = installations?.find(
                         (instalacion) => instalacion.id === idInstalacion,
                       )?.nombre;
@@ -268,23 +262,21 @@ export default function OwnReservations({
 
                       return (
                         <tr key={index} className="hover:bg-gray-100 h-20">
-                          <td className="px-6 py-4 whitespace-nowrap text-center">{id}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-center">{idUsuario}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-center" data-id={idInstalacion}>
+                          <td className="px-3 py-2 whitespace-nowrap text-center text-sm" data-id={idInstalacion}>
                             {nombreInstalacion}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-center">{date}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-center">{time}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-center">{duracion}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-center">{importe}€</td>
-                          <td className="flex flex-row px-6 py-4 whitespace-nowrap text-center">
-                            <div className="flex pl-4 justify-center">
+                          <td className="px-3 py-2 whitespace-nowrap text-center text-sm">{date}</td>
+                          <td className="px-3 py-2 whitespace-nowrap text-center text-sm">{time}</td>
+                          <td className="px-3 py-2 whitespace-nowrap text-center text-sm">{duracion}</td>
+                          <td className="px-3 py-2 whitespace-nowrap text-center text-sm">{importe}€</td>
+                          <td className="px-3 py-2 whitespace-nowrap text-center">
+                            <div className="flex pl-2 justify-center">
                               {differenceInHours > 12 && (
                                 <>
                                   <img
                                     src="src/assets/icons/edit.svg"
                                     alt="Edit icon"
-                                    className="w-8 cursor-pointer"
+                                    className="w-6 cursor-pointer"
                                     onClick={() =>
                                       setEditInfo({
                                         installationId: idInstalacion,
@@ -297,7 +289,7 @@ export default function OwnReservations({
                                   <img
                                     src="src/assets/icons/delete.svg"
                                     alt="Delete icon"
-                                    className="w-10 cursor-pointer"
+                                    className="w-6 cursor-pointer"
                                     onClick={() => deleteReservation(id)}
                                   />
                                 </>
@@ -308,21 +300,27 @@ export default function OwnReservations({
                       );
                     })
                   ))}
+                <tr>
+                  <td colSpan={6} className="px-3 py-2 whitespace-nowrap text-sm">
+                    <span className="font-bold">Total de reservas:</span> {totalReservations.current}
+                  </td>
+                </tr>
               </tbody>
             </table>
 
-            <div className="flex justify-center mt-4">
+            <div className="relative flex justify-center mt-4">
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                className="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded mr-2"
                 onClick={() => handlePagination(false)}
               >
                 Previous
               </button>
-              <span className="mx-4 text-center text-lg font-bold bg-gray-400 text-white py-1 px-2 rounded">
+
+              <span className="flex items-center mx-4 text-center text-sm font-bold bg-gray-400 text-white py-1 px-2 rounded">
                 {pagination}
               </span>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
+                className="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded ml-2"
                 onClick={() => handlePagination(true)}
               >
                 Next

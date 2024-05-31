@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { ReservaModal, MergeRows, ReservationsTableProps } from '../types/types';
 import { ReservationModal } from './ReservationModal';
 import ReservationsErrors from './errors/ReservationsError';
@@ -107,7 +107,6 @@ export default function ReservationsTable({
     let reservationsToCheck = reservations;
 
     if (reservations && editInfo) {
-      debugger;
       const editingReservation = hasReserva(editInfo.installationId, editInfo.date.toString());
       reservationsToCheck = reservations.filter((r) => r.id !== editingReservation?.id);
     }
@@ -143,7 +142,6 @@ export default function ReservationsTable({
         const fechaFinalExistente = new Date(fechaInicioExistente.getTime());
         fechaFinalExistente.setTime(fechaInicioExistente.getTime() + reservation.duracion * 60 * 1000);
 
-        debugger;
         if (fechaInicioExistente.getTime() === fechaInicioNueva.getTime()) {
           return true;
         }
@@ -267,7 +265,7 @@ export default function ReservationsTable({
           {(installations.length === 1 ? handleTableResponsive['large'] : handleTableResponsive[typeOfDevice()]).map(
             (range, index) => {
               return (
-                <>
+                <React.Fragment key={index}>
                   <div
                     className={`flex flex-col sm:flex-row bg-gray-100 items-center p-4 rounded-md mb-4 
                 ${index >= 1 ? 'mt-4' : ''}`}
@@ -370,10 +368,10 @@ export default function ReservationsTable({
                                     key={instalacion.id}
                                     data-instalacion={instalacion.id}
                                     className={`border 
-                            ${!shouldShowGray ? 'bg-gray-300' : reserva ? (editReservation ? 'bg-blue-500' : 'bg-red-500 text-white') : ''} 
-                            ${installations.length === 1 ? 'w-5/6' : 'w-1/6'} 
-                            py-2 cursor-pointer
-                            `}
+                                      ${!shouldShowGray ? 'bg-gray-300' : reserva ? (editReservation ? 'bg-blue-500' : 'bg-red-500 text-white') : ''} 
+                                      ${installations.length === 1 ? 'w-5/6' : 'w-1/6'} 
+                                      py-2 cursor-pointer
+                                      `}
                                   >
                                     {showHour(cRow.merge, time)}
                                   </td>
@@ -385,7 +383,7 @@ export default function ReservationsTable({
                       </tbody>
                     </table>
                   </div>
-                </>
+                </React.Fragment>
               );
             },
           )}

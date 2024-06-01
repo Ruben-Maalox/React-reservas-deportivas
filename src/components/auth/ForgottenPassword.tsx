@@ -33,7 +33,7 @@ export default function ForgottenPassword({ setError, showForgottenPassword }: F
   };
 
   return (
-    <div className="flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-2/6">
+    <div className="flex flex-col bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md mx-auto">
       {showNewPassword ? (
         <NewPassword showForgottenPassword={showForgottenPassword} setError={setError} />
       ) : (
@@ -42,9 +42,7 @@ export default function ForgottenPassword({ setError, showForgottenPassword }: F
             <img
               src="/src/assets/images/logoMenosTransparencia.png"
               alt="logo"
-              width={250}
-              height={250}
-              className="mb-10"
+              className="mb-10 w-2/3 sm:w-1/2 md:w-1/2"
             />
           </div>
           <h2 className="text-2xl text-center mb-4 font-bold">Restablecer contraseña</h2>
@@ -58,7 +56,7 @@ export default function ForgottenPassword({ setError, showForgottenPassword }: F
           </div>
 
           <div className="flex flex-col items-center justify-center mt-3">
-            <button className="flex bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full animate-pulse">
+            <button className="w-full sm:w-2/3 bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full animate-pulse">
               Enviar
             </button>
           </div>
@@ -68,7 +66,7 @@ export default function ForgottenPassword({ setError, showForgottenPassword }: F
       <div className="flex items-center justify-center m-4">
         <button
           onClick={() => setShowNewPassword((prevState) => !prevState)}
-          className="flex bg-violet-400 hover:bg-violet-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
+          className="w-full sm:w-2/3 bg-violet-400 hover:bg-violet-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
         >
           {showNewPassword ? 'Volver a enviar token' : '¿Ya tienes el token?'}
         </button>
@@ -77,7 +75,7 @@ export default function ForgottenPassword({ setError, showForgottenPassword }: F
       <div className="flex items-center justify-center m-4">
         <button
           onClick={() => showForgottenPassword(false)}
-          className="flex bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
+          className="w-full sm:w-2/3 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
         >
           Volver a inicio de sesión
         </button>

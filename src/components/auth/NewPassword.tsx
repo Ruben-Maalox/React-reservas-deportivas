@@ -30,15 +30,9 @@ export default function NewPassword({ showForgottenPassword, setError }: NewPass
   };
 
   return (
-    <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+    <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md mx-auto" onSubmit={handleSubmit}>
       <div className="flex items-center justify-center">
-        <img
-          src="/src/assets/images/logoMenosTransparencia.png"
-          alt="logo"
-          width={250}
-          height={250}
-          className="mb-10"
-        />
+        <img src="/src/assets/images/logoMenosTransparencia.png" alt="logo" className="mb-10 w-2/3 sm:w-1/2 md:w-1/2" />
       </div>
 
       <h2 className="text-2xl text-center mb-4 font-bold">Restablecer contraseña</h2>
@@ -72,7 +66,7 @@ export default function NewPassword({ showForgottenPassword, setError }: NewPass
       </div>
 
       <div className="flex flex-col items-center justify-center mt-3">
-        <button className="w-1/3 bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full animate-pulse">
+        <button className="w-full sm:w-2/3 bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full animate-pulse">
           Restablecer
         </button>
       </div>

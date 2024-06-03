@@ -28,6 +28,7 @@ export default function OwnReservations({
   const [showEditReservation, setShowEditReservation] = useState<boolean>(false);
   const totalReservations = useRef<number>(0);
   const [pagination, setPagination] = useState<number>(1);
+  const [ownReservationsFetch, setOwnReservationsFetch] = useState<Reserva[]>();
   const [showAllOwnReservations, setShowAllOwnReservations] = useState<boolean>(false);
   const [filterByDate, setFilterByDate] = useState<Date>();
   const [filterByInstallation, setFilterByInstallation] = useState<number>(0);
@@ -43,25 +44,36 @@ export default function OwnReservations({
 
   // Métodos para filtrar en las reservas propias
 
-  const ownReservationsByUser = useMemo(() => {
-    if (showAllOwnReservations) {
-      const allReservations = reservations
-        ?.filter((reservation) => reservation.idUsuario === user?.id)
-        .sort((a, b) => b.id - a.id);
+  useEffect(() => {
+    fetch('http://localhost:8000/api/reservas/userEmail', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setOwnReservationsFetch(data.results);
+      });
+  }, [reservations]);
 
-      totalReservations.current = allReservations?.length || 0;
+  const ownReservationsByUser = useMemo(() => {
+    if (showAllOwnReservations && ownReservationsFetch) {
+      const allOwnReservations = [...ownReservationsFetch].sort((a, b) => b.id - a.id);
+
+      totalReservations.current = allOwnReservations?.length || 0;
       setPagination(1);
 
-      return allReservations;
+      return allOwnReservations;
     }
 
-    totalReservations.current = reservations?.length || 0;
+    totalReservations.current = ownReservationsFetch?.length || 0;
     setPagination(1);
 
-    return reservations
+    return ownReservationsFetch
       ?.filter((reservation) => new Date(reservation.fechaYHora).getTime() >= new Date().getTime())
       .sort((a, b) => b.id - a.id);
-  }, [reservations, showAllOwnReservations]);
+  }, [ownReservationsFetch, showAllOwnReservations]);
 
   const ownReservationsByDate = useMemo(() => {
     if (filterByDate !== undefined) {

@@ -37,7 +37,7 @@ export const ReservationModal = ({
         handleCloseModal();
         handleShowEditReservation && handleShowEditReservation(); // Para comprobar que tenemos la función ya que puede ser tb undefined
         handleRefetch();
-      }, 5000);
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [responseMessage, handleCloseModal]);

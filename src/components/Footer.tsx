@@ -28,15 +28,7 @@ export default function Footer() {
         <h2 className="font-bold text-lg mb-2">Horario:</h2>
         <p className="mb-1">
           <AiOutlineClockCircle className="inline-block mr-1" />
-          <span className="font-bold">Lunes - Viernes:</span> 9:00 - 23:00
-        </p>
-        <p className="mb-1">
-          <AiOutlineClockCircle className="inline-block mr-1" />
-          <span className="font-bold">Sábado:</span> 10:00 - 14:00
-        </p>
-        <p className="mb-1">
-          <AiOutlineClockCircle className="inline-block mr-1" />
-          <span className="font-bold">Domingo:</span> Cerrado
+          <span className="font-bold">Lunes - Domingo:</span> 9:00 - 23:00
         </p>
       </div>
       {/* CONTACTO */}

@@ -19,7 +19,7 @@ export default function ReservationsAdmin() {
   const [filterByDate, setFilterByDate] = useState<Date>();
   const [filterByInstallation, setFilterByInstallation] = useState<number>(0);
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const { error, setError } = useError(3000);
+  const { error, setError } = useError(2000);
 
   const isMobileDevice = useMediaQuery({ maxWidth: 665 });
 
@@ -155,7 +155,7 @@ export default function ReservationsAdmin() {
   };
 
   return (
-    <div className="w-full md:w-2/3 lg:w-3/4 mx-auto rounded-lg overflow-x-auto m-4">
+    <div className="w-full lg:w-3/4 mx-auto rounded-lg overflow-x-auto m-4">
       {error && <AdminError error={error} />}
 
       <div
@@ -197,57 +197,145 @@ export default function ReservationsAdmin() {
         </p>
       </div>
 
-      <h2 className="text-2xl font-bold text-center mt-4">
-        {showAllReservations ? 'Reservas próximas y antiguas' : 'Reservas próximas'}
-      </h2>
-      <table className="min-w-full divide-y divide-gray-200 mt-4">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              ID Usuario
-            </th>
-            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              ID Instalación
-            </th>
-            <th className="flex px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Fecha y Hora
-            </th>
-            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Duración
-            </th>
-            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Importe
-            </th>
-            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Acciones
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+      {isMobileDevice ? (
+        <div className="flex flex-col items-center bg-slate-50">
+          <h2 className="text-2xl font-bold">
+            {showAllReservations ? 'Reservas próximas y antiguas' : 'Reservas próximas'}
+          </h2>
+          <hr className="w-full border-t-2 border-gray-200 my-2" />
+
           {finalReservations &&
-            finalReservations.slice(pagination * 10 - 10, pagination * 10)?.map((reservation) => (
-              <tr key={reservation.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-center">{reservation.id}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">{reservation.idUsuario}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">{reservation.idInstalacion}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">
-                  {format(new Date(reservation.fechaYHora), 'HH:mm dd/MM/yyyy')}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">{reservation.duracion}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">{reservation.importe}</td>
-                <td className="flex justify-center px-6 py-4 whitespace-nowrap text-center">
-                  <img
-                    src="src/assets/icons/delete.svg"
-                    alt="Delete icon"
-                    className="w-10 h10 cursor-pointer"
-                    onClick={() => handleDeleteReservationRequest(reservation.id)}
-                  />
-                </td>
-              </tr>
+            (finalReservations.length === 0 ? (
+              <p>No tienes reservas aún!!</p>
+            ) : (
+              finalReservations.slice(pagination * 10 - 10, pagination * 10).map((reserva, index) => {
+                const { id, idInstalacion, fechaYHora, duracion, importe } = reserva;
+                const nombreInstalacion = installations?.find(
+                  (instalacion) => instalacion.id === idInstalacion,
+                )?.nombre;
+                const [date, timeWithZone] = fechaYHora.split('T');
+                const [fullTime, _] = timeWithZone.split('+');
+                const time = fullTime.substring(0, 5);
+
+                const reservationDateTime = new Date(`${date}T${time}`);
+                const differenceInHours =
+                  (reservationDateTime.getTime() -
+                    new Date().getTime() +
+                    (reservationDateTime.getTimezoneOffset() + 120) * 60 * 1000) /
+                  (1000 * 60 * 60);
+
+                return (
+                  <div
+                    className="flex flex-col mt-3 mb-3 w-2/3 bg-white shadow-lg rounded-lg overflow-hidden"
+                    key={index}
+                  >
+                    <div className="px-4 py-5 sm:p-6">
+                      <p className="font-bold text-xl mb-2">Instalacion: {nombreInstalacion}</p>
+                      <p>
+                        <span className="font-bold">Fecha:</span> {date}
+                      </p>
+                      <p>
+                        <span className="font-bold">Hora:</span> {time}
+                      </p>
+                      <p>
+                        <span className="font-bold">Duración:</span> {duracion}
+                      </p>
+                      <p>
+                        <span className="font-bold">Importe:</span> {importe}€
+                      </p>
+                    </div>
+                    <div className="px-4 py-4 sm:px-6 flex pl-2 justify-center border-t border-gray-200">
+                      {differenceInHours > 12 && (
+                        <>
+                          <img
+                            src="src/assets/icons/delete.svg"
+                            alt="Delete icon"
+                            className="w-8 cursor-pointer"
+                            onClick={() => handleDeleteReservationRequest(id)}
+                          />
+                        </>
+                      )}
+                    </div>
+                  </div>
+                );
+              })
             ))}
-        </tbody>
-      </table>
+        </div>
+      ) : (
+        <>
+          <h2 className="text-2xl font-bold text-center mt-4">
+            {showAllReservations ? 'Reservas próximas y antiguas' : 'Reservas próximas'}
+          </h2>
+
+          <table className="min-w-full divide-y divide-gray-200 mt-4">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  ID Usuario
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Instalación
+                </th>
+                <th className="flex px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Fecha y Hora
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Duración
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Importe
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {finalReservations &&
+                finalReservations.slice(pagination * 10 - 10, pagination * 10)?.map((reservation) => {
+                  const [date, timeWithZone] = reservation.fechaYHora.split('T');
+                  const [fullTime, _] = timeWithZone.split('+');
+                  const time = fullTime.substring(0, 5);
+
+                  const reservationDateTime = new Date(`${date}T${time}`);
+                  const differenceInHours =
+                    (reservationDateTime.getTime() -
+                      new Date().getTime() +
+                      (reservationDateTime.getTimezoneOffset() + 120) * 60 * 1000) /
+                    (1000 * 60 * 60);
+
+                  const nombreInstalacion = installations?.find(
+                    (instalacion) => instalacion.id === reservation.idInstalacion,
+                  )?.nombre;
+
+                  return (
+                    <tr key={reservation.id}>
+                      <td className="px-4 py-4 whitespace-nowrap text-center">{reservation.idUsuario}</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-center">{nombreInstalacion}</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-center">
+                        {format(new Date(reservation.fechaYHora), 'HH:mm dd/MM/yyyy')}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-center">{reservation.duracion}</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-center">{reservation.importe}</td>
+                      <td className="flex justify-center px-6 py-4 whitespace-nowrap text-center">
+                        {differenceInHours > 12 && (
+                          <>
+                            <img
+                              src="src/assets/icons/delete.svg"
+                              alt="Delete icon"
+                              className="w-8 cursor-pointer"
+                              onClick={() => handleDeleteReservationRequest(reservation.id)}
+                            />
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </>
+      )}
 
       <div className="relative flex justify-center mt-4">
         <button

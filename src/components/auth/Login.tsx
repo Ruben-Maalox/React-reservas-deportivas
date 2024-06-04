@@ -66,12 +66,6 @@ export default function Login({ setShowLogin, setError, showForgottenPassword }:
             placeholder="Contraseña"
           />
         </div>
-        <div className="flex items-center justify-center mb-4">
-          <input type="checkbox" id="remember" name="remember" value="remember" className="mr-2" />
-          <label className="text-gray-700 text-sm font-bold" htmlFor="remember">
-            Recordar inicio de sesión
-          </label>
-        </div>
         <div className="flex flex-col items-center justify-center mt-3">
           <button className="w-full md:w-1/2 lg:w-1/3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full animate-pulse">
             Entrar

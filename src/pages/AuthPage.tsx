@@ -8,7 +8,7 @@ import ForgottenPassword from '../components/auth/ForgottenPassword';
 export default function AuthPage() {
   const [showLogin, setShowLogin] = useState<boolean>(true);
   const [showForgottenPassword, setShowForgottenPasword] = useState<boolean>(false);
-  const { error, setError } = useError(5000);
+  const { error, setError } = useError(2000);
 
   const handleShowForgottenPassword = (shouldShow: boolean) => {
     setShowForgottenPasword(shouldShow);

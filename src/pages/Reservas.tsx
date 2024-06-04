@@ -11,7 +11,7 @@ export default function Reservas() {
   const [showOwnReservations, setShowOwnReservations] = useState<boolean>(false);
   const [installations, setInstallations] = useState<Instalacion[]>([]);
   const [reservations, setReservations] = useState<Reserva[]>([]);
-  const { error, setError } = useError(3000);
+  const { error, setError } = useError(2000);
   const [refetch, setRefetch] = useState<boolean>(false);
   const { user } = useAuthProvider();
 

@@ -129,6 +129,7 @@ export default function InstallationsAdmin() {
                         <input
                           type="text"
                           name="nombre"
+                          style={{ width: 'min-content', minWidth: '20px' }}
                           defaultValue={installationsInfoUpdated.current[installation.id].nombre}
                           onChange={(event) => updateInstallationInfo(event, installation.id)}
                         />

@@ -165,10 +165,18 @@ export default function ReservationsTable({
           return false;
         }
 
-        duracionNueva = 90;
+        if (fechaInicioNueva.getHours() === 22) {
+          duracionNueva = 60;
+        } else {
+          duracionNueva = 90;
+        }
       });
     } else {
-      duracionNueva = 90;
+      if (new Date(fechaYHoraNueva).getHours() === 22) {
+        duracionNueva = 60;
+      } else {
+        duracionNueva = 90;
+      }
     }
 
     return duracionNueva;
@@ -179,9 +187,14 @@ export default function ReservationsTable({
       return;
     }
 
+    if (isAfterCloseTime(fechaYHoraNueva)) {
+      setError('No puedes realizar una reserva a partir de las 22:30');
+      return;
+    }
+
     const nuevaDuracion = checkIfReservationAlreadyExists(idInstalacion, fechaYHoraNueva);
     if (nuevaDuracion === 0) {
-      setError('No puedes realizar esta reserva!');
+      setError('Ya existe una reserva en ese horario!');
       return;
     }
 
@@ -244,13 +257,21 @@ export default function ReservationsTable({
     return true;
   }
 
+  function isAfterCloseTime(fechaYHoraNueva: string): boolean {
+    const targetDate = new Date(fechaYHoraNueva);
+    const closeTime = new Date(fechaYHoraNueva);
+    closeTime.setHours(22, 30, 0, 0);
+
+    return targetDate.getTime() >= closeTime.getTime();
+  }
+
   return (
     <>
       {installations && (
         <div
           className={`w-full relative ${installations.length === 1 ? 'w-1/6' : 'md:w-2/3 lg:w-3/4'} mx-auto bg-white rounded-lg p-6 shadow-md`}
         >
-          {error && <ReservationsErrors />}
+          {error && <ReservationsErrors error={error} />}
           {installations.length === 1 && (
             <button
               onClick={() => handleShowEditReservation && handleShowEditReservation()}
@@ -313,7 +334,7 @@ export default function ReservationsTable({
                         </tr>
                       </thead>
                       <tbody>
-                        {Array.from({ length: 29 }, (_, i) => i + 18).map((halfHour) => {
+                        {Array.from({ length: 28 }, (_, i) => i + 18).map((halfHour) => {
                           const hour1 = Math.floor(halfHour / 2) % 24;
                           const hour2 = hour1 >= 10 ? hour1 : `0${hour1}`;
                           const time = `${hour2}:${halfHour % 2 === 0 ? '00' : '30'}`;

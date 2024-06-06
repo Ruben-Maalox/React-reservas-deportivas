@@ -403,6 +403,10 @@ export default function ReservationsTable({
                         })}
                       </tbody>
                     </table>
+                    <p className="mt-4 text-sm text-gray-800 font-bold">
+                      *Informamos que para cualquier cambio o anulación de reserva debe comunicarse con 12h de
+                      antelación. De lo contrario no se devolverá el importe.*
+                    </p>
                   </div>
                 </React.Fragment>
               );

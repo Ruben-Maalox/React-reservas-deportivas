@@ -4,8 +4,8 @@ import './Footer.css';
 
 export default function Footer() {
   return (
-    <footer className="p-5 bg-gray-200 text-white flex flex-col items-start md:flex-row md:justify-between md:items-center">
-      <div id="social-ftr" className="flex flex-col items-center mb-4 md:mb-0">
+    <footer className="p-5 bg-gray-200 text-white flex flex-col items-start md:flex-row md:justify-between md:items-start">
+      <div id="social-ftr" className="flex flex-col items-center md:items-center mb-4 md:mb-0">
         <img src="./src/assets/images/logo-white-transp.png" alt="LetsMove" className="w-25 h-16" />
         <div className="social-networks flex flex-row mt-4">
           <img src="./src/assets/icons/facebook.svg" alt="Facebook" className="w-4 h-4 mr-2" />
@@ -24,7 +24,7 @@ export default function Footer() {
           Aviso legal
         </Link>
       </div>
-      <div className="mt-5 text-black mb-4 md:mb-0">
+      <div className="text-black mb-4 md:mb-0">
         <h2 className="font-bold text-lg mb-2">Horario:</h2>
         <p className="mb-1">
           <AiOutlineClockCircle className="inline-block mr-1" />

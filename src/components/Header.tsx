@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import logo from '../assets/images/logo-white-transp.png';
 import NavLinks from './navegation/NavLinks';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +12,9 @@ export default function Header() {
 
   return (
     <header className="flex flex-row items-center justify-between p-5 bg-white shadow-md relative">
-      <img src={logo} alt="logo" className="h-20 w-64" />
+      <Link to="/">
+        <img src={logo} alt="logo" className="h-20 w-64" />
+      </Link>
       <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden">
         {isOpen ? (
           <svg

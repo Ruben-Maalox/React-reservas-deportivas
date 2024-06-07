@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import switchIcon from '/src/assets/icons/switch-white.svg';
-import deleteIcon from 'src/assets/icons/delete.svg';
-import editIcon from 'src/assets/icons/edit.svg';
+import deleteIcon from '/src/assets/icons/delete.svg';
+import editIcon from '/src/assets/icons/edit.svg';
 // import reservationsJSON from "../json_prueba/reservas.json";
 // --> Types
 import { EditReservationInfo, Instalacion, Reserva } from '../types/types';

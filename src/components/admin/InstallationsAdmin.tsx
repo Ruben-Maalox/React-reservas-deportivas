@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Instalacion } from '../../types/types';
 import { useAuthProvider } from '../../context/useAuthProvider';
-import deleteIcon from 'src/assets/icons/delete.svg';
-import editIcon from 'src/assets/icons/edit.svg';
-import newIcon from 'src/assets/icons/new.svg';
+import deleteIcon from '/src/assets/icons/delete.svg';
+import editIcon from '/src/assets/icons/edit.svg';
+import newIcon from '/src/assets/icons/new.svg';
 
 export default function InstallationsAdmin() {
   const { user } = useAuthProvider();

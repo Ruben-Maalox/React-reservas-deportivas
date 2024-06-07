@@ -29,7 +29,7 @@ export default function GoogleLogin({ setIsLoading }: { setIsLoading: (isLoading
   useEffect(() => {
     if (userGoogle) {
       setIsLoading(true);
-      fetch(`http://localhost:8000/api/login-google`, {
+      fetch(`${import.meta.env.VITE_API_URL}/login-google`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

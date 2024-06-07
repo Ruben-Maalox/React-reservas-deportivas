@@ -45,7 +45,7 @@ export default function OwnReservations({
   // Métodos para filtrar en las reservas propias
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/reservas/userEmail', {
+    fetch(`${import.meta.env.VITE_API_URL}/reservas/userEmail`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${user?.token}`,
@@ -141,7 +141,7 @@ export default function OwnReservations({
 
   const deleteReservation = async (reservationId: number) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/reservas/delete/${reservationId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/reservas/delete/${reservationId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

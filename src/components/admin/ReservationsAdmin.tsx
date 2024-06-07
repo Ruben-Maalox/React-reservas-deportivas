@@ -24,7 +24,7 @@ export default function ReservationsAdmin() {
   const isMobileDevice = useMediaQuery({ maxWidth: 665 });
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/reservas/all', {
+    fetch(`${import.meta.env.VITE_API_URL}/reservas/all`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export default function ReservationsAdmin() {
         }
       });
 
-    fetch('http://localhost:8000/api/instalaciones/all', {
+    fetch(`${import.meta.env.VITE_API_URL}/instalaciones/all`, {
       headers: {
         Authorization: `Bearer ${user?.token}`,
       },
@@ -139,7 +139,7 @@ export default function ReservationsAdmin() {
   };
 
   const handleDeleteReservationRequest = (idReservation: number) => {
-    fetch(`http://localhost:8000/api/reservas/delete/${idReservation}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/reservas/delete/${idReservation}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

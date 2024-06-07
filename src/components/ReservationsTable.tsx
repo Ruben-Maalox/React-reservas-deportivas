@@ -194,7 +194,7 @@ export default function ReservationsTable({
 
     const nuevaDuracion = checkIfReservationAlreadyExists(idInstalacion, fechaYHoraNueva);
     if (nuevaDuracion === 0) {
-      setError('Ya existe una reserva en ese horario!');
+      setError('No puedes hacer esta reserva!');
       return;
     }
 

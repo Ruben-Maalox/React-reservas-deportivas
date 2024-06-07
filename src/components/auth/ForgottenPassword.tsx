@@ -14,7 +14,7 @@ export default function ForgottenPassword({ setError, showForgottenPassword }: F
     const form = event.currentTarget;
     const email = (form.email as HTMLInputElement).value;
 
-    fetch('http://localhost:8000/api/request-reset-password', {
+    fetch(`${import.meta.env.VITE_API_URL}/request-reset-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

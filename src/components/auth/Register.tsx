@@ -37,7 +37,7 @@ export default function Register({ setShowLogin, setError }: AuthProps) {
 
     const body = JSON.stringify({ email, password, name, surname, phone });
 
-    fetch('http://127.0.0.1:8000/api/register', {
+    fetch(`${import.meta.env.VITE_API_URL}/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

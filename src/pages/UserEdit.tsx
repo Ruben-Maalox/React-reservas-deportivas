@@ -45,7 +45,7 @@ export default function UserEdit() {
       formData.append('picture', selectedFile);
     }
     // Aquí puedes hacer un fetch para actualizar los datos del usuario
-    const response = await fetch(`http://localhost:8000/api/user/update/${user?.id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/user/update/${user?.id}`, {
       method: 'POST', // Cambiado a POST
       headers: {
         Authorization: `Bearer ${user?.token}`,

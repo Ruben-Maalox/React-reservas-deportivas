@@ -16,7 +16,7 @@ export default function Reservas() {
   const { user } = useAuthProvider();
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/instalaciones/all', {
+    fetch(`${import.meta.env.VITE_API_URL}/instalaciones/all`, {
       headers: {
         Authorization: `Bearer ${user?.token}`,
       },
@@ -31,7 +31,7 @@ export default function Reservas() {
         }
       });
 
-    fetch('http://localhost:8000/api/reservas/all', {
+    fetch(`${import.meta.env.VITE_API_URL}/reservas/all`, {
       headers: {
         Authorization: `Bearer ${user?.token}`,
       },

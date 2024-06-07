@@ -11,7 +11,7 @@ export default function NewPassword({ showForgottenPassword, setError }: NewPass
     const token = (form.token as HTMLInputElement).value;
     const newPassword = (form.password as HTMLInputElement).value;
 
-    fetch('http://localhost:8000/api/reset-password', {
+    fetch(`${import.meta.env.VITE_API_URL}/reset-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

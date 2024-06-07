@@ -53,7 +53,7 @@ export const ReservationModal = ({
     };
 
     if (isEdit && reservationId !== null) {
-      fetch(`http://127.0.0.1:8000/api/reservas/edit/${reservationId}`, {
+      fetch(`${import.meta.env.VITE_API_URL}/reservas/edit/${reservationId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export const ReservationModal = ({
 
     // Si no estamos editanto, es porque creamos una nueva reserva
     if (isEdit === false) {
-      fetch('http://127.0.0.1:8000/api/reservas/new', {
+      fetch(`${import.meta.env.VITE_API_URL}/reservas/new`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

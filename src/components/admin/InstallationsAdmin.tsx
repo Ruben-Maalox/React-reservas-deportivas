@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Instalacion } from '../../types/types';
 import { useAuthProvider } from '../../context/useAuthProvider';
+import deleteIcon from 'src/assets/icons/delete.svg';
+import editIcon from 'src/assets/icons/edit.svg';
+import newIcon from 'src/assets/icons/new.svg';
 
 export default function InstallationsAdmin() {
   const { user } = useAuthProvider();
@@ -145,14 +148,14 @@ export default function InstallationsAdmin() {
                       </td>
                       <td className="flex justify-center px-6 py-4 whitespace-nowrap text-center">
                         <img
-                          src="src/assets/icons/edit.svg"
-                          alt="Delete icon"
+                          src={editIcon}
+                          alt="Edit icon"
                           className="w-10 h10 cursor-pointer"
                           onClick={() => handleEditInstallationRequest(installation.id)}
                         />
 
                         <img
-                          src="src/assets/icons/delete.svg"
+                          src={deleteIcon}
                           alt="Delete icon"
                           className="w-10 h10 cursor-pointer"
                           onClick={() => handleDeleteInstallationRequest(installation.id)}
@@ -188,7 +191,7 @@ export default function InstallationsAdmin() {
                   </td>
                   <td className="flex justify-center px-6 py-4 whitespace-nowrap text-center">
                     <img
-                      src="src/assets/icons/new.svg"
+                      src={newIcon}
                       alt="New icon"
                       className="w-10 h10 cursor-pointer"
                       onClick={() => handleNewInstallationRequest()}

@@ -1,3 +1,5 @@
+import logoEmpresa from '/src/assets/images/logoMenosTransparencia.png';
+
 export interface NewPasswordProps {
   showForgottenPassword: (shouldShow: boolean) => void;
   setError: (showError: string) => void;
@@ -32,7 +34,7 @@ export default function NewPassword({ showForgottenPassword, setError }: NewPass
   return (
     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md mx-auto" onSubmit={handleSubmit}>
       <div className="flex items-center justify-center">
-        <img src="/src/assets/images/logoMenosTransparencia.png" alt="logo" className="mb-10 w-2/3 sm:w-1/2 md:w-1/2" />
+        <img src={logoEmpresa} alt="logo" className="mb-10 w-2/3 sm:w-1/2 md:w-1/2" />
       </div>
 
       <h2 className="text-2xl text-center mb-4 font-bold">Restablecer contraseña</h2>

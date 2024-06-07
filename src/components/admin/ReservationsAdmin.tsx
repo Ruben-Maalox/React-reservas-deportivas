@@ -6,6 +6,7 @@ import { getDayMonthYear } from '../../utils/utils';
 import { useMediaQuery } from 'react-responsive';
 import useError from '../../hooks/useError';
 import AdminError from '../errors/AdminError';
+import switchIcon from '/src/assets/icons/switch-white.svg';
 
 export default function ReservationsAdmin() {
   const { user } = useAuthProvider();
@@ -166,7 +167,7 @@ export default function ReservationsAdmin() {
           onClick={() => setShowAllReservations((prevState) => !prevState)}
           className={`${isMobileDevice ? '' : 'mr-4 mt-0'} flex items-center bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded`}
         >
-          <img src="/src/assets/icons/switch-white.svg" className="w-6 mr-2" />
+          <img src={switchIcon} className="w-6 mr-2" />
           {showAllReservations ? 'Futuras' : 'Futuras y antiguas'}
         </button>
 

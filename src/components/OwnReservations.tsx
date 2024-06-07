@@ -1,4 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import switchIcon from '/src/assets/icons/switch-white.svg';
+import deleteIcon from 'src/assets/icons/delete.svg';
+import editIcon from 'src/assets/icons/edit.svg';
 // import reservationsJSON from "../json_prueba/reservas.json";
 // --> Types
 import { EditReservationInfo, Instalacion, Reserva } from '../types/types';
@@ -202,7 +205,7 @@ export default function OwnReservations({
                 onClick={() => setShowAllOwnReservations((prevState) => !prevState)}
                 className={`${isMobileDevice ? '' : 'mr-4 mt-0'} flex items-center bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded`}
               >
-                <img src="/src/assets/icons/switch-white.svg" className="w-6 mr-2" />
+                <img src={switchIcon} className="w-6 mr-2" />
                 {showAllOwnReservations ? 'Futuras' : 'Futuras y antiguas'}
               </button>
 
@@ -284,7 +287,7 @@ export default function OwnReservations({
                             {differenceInHours > 12 && (
                               <>
                                 <img
-                                  src="src/assets/icons/edit.svg"
+                                  src={editIcon}
                                   alt="Edit icon"
                                   className="w-8 cursor-pointer mr-4"
                                   onClick={() =>
@@ -297,7 +300,7 @@ export default function OwnReservations({
                                 />
 
                                 <img
-                                  src="src/assets/icons/delete.svg"
+                                  src={deleteIcon}
                                   alt="Delete icon"
                                   className="w-8 cursor-pointer"
                                   onClick={() => deleteReservation(id)}
@@ -381,7 +384,7 @@ export default function OwnReservations({
                                 {differenceInHours > 12 && (
                                   <>
                                     <img
-                                      src="src/assets/icons/edit.svg"
+                                      src={editIcon}
                                       alt="Edit icon"
                                       className="w-8 cursor-pointer"
                                       onClick={() =>
@@ -394,7 +397,7 @@ export default function OwnReservations({
                                     />
 
                                     <img
-                                      src="src/assets/icons/delete.svg"
+                                      src={deleteIcon}
                                       alt="Delete icon"
                                       className="w-8 cursor-pointer"
                                       onClick={() => deleteReservation(id)}

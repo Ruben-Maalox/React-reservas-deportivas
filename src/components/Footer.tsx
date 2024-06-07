@@ -1,17 +1,22 @@
 import { AiOutlinePhone, AiOutlineMail, AiOutlineHome, AiOutlineClockCircle } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import './Footer.css';
+import facebook from '/src/assets/icons/facebook.svg';
+import instagram from '/src/assets/icons/instagram.svg';
+import twitter from '/src/assets/icons/twitter.svg';
+import tiktok from '/src/assets/icons/tiktok.svg';
+import logoEmpresa from '/src/assets/images/logo-white-transp.png';
 
 export default function Footer() {
   return (
     <footer className="p-5 bg-gray-200 text-white flex flex-col items-start md:flex-row md:justify-between md:items-start">
       <div id="social-ftr" className="flex flex-col items-center md:items-center mb-4 md:mb-0">
-        <img src="./src/assets/images/logo-white-transp.png" alt="LetsMove" className="w-25 h-16" />
+        <img src={logoEmpresa} alt="LetsMove" className="w-25 h-16" />
         <div className="social-networks flex flex-row mt-4">
-          <img src="./src/assets/icons/facebook.svg" alt="Facebook" className="w-4 h-4 mr-2" />
-          <img src="./src/assets/icons/instagram.svg" alt="Instagram" className="w-4 h-4 mr-2" />
-          <img src="./src/assets/icons/twitter.svg" alt="twitter" className="w-4 h-4 mr-2" />
-          <img src="./src/assets/icons/tiktok.svg" alt="tiktok" className="w-4 h-4" />
+          <img src={facebook} alt="Facebook" className="w-4 h-4 mr-2" />
+          <img src={instagram} alt="Instagram" className="w-4 h-4 mr-2" />
+          <img src={twitter} alt="twitter" className="w-4 h-4 mr-2" />
+          <img src={tiktok} alt="tiktok" className="w-4 h-4" />
         </div>
       </div>
       {/* Añadir enlaces politica de cookies, privacidad, aviso legal. */}

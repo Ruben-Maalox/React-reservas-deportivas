@@ -54,9 +54,12 @@ export default function ReservationsTable({
 
   const handlePrevDay = () => {
     //No permitir seleccionar fechas anteriores a la actual
-    if (new Date().getTime() > selectedDate.getTime()) {
+    const isBeforeCurrentDate =
+      new Date(new Date().setHours(0, 0, 0, 0)).getTime() >= new Date(selectedDate.setHours(0, 0, 0, 0)).getTime();
+    if (isBeforeCurrentDate) {
       return;
     }
+
     setSelectedDate((prevDate) => new Date(new Date(prevDate).setDate(prevDate.getDate() - 1)));
   };
 

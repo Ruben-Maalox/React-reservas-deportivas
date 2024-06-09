@@ -213,6 +213,7 @@ export default function OwnReservations({
                 type="date"
                 id="reservation-date"
                 min={getDayMonthYear(new Date())}
+                value={getDayMonthYear(filterByDate || new Date())}
                 onChange={handleDateChange}
                 className={`${isMobileDevice ? 'mt-2' : 'mt-0'} block pl-3 pr-5 py-2  border-gray-300 rounded-md shadow-sm bg-gray-100 text-sm`}
               />
@@ -419,7 +420,7 @@ export default function OwnReservations({
                 className="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded mr-2"
                 onClick={() => handlePagination(false)}
               >
-                Previous
+                &lt;
               </button>
 
               <span className="flex items-center mx-4 text-center text-sm font-bold bg-gray-400 text-white py-1 px-2 rounded">
@@ -429,7 +430,7 @@ export default function OwnReservations({
                 className="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded ml-2"
                 onClick={() => handlePagination(true)}
               >
-                Next
+                &gt;
               </button>
             </div>
           </>

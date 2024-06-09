@@ -56,7 +56,7 @@ export default function ForgottenPassword({ setError, showForgottenPassword }: F
           </div>
 
           <div className="flex flex-col items-center justify-center mt-3">
-            <button className="w-full sm:w-2/3 bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full animate-pulse">
+            <button className="w-full sm:w-2/3 bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full hover:animate-pulse">
               Enviar
             </button>
           </div>
@@ -75,7 +75,7 @@ export default function ForgottenPassword({ setError, showForgottenPassword }: F
       <div className="flex items-center justify-center m-4">
         <button
           onClick={() => showForgottenPassword(false)}
-          className="w-full sm:w-2/3 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
+          className="w-full sm:w-2/3 bg-green-600 hover:bg-green-800 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
         >
           Volver a inicio de sesión
         </button>

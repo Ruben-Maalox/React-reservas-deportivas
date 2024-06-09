@@ -133,7 +133,7 @@ export default function Register({ setShowLogin, setError }: AuthProps) {
           <button
             type="button"
             onClick={() => setShowLogin(true)}
-            className="w-full sm:w-2/3 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
+            className="w-full sm:w-2/3 bg-green-600 hover:bg-green-800 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse active:animate-bounce"
           >
             Inicia sesión
           </button>

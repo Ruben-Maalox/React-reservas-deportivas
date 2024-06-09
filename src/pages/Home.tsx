@@ -12,14 +12,11 @@ export default function Home() {
         <img src={homeImage} alt="Carrusel de imágenes" />
 
         <div id="home-info" className="flex flex-col md:flex-row w-full">
-          <div
-            className="flex flex-row p-4 justify-center items-center w-full md:w-1/3"
-            style={{ backgroundColor: '#959595' }}
-          >
+          <div className="flex flex-row p-4 justify-center items-center w-full md:w-1/3 bg-gray-300">
             <img className="m-4" src={sneakers} alt="Whatsapp" style={{ width: '150px' }} />
             <div className="flex flex-col items-center">
-              <p className="text-white">Instalaciones de alta calidad</p>
-              <h2 className="text-white">Disfruta!</h2>
+              <p>Instalaciones de alta calidad</p>
+              <h2>Disfruta!</h2>
             </div>
           </div>
           <div
@@ -28,14 +25,11 @@ export default function Home() {
           >
             <img className="m-4" src={whatsapp} alt="Whatsapp" />
             <div className="flex flex-col items-center">
-              <p className="text-white">Infórmate sin compromiso</p>
-              <h2 className="text-white">+34 662 662 662</h2>
+              <p>Infórmate sin compromiso</p>
+              <h2>+34 662 662 662</h2>
             </div>
           </div>
-          <div
-            className="flex flex-row p-4 justify-center items-center w-full md:w-1/3"
-            style={{ backgroundColor: '#C3E5D4' }}
-          >
+          <div className="flex flex-row p-4 justify-center items-center w-full md:w-1/3 bg-emerald-100">
             <img className="m-4" src={heart} alt="Whatsapp" />
             <div className="flex flex-col items-center">
               <p className="">Ven a divertite</p>

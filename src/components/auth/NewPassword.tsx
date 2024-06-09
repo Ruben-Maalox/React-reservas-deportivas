@@ -68,7 +68,7 @@ export default function NewPassword({ showForgottenPassword, setError }: NewPass
       </div>
 
       <div className="flex flex-col items-center justify-center mt-3">
-        <button className="w-full sm:w-2/3 bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full animate-pulse">
+        <button className="w-full sm:w-2/3 bg-orange-400 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full hover:animate-pulse">
           Restablecer
         </button>
       </div>

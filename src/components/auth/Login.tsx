@@ -67,7 +67,7 @@ export default function Login({ setShowLogin, setError, showForgottenPassword }:
           />
         </div>
         <div className="flex flex-col items-center justify-center mt-3">
-          <button className="w-full md:w-1/2 lg:w-1/3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full animate-pulse">
+          <button className="w-full md:w-1/2 lg:w-1/3 bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-full hover:animate-pulse">
             Entrar
           </button>
         </div>
@@ -88,7 +88,7 @@ export default function Login({ setShowLogin, setError, showForgottenPassword }:
       <div className="flex flex-col items-center justify-center">
         <p
           onClick={() => showForgottenPassword && showForgottenPassword(true)}
-          className="text-center mt-4 text-gray-700 font-bold mb-5"
+          className="text-center mt-4 text-gray-700 font-bold mb-5 cursor-pointer"
         >
           He olvidado mi contraseña
         </p>

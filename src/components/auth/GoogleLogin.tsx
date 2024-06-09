@@ -59,7 +59,7 @@ export default function GoogleLogin({ setIsLoading }: { setIsLoading: (isLoading
       className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-500 hover:bg-cyan-600"
     >
       <img src={googleIcon} alt="Google" className="h-5 w-5 mr-3" />
-      {isMobile ? 'Sign In 🚀' : 'Sign In with Google 🚀'}
+      {isMobile ? 'Iniciar sesión 🚀' : 'Iniciar sesión con Google 🚀'}
     </button>
   );
 }

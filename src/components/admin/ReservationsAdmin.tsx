@@ -175,6 +175,7 @@ export default function ReservationsAdmin() {
           type="date"
           id="reservation-date"
           min={getDayMonthYear(new Date())}
+          value={getDayMonthYear(filterByDate || new Date())}
           onChange={handleDateChange}
           className={`${isMobileDevice ? 'mt-2' : 'mt-0'} block pl-3 pr-5 py-2  border-gray-300 rounded-md shadow-sm bg-gray-100 text-sm`}
         />
@@ -219,11 +220,8 @@ export default function ReservationsAdmin() {
                 const time = fullTime.substring(0, 5);
 
                 const reservationDateTime = new Date(`${date}T${time}`);
-                const differenceInHours =
-                  (reservationDateTime.getTime() -
-                    new Date().getTime() +
-                    (reservationDateTime.getTimezoneOffset() + 120) * 60 * 1000) /
-                  (1000 * 60 * 60);
+
+                const isPastReservation = reservationDateTime.getTime() < new Date().getTime();
 
                 return (
                   <div
@@ -246,7 +244,7 @@ export default function ReservationsAdmin() {
                       </p>
                     </div>
                     <div className="px-4 py-4 sm:px-6 flex pl-2 justify-center border-t border-gray-200">
-                      {differenceInHours > 12 && (
+                      {isPastReservation && (
                         <>
                           <img
                             src="src/assets/icons/delete.svg"
@@ -343,7 +341,7 @@ export default function ReservationsAdmin() {
           className="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded mr-2"
           onClick={() => handlePagination(false)}
         >
-          Previous
+          &lt;
         </button>
 
         <span className="flex items-center mx-4 text-center text-sm font-bold bg-gray-400 text-white py-1 px-2 rounded">
@@ -353,7 +351,7 @@ export default function ReservationsAdmin() {
           className="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded ml-2"
           onClick={() => handlePagination(true)}
         >
-          Next
+          &gt;
         </button>
       </div>
     </div>

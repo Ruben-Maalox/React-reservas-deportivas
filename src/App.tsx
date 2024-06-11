@@ -14,6 +14,7 @@ import Header from './components/Header.tsx';
 import AvisoLegal from './pages/AvisoLegal.tsx';
 import UserInfo from './pages/UserInfo.tsx';
 import UserEdit from './pages/UserEdit.tsx';
+import NotFound from './components/errors/NotFound.tsx';
 // --> Navegación
 import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -72,6 +73,7 @@ export default function App() {
               <Route path="/politicaPrivacidad" element={<PoliticaPrivacidad />} />
               <Route path="/avisoLegal" element={<AvisoLegal />} />
               <Route path="/auth-page" element={<AuthPage />} />
+              <Route path="*" element={<NotFound />} /> {/* Ruta 404 */}
             </Routes>
           </main>
           <Footer />

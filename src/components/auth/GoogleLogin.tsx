@@ -47,6 +47,11 @@ export default function GoogleLogin({ setIsLoading }: { setIsLoading: (isLoading
             );
             setIsLoading(false);
             navigate('/reservas');
+
+            setTimeout(() => {
+              setUser(null);
+              window.localStorage.removeItem('loggedUser');
+            }, 7200000);
           }
         })
         .catch((err) => console.log(err));

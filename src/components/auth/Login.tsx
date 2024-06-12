@@ -34,6 +34,11 @@ export default function Login({ setShowLogin, setError, showForgottenPassword }:
             JSON.stringify({ email, name, token, picture, fromGoogle: false, surname, phone, id, isAdmin }),
           );
           navigate('/reservas');
+
+          setTimeout(() => {
+            setUser(null);
+            window.localStorage.removeItem('loggedUser');
+          }, 7200000);
         }
         if (data.error) {
           setError(data.error);

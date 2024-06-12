@@ -16,7 +16,11 @@
 }
 
 .user-info {
-  background-image: url('/src/assets/images/user-bg.jpg');
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
+    url('/src/assets/images/yoga.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   display: block;
   padding: 20px;
   position: fixed;

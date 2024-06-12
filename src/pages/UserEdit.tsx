@@ -12,7 +12,6 @@ export default function UserEdit() {
     picture: '',
   });
   const [message, setMessage] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -24,16 +23,6 @@ export default function UserEdit() {
     setUser({ ...userN, [event.target.name]: event.target.value });
   };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setSelectedFile(event.target.files[0]);
-    }
-  };
-
-  // const handleFileChange = (event: any) => {
-  //   setSelectedFile(event.target.files[0]);
-  // };
-
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
@@ -41,12 +30,9 @@ export default function UserEdit() {
     formData.append('nombre', userN.name);
     formData.append('apellidos', userN.surname);
     formData.append('telefono', userN.phone);
-    if (selectedFile) {
-      formData.append('picture', selectedFile);
-    }
-    // Aquí puedes hacer un fetch para actualizar los datos del usuario
+
     const response = await fetch(`${import.meta.env.VITE_API_URL}/user/update/${user?.id}`, {
-      method: 'POST', // Cambiado a POST
+      method: 'PATCH',
       headers: {
         Authorization: `Bearer ${user?.token}`,
       },
@@ -57,8 +43,8 @@ export default function UserEdit() {
       const responseData = await response.json();
       setMessage('Usuario actualizado correctamente');
       const updatedUser = { ...userN, ...responseData };
-      updateUser(updatedUser); // Actualiza el estado del usuario con la respuesta del servidor
-      localStorage.setItem('loggedUser', JSON.stringify(updatedUser)); // Actualiza localStorage con la respuesta del servidor
+      updateUser(updatedUser);
+      localStorage.setItem('loggedUser', JSON.stringify(updatedUser));
     } else {
       setMessage('Error al actualizar el usuario');
     }
@@ -127,17 +113,6 @@ export default function UserEdit() {
             value={user?.email}
             onChange={handleInputChange}
             readOnly
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-            Foto:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-20"
-            type="file"
-            name="picture"
-            onChange={handleImageChange}
           />
         </div>
         <div className="flex flex-col items-center justify-center">

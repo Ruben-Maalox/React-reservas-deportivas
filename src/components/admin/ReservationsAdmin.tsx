@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useAuthProvider } from '../../context/useAuthProvider';
 import { Instalacion, Reserva } from '../../types/types';
-import { format } from 'date-fns';
 import { getDayMonthYear } from '../../utils/utils';
 import { useMediaQuery } from 'react-responsive';
 import useError from '../../hooks/useError';
@@ -22,7 +21,7 @@ export default function ReservationsAdmin() {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const { error, setError } = useError(2000);
 
-  const isMobileDevice = useMediaQuery({ maxWidth: 665 });
+  const isMobileDevice = useMediaQuery({ maxWidth: 790 });
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/reservas/all`, {
@@ -155,6 +154,13 @@ export default function ReservationsAdmin() {
       });
   };
 
+  const isPastReservation = (fechaYHora: string) => {
+    const today = new Date();
+    const reservationDate = new Date(fechaYHora);
+
+    return today.getTime() < reservationDate.getTime();
+  };
+
   return (
     <div className="w-full lg:w-3/4 mx-auto rounded-lg overflow-x-auto m-4">
       {error && <AdminError error={error} />}
@@ -219,10 +225,6 @@ export default function ReservationsAdmin() {
                 const [fullTime, _] = timeWithZone.split('+');
                 const time = fullTime.substring(0, 5);
 
-                const reservationDateTime = new Date(`${date}T${time}`);
-
-                const isPastReservation = reservationDateTime.getTime() < new Date().getTime();
-
                 return (
                   <div
                     className="flex flex-col mt-3 mb-3 w-2/3 bg-white shadow-lg rounded-lg overflow-hidden"
@@ -244,7 +246,7 @@ export default function ReservationsAdmin() {
                       </p>
                     </div>
                     <div className="px-4 py-4 sm:px-6 flex pl-2 justify-center border-t border-gray-200">
-                      {isPastReservation && (
+                      {isPastReservation(fechaYHora) && (
                         <>
                           <img
                             src="src/assets/icons/delete.svg"
@@ -275,8 +277,11 @@ export default function ReservationsAdmin() {
                 <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Instalación
                 </th>
-                <th className="flex px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Fecha y Hora
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Fecha
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Hora
                 </th>
                 <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Duración
@@ -296,13 +301,6 @@ export default function ReservationsAdmin() {
                   const [fullTime, _] = timeWithZone.split('+');
                   const time = fullTime.substring(0, 5);
 
-                  const reservationDateTime = new Date(`${date}T${time}`);
-                  const differenceInHours =
-                    (reservationDateTime.getTime() -
-                      new Date().getTime() +
-                      (reservationDateTime.getTimezoneOffset() + 120) * 60 * 1000) /
-                    (1000 * 60 * 60);
-
                   const nombreInstalacion = installations?.find(
                     (instalacion) => instalacion.id === reservation.idInstalacion,
                   )?.nombre;
@@ -311,13 +309,12 @@ export default function ReservationsAdmin() {
                     <tr key={reservation.id}>
                       <td className="px-4 py-4 whitespace-nowrap text-center">{reservation.idUsuario}</td>
                       <td className="px-4 py-4 whitespace-nowrap text-center">{nombreInstalacion}</td>
-                      <td className="px-4 py-4 whitespace-nowrap text-center">
-                        {format(new Date(reservation.fechaYHora), 'HH:mm dd/MM/yyyy')}
-                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-center">{date}</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-center">{time}</td>
                       <td className="px-4 py-4 whitespace-nowrap text-center">{reservation.duracion}</td>
                       <td className="px-4 py-4 whitespace-nowrap text-center">{reservation.importe}</td>
                       <td className="flex justify-center px-6 py-4 whitespace-nowrap text-center">
-                        {differenceInHours > 12 && (
+                        {isPastReservation(reservation.fechaYHora) && (
                           <>
                             <img
                               src="src/assets/icons/delete.svg"

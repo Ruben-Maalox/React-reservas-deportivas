@@ -85,12 +85,14 @@ export default function Register({ setShowLogin, setError }: AuthProps) {
         </div>
         <div className="mb-4">
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="phone"
-            minLength={9}
-            maxLength={9}
             type="tel"
             placeholder="Móvil *"
+            pattern="[0-9]{9}"
+            onInvalid={(event) => {
+              (event.target as HTMLInputElement).setCustomValidity('Por favor, introduce exactamente 9 números.');
+            }}
             required
           />
         </div>

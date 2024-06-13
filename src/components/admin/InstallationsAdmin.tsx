@@ -9,8 +9,9 @@ export default function InstallationsAdmin() {
   const { user } = useAuthProvider();
   const [refetch, setRefetch] = useState<boolean>(false);
   const [installations, setInstallations] = useState<Instalacion[] | null>();
-  const installationsInfoUpdated = useRef<any>({}); // <{ [key: number]: Instalacion }> así me da fallo en la parte de editInstallation
-  const newInstallationInfo = useRef<any>({ id: 1, nombre: '', precioHora: 1 }); // <{ Instalacion }> tb hay que cambiar esto!
+  const installationsInfoUpdated = useRef<any>({});
+  const newInstallationInfo = useRef<any>({ id: 1, nombre: '', precioHora: 1 });
+  const [notificationMessage, setNotificationMessage] = useState<string>('');
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/instalaciones/all`, {
@@ -60,6 +61,16 @@ export default function InstallationsAdmin() {
       .then((data) => {
         if (data.ok) {
           setRefetch((prevState) => !prevState);
+          setNotificationMessage(data.ok);
+          setTimeout(() => {
+            setNotificationMessage('');
+          }, 3000);
+        }
+        if (data.error) {
+          setNotificationMessage(data.error);
+          setTimeout(() => {
+            setNotificationMessage('');
+          }, 3000);
         }
       });
   };
@@ -80,11 +91,12 @@ export default function InstallationsAdmin() {
         if (data.ok) {
           setRefetch((prevState) => !prevState);
         }
+        if (data.error) {
+        }
       });
   };
 
   const handleDeleteInstallationRequest = (idInstallation: number) => {
-    console.log('DELETE: ', idInstallation);
     fetch(`${import.meta.env.VITE_API_URL}/instalaciones/delete/${idInstallation}`, {
       method: 'POST',
       headers: {
@@ -96,6 +108,9 @@ export default function InstallationsAdmin() {
       .then((data) => {
         if (data.ok) {
           setRefetch((prevState) => !prevState);
+        }
+        if (data.error) {
+          console.log(data.error);
         }
       });
   };
@@ -202,6 +217,17 @@ export default function InstallationsAdmin() {
             )}
           </tbody>
         </table>
+      </div>
+
+      <div>
+        {notificationMessage && (
+          <div
+            className="absolute top-0 right-0 m-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg w-1/6"
+            role="alert"
+          >
+            <span className="font-bold block mb-2 sm:inline">{notificationMessage}</span>
+          </div>
+        )}
       </div>
     </>
   );

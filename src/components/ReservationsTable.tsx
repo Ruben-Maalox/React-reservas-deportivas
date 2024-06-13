@@ -16,34 +16,53 @@ export default function ReservationsTable({
   editInfo = undefined,
 }: ReservationsTableProps) {
   const [selectedDate, setSelectedDate] = useState(date);
-  const mergeRows = useRef<MergeRows>({
-    1: { merge: 1, first: true },
-    2: { merge: 1, first: true },
-    3: { merge: 1, first: true },
-    4: { merge: 1, first: true },
-    5: { merge: 1, first: true },
-    6: { merge: 1, first: true },
-    7: { merge: 1, first: true },
-    8: { merge: 1, first: true },
-  });
+  const mergeRows = useRef<MergeRows>();
+
+  const createMergeRowsObjects = (length: number) => {
+    const mergeRowsObject: { [key: number]: { merge: number; first: boolean } } = {};
+    for (let i = 1; i <= length; i++) {
+      mergeRowsObject[i] = { merge: 1, first: true };
+    }
+    mergeRows.current = mergeRowsObject;
+  };
+
+  createMergeRowsObjects(installations.length);
+
   const [showModalReservation, setShowModalReservation] = useState<boolean>(false);
   const [reservationData, setReservationData] = useState<ReservaModal | null>(null);
 
   // Para renderizar la tabla de una forma u otra en función de si es >1024px
-  const isLargeScreen = useMediaQuery({ minWidth: 1090 });
+  const isLargeScreen = useMediaQuery({ minWidth: 1200 });
   const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 1089 });
 
+  const generateSmallObjects = (length: number) => {
+    const smallObjects = [];
+    for (let i = 0; i < length; i += 3) {
+      smallObjects.push({ start: i, end: i + 3 });
+    }
+    return smallObjects;
+  };
+
+  const generateMediumObjects = (length: number) => {
+    const mediumObjects = [];
+    for (let i = 0; i < length; i += 4) {
+      mediumObjects.push({ start: i, end: i + 4 });
+    }
+    return mediumObjects;
+  };
+
+  const generateLargeObjects = (length: number) => {
+    const largeObjects = [];
+    for (let i = 0; i < length; i += 8) {
+      largeObjects.push({ start: i, end: i + 8 });
+    }
+    return largeObjects;
+  };
+
   const handleTableResponsive = {
-    small: [
-      { start: 0, end: 3 },
-      { start: 3, end: 6 },
-      { start: 6, end: 9 },
-    ],
-    medium: [
-      { start: 0, end: 4 },
-      { start: 4, end: 9 },
-    ],
-    large: [{ start: 0, end: 9 }],
+    small: generateSmallObjects(installations.length),
+    medium: generateMediumObjects(installations.length),
+    large: generateLargeObjects(installations.length),
   };
 
   const typeOfDevice = () => {
@@ -344,7 +363,7 @@ export default function ReservationsTable({
 
                           return (
                             <tr key={halfHour} data-hour={time} className="odd:bg-white even:bg-gray-50">
-                              {installations.slice(range.start, range.end).map((instalacion) => {
+                              {installations.slice(range.start, range.end).map((instalacion, index) => {
                                 const fechaYHoraNueva = getDayMonthYear(selectedDate) + 'T' + time;
                                 const reserva = hasReserva(instalacion.id, fechaYHoraNueva);
 
@@ -359,47 +378,49 @@ export default function ReservationsTable({
                                   }
                                 }
 
-                                const cRow = mergeRows.current[instalacion.id];
+                                if (mergeRows.current) {
+                                  const cRow = mergeRows.current[index + 1];
 
-                                const shouldShowGray = isAfterCurrentTime(fechaYHoraNueva);
+                                  const shouldShowGray = isAfterCurrentTime(fechaYHoraNueva);
 
-                                if (reserva && reserva.duracion === 60 && editReservation === false) {
-                                  cRow.merge = 2;
-                                  cRow.first = true;
-                                }
-                                if (reserva && reserva.duracion === 90 && editReservation === false) {
-                                  cRow.merge = 3;
-                                  cRow.first = true;
-                                }
+                                  if (reserva && reserva.duracion === 60 && editReservation === false) {
+                                    cRow.merge = 2;
+                                    cRow.first = true;
+                                  }
+                                  if (reserva && reserva.duracion === 90 && editReservation === false) {
+                                    cRow.merge = 3;
+                                    cRow.first = true;
+                                  }
 
-                                if (cRow.first === false) {
-                                  cRow.merge -= 1;
-                                  if (cRow.merge === 1) cRow.first = true;
-                                  return null;
-                                }
+                                  if (cRow.first === false) {
+                                    cRow.merge -= 1;
+                                    if (cRow.merge === 1) cRow.first = true;
+                                    return null;
+                                  }
 
-                                if (cRow.merge > 1) {
-                                  cRow.first = false;
-                                }
-                                if (cRow.merge === 1) {
-                                  cRow.first = true;
-                                }
+                                  if (cRow.merge > 1) {
+                                    cRow.first = false;
+                                  }
+                                  if (cRow.merge === 1) {
+                                    cRow.first = true;
+                                  }
 
-                                return (
-                                  <td
-                                    onClick={() => handleReservation(instalacion.id, fechaYHoraNueva)}
-                                    rowSpan={cRow.merge}
-                                    key={instalacion.id}
-                                    data-instalacion={instalacion.id}
-                                    className={`border 
+                                  return (
+                                    <td
+                                      onClick={() => handleReservation(instalacion.id, fechaYHoraNueva)}
+                                      rowSpan={cRow.merge}
+                                      key={instalacion.id}
+                                      data-instalacion={instalacion.id}
+                                      className={`border 
                                       ${!shouldShowGray ? 'bg-gray-300' : reserva ? (editReservation ? 'bg-blue-500' : 'bg-red-500 text-white') : ''} 
                                       ${installations.length === 1 ? 'w-5/6' : 'w-1/6'} 
                                       py-2 cursor-pointer
                                       `}
-                                  >
-                                    {showHour(cRow.merge, time)}
-                                  </td>
-                                );
+                                    >
+                                      {showHour(cRow.merge, time)}
+                                    </td>
+                                  );
+                                }
                               })}
                             </tr>
                           );

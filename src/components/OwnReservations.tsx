@@ -36,6 +36,7 @@ export default function OwnReservations({
   const [filterByDate, setFilterByDate] = useState<Date>();
   const [filterByInstallation, setFilterByInstallation] = useState<number>(0);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [notificationMessage, setNotificationMessage] = useState<string>('');
 
   // Cada vez que pulsamos en el botón de editar y cambiamos sus valores, se ejecuta para mostrar el modal de edición
   useEffect(() => {
@@ -142,24 +143,30 @@ export default function OwnReservations({
     }
   };
 
-  const deleteReservation = async (reservationId: number) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/reservas/delete/${reservationId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user?.token}`,
-        },
+  const deleteReservation = (reservationId: number) => {
+    fetch(`${import.meta.env.VITE_API_URL}/reservas/delete/${reservationId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user?.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok) {
+          handleRefetch();
+          setNotificationMessage(data.ok);
+          setTimeout(() => {
+            setNotificationMessage('');
+          }, 3000);
+        }
+        if (data.error) {
+          setNotificationMessage(data.error);
+          setTimeout(() => {
+            setNotificationMessage('');
+          }, 3000);
+        }
       });
-
-      if (!response.ok) {
-        throw new Error('Error al eliminar la reserva');
-      }
-
-      handleRefetch();
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const handleShowEditReservation = () => {
@@ -414,6 +421,16 @@ export default function OwnReservations({
                 </tbody>
               </table>
             )}
+            <div className="flex flex-col justify-start items-center">
+              {notificationMessage && (
+                <div
+                  className="m-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg w-auto sm:w-1/2 md:w-1/3 lg:w-1/6"
+                  role="alert"
+                >
+                  <span className="font-bold inline mb-2 sm:inline">{notificationMessage}</span>
+                </div>
+              )}
+            </div>
 
             <div className="relative flex justify-center mt-4">
               <button

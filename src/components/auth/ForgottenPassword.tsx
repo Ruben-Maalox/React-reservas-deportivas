@@ -83,10 +83,10 @@ export default function ForgottenPassword({ setError, showForgottenPassword }: F
         </button>
       </div>
 
-      <div>
+      <div className="flex justify-center">
         {notificationMessage && (
           <div
-            className="absolute top-0 right-0 m-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg w-1/6"
+            className="absolute top-72 m-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg w-full sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4"
             role="alert"
           >
             <span className="font-bold block mb-2 sm:inline">{notificationMessage}</span>

@@ -140,17 +140,17 @@ export default function Register({ setShowLogin, setError }: AuthProps) {
             Inicia sesión
           </button>
         </div>
+        <div className="flex flex-col justify-start items-center">
+          {notificationMessage && (
+            <div
+              className="m-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg w-auto sm:w-1/2 md:w-1/3 lg:w-full"
+              role="alert"
+            >
+              <span className="font-bold inline mb-2 sm:inline">{notificationMessage}</span>
+            </div>
+          )}
+        </div>
       </form>
-      <div>
-        {notificationMessage && (
-          <div
-            className="absolute top-0 right-0 m-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg w-1/6"
-            role="alert"
-          >
-            <span className="font-bold block mb-2 sm:inline">{notificationMessage}</span>
-          </div>
-        )}
-      </div>
     </>
   );
 }

@@ -90,8 +90,16 @@ export default function InstallationsAdmin() {
       .then((data) => {
         if (data.ok) {
           setRefetch((prevState) => !prevState);
+          setNotificationMessage(data.ok);
+          setTimeout(() => {
+            setNotificationMessage('');
+          }, 3000);
         }
         if (data.error) {
+          setNotificationMessage(data.error);
+          setTimeout(() => {
+            setNotificationMessage('');
+          }, 3000);
         }
       });
   };
@@ -108,9 +116,16 @@ export default function InstallationsAdmin() {
       .then((data) => {
         if (data.ok) {
           setRefetch((prevState) => !prevState);
+          setNotificationMessage(data.ok);
+          setTimeout(() => {
+            setNotificationMessage('');
+          }, 3000);
         }
         if (data.error) {
-          console.log(data.error);
+          setNotificationMessage(data.error);
+          setTimeout(() => {
+            setNotificationMessage('');
+          }, 3000);
         }
       });
   };
@@ -219,13 +234,13 @@ export default function InstallationsAdmin() {
         </table>
       </div>
 
-      <div>
+      <div className="flex flex-col justify-start items-center">
         {notificationMessage && (
           <div
-            className="absolute top-0 right-0 m-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg w-1/6"
+            className="m-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-lg w-full sm:w-1/2 md:w-1/3 lg:w-1/6"
             role="alert"
           >
-            <span className="font-bold block mb-2 sm:inline">{notificationMessage}</span>
+            <span className="font-bold inline mb-2 sm:inline">{notificationMessage}</span>
           </div>
         )}
       </div>

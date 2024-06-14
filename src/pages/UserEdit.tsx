@@ -26,17 +26,18 @@ export default function UserEdit() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    const formData = new FormData();
-    formData.append('nombre', userN.name);
-    formData.append('apellidos', userN.surname);
-    formData.append('telefono', userN.phone);
+    const body = JSON.stringify({
+      nombre: userN.name,
+      apellidos: userN.surname,
+      telefono: userN.phone,
+    });
 
     const response = await fetch(`${import.meta.env.VITE_API_URL}/user/update/${user?.id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${user?.token}`,
       },
-      body: formData,
+      body,
     });
 
     if (response.ok) {
@@ -96,8 +97,15 @@ export default function UserEdit() {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white bg-opacity-20"
-            type="text"
+            type="tel"
             name="phone"
+            pattern="[0-9]{9}"
+            onInvalid={(event) => {
+              (event.target as HTMLInputElement).setCustomValidity('Por favor, introduce exactamente 9 números.');
+            }}
+            onInput={(event) => {
+              (event.target as HTMLInputElement).setCustomValidity('');
+            }}
             value={userN?.phone}
             onChange={handleInputChange}
           />
@@ -116,7 +124,13 @@ export default function UserEdit() {
           />
         </div>
         <div className="flex flex-col items-center justify-center">
-          {message && <p className="text-green-500 font-bold">{message}</p>}
+          {message && (
+            <p
+              className={`${message === 'Error al actualizar el usuario' ? 'text-red-500' : 'text-green-500'} font-bold`}
+            >
+              {message}
+            </p>
+          )}
           <button
             className="w-28 h-12 text-white font-semibold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg shadow-lg hover:scale-105 duration-200 hover:drop-shadow-2xl hover:shadow-[#7dd3fc] hover:cursor-pointer"
             type="submit"

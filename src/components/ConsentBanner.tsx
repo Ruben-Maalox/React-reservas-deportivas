@@ -1,4 +1,4 @@
-import CookieConsent from 'react-cookie-consent'; // npm install react-cookie-consent
+import CookieConsent from 'react-cookie-consent';
 
 export const ConsentBanner = () => {
   return (
@@ -6,9 +6,9 @@ export const ConsentBanner = () => {
       location="bottom"
       buttonText="Aceptar"
       cookieName="bestCookieInTheWorld"
-      style={{ background: '#606078' }} //color sacado de la paleta de colores que elegimos
+      style={{ background: '#606078' }}
       buttonStyle={{ color: '#4e503b', borderRadius: '5px', fontWeight: 'bold' }}
-      expires={150} //numero de días antes de que la cookie expire
+      expires={150}
       enableDeclineButton
       declineButtonText="Rechazar"
       declineButtonStyle={{ borderRadius: '5px', fontWeight: 'bold' }}

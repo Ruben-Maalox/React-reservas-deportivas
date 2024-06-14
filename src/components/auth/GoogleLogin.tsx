@@ -21,7 +21,7 @@ export default function GoogleLogin({ setIsLoading }: { setIsLoading: (isLoading
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   const login = useGoogleLogin({
-    onSuccess: (codeResponse: any) => setUserGoogle(codeResponse), // {access_token, authuser, expires_in, ... } ❗❗ Si ponemos ANY se va el error, pero tenemos que arreglar
+    onSuccess: (codeResponse: any) => setUserGoogle(codeResponse),
     onError: (error) => console.log('Login Failed:', error),
   });
 
@@ -67,11 +67,6 @@ export default function GoogleLogin({ setIsLoading }: { setIsLoading: (isLoading
     </button>
   );
 }
-
-/* TODO:
-- Si en el useState de userGoogle tipamos como GoogleLoginResponse, nos da error en el setUserGoogle(codeResponse)
-- Ver por qué tarda tanto en hacer la petición al servidor y mostrar los datos
-*/
 
 /* Opción 1 --> Pasarle token al servidor
 if (userGoogle) {

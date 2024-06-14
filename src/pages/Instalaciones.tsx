@@ -32,7 +32,3 @@ export default function Instalaciones() {
     </div>
   );
 }
-
-/* TODO
-- Mejorar la optimización de las imágenes (tardan mucho en cargar)
-*/

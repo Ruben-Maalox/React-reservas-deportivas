@@ -101,5 +101,3 @@ export default function Login({ setShowLogin, setError, showForgottenPassword }:
     </div>
   );
 }
-/* TODO:
-- Reiniciar los campos del formulario (por lo menos contraseña) cuando haya un error */

@@ -8,7 +8,7 @@ export default function useError(time: number) {
     if (error) {
       timer = setTimeout(() => {
         setError(null);
-      }, time); // Cambia esto al número de milisegundos que quieras
+      }, time);
     }
     return () => {
       if (timer) {

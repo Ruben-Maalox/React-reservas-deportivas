@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import switchIcon from '/src/assets/icons/switch-white.svg';
 import deleteIcon from '/src/assets/icons/delete.svg';
 import editIcon from '/src/assets/icons/edit.svg';
-// import reservationsJSON from "../json_prueba/reservas.json";
 // --> Types
 import { EditReservationInfo, Instalacion, Reserva } from '../types/types';
 import { useAuthProvider } from '../context/useAuthProvider';
@@ -38,15 +37,12 @@ export default function OwnReservations({
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [notificationMessage, setNotificationMessage] = useState<string>('');
 
-  // Cada vez que pulsamos en el botón de editar y cambiamos sus valores, se ejecuta para mostrar el modal de edición
   useEffect(() => {
     if (editInfo) {
       setDate(editInfo?.date);
       setShowEditReservation(true);
     }
   }, [editInfo]);
-
-  // Métodos para filtrar en las reservas propias
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/reservas/userEmail`, {
@@ -117,8 +113,6 @@ export default function OwnReservations({
     return ownReservationsByInstallation;
   }, [ownReservationsByInstallation]);
 
-  // Métodos para filtrar en las reservas que se van a mostrar al pinchar en EDITAR en la tabla
-
   const filteredInstallation = useMemo(() => {
     return installations?.filter((instalacion) => instalacion.id === editInfo?.installationId);
   }, [installations, editInfo]);
@@ -128,8 +122,6 @@ export default function OwnReservations({
       return reservations?.filter((reservation) => reservation.idInstalacion === editInfo?.installationId);
     }
   }, [reservations, editInfo]);
-
-  // Métodos para manejar eventos
 
   const handlePagination = (next: boolean) => {
     if (next) {

@@ -247,8 +247,3 @@ export default function InstallationsAdmin() {
     </>
   );
 }
-
-/* TODO
-- Tipar bien el useRef y no ponerle el any
-- Al crear una nueva instalación, reiniciar los campos de texto y precioHora
-*/

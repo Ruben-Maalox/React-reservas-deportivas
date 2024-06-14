@@ -114,8 +114,6 @@ export default function ReservationsAdmin() {
     return reservationsByInstallation;
   }, [reservationsByInstallation]);
 
-  // Métodos para manejar eventos
-
   const handlePagination = (next: boolean) => {
     if (next) {
       if (totalReservations.current <= pagination * 10) return;
@@ -376,8 +374,3 @@ export default function ReservationsAdmin() {
     </div>
   );
 }
-
-/* TODO
-- Paginar??
-- Ordenar por algo más que fecha? Yo creo que con fecha es suficiente pero lo que quieras
-*/

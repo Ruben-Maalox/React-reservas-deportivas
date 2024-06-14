@@ -1,35 +1,25 @@
-# TAILWIND proceso para instalarlo
+# Guía para configurar el proyecto
 
-## 1º Ejecutar los comandos:
+## 1º Tener instalado Node.js y npm
 
-npm add -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+Si no lo tienes instalado puedes descargarlo desde aquí:
 
-## 2º Añadir a tailwind.config.js lo siguiente
+https://nodejs.org/en/download/package-manager
 
-/** @type {import('tailwindcss').Config} \*/
-export default {
-content: ["./src/**/\*.{html,js,ts,jsx,tsx}", "./index.html"],
-theme: {
-extend: {},
-},
-plugins: [],
-};
+## 2º Instalar dependencias
 
-## 3º Añadir a src/INDEX.css las directivas
+Instala todas las dependencias necesarias para el proyecto ejecutando el siguiente comando en el directorio raíz del proyecto:
 
-**index.css se refiere al fichero de entrada de css al proyecto**
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+**npm install**
 
-# Estructuración de carpetas
+## 3º Configurar Variables de Entorno
 
-- src/: Contiene todo el código fuente de la aplicación.
-  - /assets/: Contiene recursos estáticos como imágenes y estilos globales.
-  - /components/: Contiene todos los componentes de React. Cada componente puede tener su propia carpeta con su archivo de código y su archivo de prueba.
-  - /utils/: Contiene funciones de utilidad que se pueden usar en todo el proyecto.
-  - /services/: Contiene servicios, como llamadas a API.
-  - /pages/: Contiene todas las páginas de nuestra web
-  - App.tsx: Es el componente principal de la aplicación.
-  - index.tsx: Es el punto de entrada de la aplicación.
+Crea un archivo .env en la raíz del proyecto y define la variable de entorno necesaria. Aquí tienes un ejemplo:
+
+VITE_API_URL=http://127.0.0.1:8000/api
+
+# 4º Ejecutar el Proyecto en Desarrollo
+
+Para iniciar el servidor de desarrollo, ejecuta:
+
+**npm run dev**

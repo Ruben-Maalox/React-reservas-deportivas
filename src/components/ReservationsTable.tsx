@@ -31,7 +31,7 @@ export default function ReservationsTable({
   const [showModalReservation, setShowModalReservation] = useState<boolean>(false);
   const [reservationData, setReservationData] = useState<ReservaModal | null>(null);
 
-  // Para renderizar la tabla de una forma u otra en función de si es >1024px
+  // Para renderizar la tabla de una forma u otra en función de si es >1200px
   const isLargeScreen = useMediaQuery({ minWidth: 1200 });
   const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 1089 });
 
@@ -108,7 +108,6 @@ export default function ReservationsTable({
     let endHour = parseInt(hourPart);
     let endMinute = parseInt(minutePart);
 
-    // Add 30 minutes for each merge
     for (let i = 0; i < merge; i++) {
       endMinute += 30;
       if (endMinute >= 60) {
@@ -117,7 +116,6 @@ export default function ReservationsTable({
       }
     }
 
-    // Format the end hour and minute
     const endHourStr = endHour < 10 ? `0${endHour}` : `${endHour}`;
     const endMinuteStr = endMinute === 0 ? '00' : `${endMinute}`;
 
@@ -450,9 +448,3 @@ export default function ReservationsTable({
     </>
   );
 }
-
-/* TODO:
-- Quitar el inicio del state de la fecha (he puesto siempre 24-04-2024T10:30+02:00 para no teneer que ir pasando fechas)
-- Ahora mismo he fijado como hora las 10.30 para comprobar que no se pincha en horas anteriores a la actual
-- Hay que tener en cuenta la franja horaria (ahora mismo es +02:00)
-*/

@@ -30,7 +30,7 @@ export const ReservationModal = ({
   const [date, timeWithZone] = fechaYHora.split('T');
   const [time, _] = timeWithZone.split('+');
 
-  // Efecto para cerrar el modal después de 5 segundos si hay un mensaje de éxito
+  // Efecto para cerrar el modal después de 3 segundos si hay un mensaje de éxito
   useEffect(() => {
     if (responseMessage && responseMessage.includes('correctamente')) {
       const timer = setTimeout(() => {

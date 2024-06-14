@@ -4,14 +4,13 @@ import { UserInfoProps } from '../types/types';
 interface AuthContextType {
   user: UserInfoProps | null;
   setUser: Dispatch<SetStateAction<UserInfoProps | null>>;
-  updateUser: (updatedFields: Partial<UserInfoProps>) => void; // Añade esta línea
+  updateUser: (updatedFields: Partial<UserInfoProps>) => void;
 }
 
-// Proporciona un valor por defecto al crear el contexto
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   setUser: () => {},
-  updateUser: () => {}, // Añade esta línea
+  updateUser: () => {},
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -28,5 +27,5 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  return <AuthContext.Provider value={{ user, setUser, updateUser }}>{children}</AuthContext.Provider>; // Añade updateUser aquí
+  return <AuthContext.Provider value={{ user, setUser, updateUser }}>{children}</AuthContext.Provider>;
 }

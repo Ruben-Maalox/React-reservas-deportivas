@@ -6,6 +6,7 @@ import { useMediaQuery } from 'react-responsive';
 import useError from '../../hooks/useError';
 import AdminError from '../errors/AdminError';
 import switchIcon from '/src/assets/icons/switch-white.svg';
+import deleteIcon from '/src/assets/icons/delete.svg';
 
 export default function ReservationsAdmin() {
   const { user } = useAuthProvider();
@@ -258,7 +259,7 @@ export default function ReservationsAdmin() {
                       {isPastReservation(fechaYHora) && (
                         <>
                           <img
-                            src="src/assets/icons/delete.svg"
+                            src={deleteIcon}
                             alt="Delete icon"
                             className="w-8 cursor-pointer"
                             onClick={() => handleDeleteReservationRequest(id)}

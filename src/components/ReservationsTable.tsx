@@ -33,7 +33,7 @@ export default function ReservationsTable({
 
   // Para renderizar la tabla de una forma u otra en función de si es >1200px
   const isLargeScreen = useMediaQuery({ minWidth: 1200 });
-  const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 1089 });
+  const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 1200 });
 
   const generateSmallObjects = (length: number) => {
     const smallObjects = [];

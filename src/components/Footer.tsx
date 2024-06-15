@@ -41,11 +41,11 @@ export default function Footer() {
         <h2 className="font-bold text-lg mb-2">Contacto:</h2>
         <p className="mb-2">
           <AiOutlinePhone className="inline-block mr-1" />
-          <span className="font-bold">Teléfono:</span> 968 111 111 - 637 111 111
+          <span className="font-bold">Teléfono:</span> 968 111 111 - 662 662 662
         </p>
         <p className="mb-2">
           <AiOutlineMail className="inline-block mr-1" />
-          <span className="font-bold">Email:</span> letsmove@letsmove.com
+          <span className="font-bold">Email:</span> letsmove.murcia@gmail.com
         </p>
         <p className="mb-2">
           <AiOutlineHome className="inline-block mr-1" />

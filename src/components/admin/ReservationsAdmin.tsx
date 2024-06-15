@@ -327,7 +327,7 @@ export default function ReservationsAdmin() {
                         {isPastReservation(reservation.fechaYHora) && (
                           <>
                             <img
-                              src="src/assets/icons/delete.svg"
+                              src={deleteIcon}
                               alt="Delete icon"
                               className="w-8 cursor-pointer"
                               onClick={() => handleDeleteReservationRequest(reservation.id)}

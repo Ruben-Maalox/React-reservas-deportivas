@@ -43,11 +43,13 @@ export default function UserEdit() {
     if (response.ok) {
       const responseData = await response.json();
       setMessage('Usuario actualizado correctamente');
+      setTimeout(() => setMessage(''), 3000);
       const updatedUser = { ...userN, ...responseData };
       updateUser(updatedUser);
       localStorage.setItem('loggedUser', JSON.stringify(updatedUser));
     } else {
       setMessage('Error al actualizar el usuario');
+      setTimeout(() => setMessage(''), 3000);
     }
   };
 

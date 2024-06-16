@@ -7,7 +7,7 @@ import userDefaultImage from '../../assets/images/user.png';
 import './NavLinks.css';
 
 const links = [
-  { name: 'Home', href: '/' },
+  { name: 'Inicio', href: '/' },
   { name: 'Instalaciones', href: '/instalaciones' },
   { name: 'Servicios', href: '/servicios' },
   { name: 'Reservas', href: '/reservas' },

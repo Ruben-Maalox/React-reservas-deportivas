@@ -11,7 +11,7 @@ export default function Contacto() {
     <>
       <div className="flex flex-col md:flex-row items-center justify-between py-10 px-5 md:px-20 bg-gray-100">
         <div className="w-full md:w-1/2 mb-10 md:mb-0">
-          <LoadScript googleMapsApiKey="AIzaSyD5cPRPxRqgt79povW5F_F8QYJT_AZRVN4">
+          <LoadScript googleMapsApiKey="">
             <GoogleMap mapContainerStyle={{ width: '100%', height: '500px' }} center={ubicacionEmpresa} zoom={15}>
               <Marker position={ubicacionEmpresa} />
             </GoogleMap>
